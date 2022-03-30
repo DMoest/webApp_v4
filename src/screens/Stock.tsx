@@ -1,16 +1,16 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import {StyleSheet, Text, View, ScrollView, Image, SafeAreaView, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import StockList from '../components/StockList';
-import coverIMG from "../assets/img/NutsAndBolts-5.jpg";
 import {theme} from "../assets/themes/theme";
+import coverIMG from "../assets/img/NutsAndBolts-5.jpg";
 
 const Stock =() => {
     return (
         <View style={styles.base}>
             <Text style={styles.header}>Produkter</Text>
             <View style={styles.imgContainer}>
-            <Image source={coverIMG} style={styles.image}/>
+                <Image source={coverIMG} style={styles.image}/>
             </View>
 
             <View style={styles.content}>
@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         backgroundColor: theme.colors.white,
-        paddingHorizontal: (Dimensions.get('screen').width / 100) * 3,
+        paddingHorizontal: theme.container.basePaddingH,
     },
     imgContainer: {
-        width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').width / 16 * 6,
+        width: theme.images.coverWidth,
+        height: theme.images.coverHeight,
     },
     image: {
         flex: 1,
@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     button: {
-        fontSize: theme.typography.btnFontSize,
         width: '100%',
+        fontSize: theme.typography.btnSmallFontSize,
         paddingHorizontal: theme.container.btnPaddingH,
         paddingVertical: theme.container.btnPaddingV,
         marginHorizontal: theme.container.btnMarginH,

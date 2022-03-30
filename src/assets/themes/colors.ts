@@ -15,6 +15,9 @@ export const colors = {
     bgLight: "#fafafa",
     bgDark: "#2a2a2a",
 
+    // Shadows
+    shadows: "#3F3F3F",
+
     // B&W + Grayscale
     black: "#090909",
     gray1: "#3F3F3F",

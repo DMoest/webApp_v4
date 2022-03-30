@@ -9,11 +9,12 @@ export const typography = {
     // Typography
     headerFontSize: 42,
     subHeaderFontSize: 21,
-    paragraphFontSize: 12,
-    btnFontSize: 16,
+    textFontSize: 14,
+    btnBigFontSize: 16,
+    btnSmallFontSize: 14,
 
-    headerWeight: '400',
-    subHeaderWeight: '400',
-    paragraphWeight: '400',
-    btnWeight: '600',
+    headerWeight: "400",
+    subHeaderWeight: "400",
+    paragraphWeight: "400",
+    btnWeight: "600",
 }

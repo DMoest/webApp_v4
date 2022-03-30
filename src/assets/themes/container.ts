@@ -1,3 +1,5 @@
+import {Dimensions} from "react-native";
+
 export const container = {
     // Paddings & Margins
 
@@ -6,10 +8,10 @@ export const container = {
     // T = Top, B = Bottom, L = Left, R = Right,
 
     //Base
-    basePaddingH: 12,
+    basePaddingH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size
     basePaddingV: 10,
-    baseMarginH: 12,
-    baseMarginV: 12,
+    baseMarginH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size,
+    baseMarginV: 10,
 
     // Container
     containerPaddingH: 12,
@@ -35,13 +37,19 @@ export const container = {
     // Paragraph
     textPaddingH: 12,
     textPaddingV: 10,
+    textPaddingT: 10,
+    textPaddingB: 10,
     textMarginH: 12,
     textMarginV: 10,
 
     // Buttons
-    btnPaddingH: 12,
-    btnPaddingV: 10,
+    btnPaddingH: 15,
+    btnPaddingV: 5,
     btnMarginH: 10,
     btnMarginV: 10,
+    btnBigMarginB: 1,
+    btnSmallMarginB: 10,
+
+    // BorderRadius
     bthRadius: 5,
 }

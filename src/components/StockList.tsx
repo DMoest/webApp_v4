@@ -1,6 +1,6 @@
 import React from "react";
 import {useEffect, useState} from 'react';
-import {FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import config from "../config/config.json";
 import {theme} from "../assets/themes/theme";
 
@@ -13,19 +13,16 @@ const StockList = ({navigation}) => {
             .then(result => setProducts(result.data));
     }, []);
 
-    const StockItem = ({item}) => {
+    const StockItemLink = ({item}) => {
         return (
             <TouchableOpacity
+                style={styles.btnContainer}
                 onPress={() => {
-                    navigation.navigate('StockItem', {
-                        id: item.id,
-                        name: item.name,
-                        stock: item.stock,
-                    })
+                    navigation.navigate('StockItem')
                 }} >
                 <View key={item.id} style={[styles.listItem, styles.button]} >
-                    <Text>{item.name}</Text>
-                    <Text>{item.stock} st</Text>
+                    <Text style={styles.btnText}>{item.name}</Text>
+                    <Text style={styles.btnText}>{item.stock} st</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -36,7 +33,7 @@ const StockList = ({navigation}) => {
             <FlatList data={products}
                       keyExtractor={item => item.id}
                       renderItem={({item}) => (
-                          <StockItem item={item}/>
+                          <StockItemLink item={item}/>
                       )} />
         </View>
     );
@@ -47,42 +44,51 @@ const styles = StyleSheet.create({
         flex: 2,
     },
     listItem: {
-        overflow: 'hidden',
-        backgroundColor: theme.colors.white,
-        borderRadius: 5,
-        paddingHorizontal: 15,
-        paddingVertical: 5,
-        marginBottom: 5,
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        shadowColor: theme.colors.gray4,
-        shadowOpacity: 0.3,
-        shadowOffset: {
-            width: -2,
-            height: 4
-        },
-        shadowRadius: 3,
+        overflow: 'hidden',
+        backgroundColor: theme.colors.white,
+        borderRadius: theme.container.bthRadius,
+        paddingHorizontal: theme.container.btnPaddingH,
+        paddingVertical: theme.container.btnPaddingV,
+        marginBottom: theme.container.btnSmallMarginB,
         color: theme.colors.textColorDark,
         fontFamily: theme.typography.textFont,
     },
     header: {
         color: theme.colors.textColorDark,
-        fontSize: 24,
-        marginBottom: 24,
+        fontSize: theme.typography.headerFontSize,
+        marginBottom: theme.container.headerMarginB,
         fontFamily: theme.typography.headerFont,
     },
     textPadding: {
-        paddingTop: 5,
-        paddingBottom: 20,
+        paddingTop: theme.container.textPaddingT,
+        paddingBottom: theme.container.textPaddingB,
+    },
+    btnContainer: {
+        width: '100%',
+        shadowColor: theme.colors.shadows,
+        shadowOffset: theme.abstracts.btnOffset,
+        shadowOpacity: theme.abstracts.btnOpacity,
+        shadowRadius: theme.abstracts.btnRadius,
+        elevation: theme.abstracts.btnElevation,
     },
     button: {
-        paddingHorizontal: 12,
-        paddingVertical: 6,
+        overflow: 'hidden',
+        width: '100%',
+        paddingHorizontal: theme.container.btnPaddingH,
+        paddingVertical: theme.container.btnPaddingV,
+        marginBottom: theme.container.btnSmallMarginB,
+        borderRadius: theme.container.bthRadius,
         backgroundColor: theme.colors.primaryColor,
-        color: theme.colors.textColorLight,
-        fontFamily: theme.typography.btnFont
-    }
+        color: theme.colors.textColorDark,
+    },
+    btnText: {
+        fontSize: theme.typography.btnSmallFontSize,
+        fontWeight: theme.typography.btnWeight,
+        color: theme.colors.textColorDark,
+    },
 });
 
 export default StockList;

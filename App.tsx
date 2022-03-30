@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from './src/screens/Home';
 import Stock from './src/screens/Stock';
+import StockItem from "./src/screens/StockItem";
 import {theme} from "./src/assets/themes/theme";
 
 const Stack = createStackNavigator();
@@ -14,7 +15,8 @@ const App =() => {
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen name='Home' component={Home} options={{ title: "Välkommen" }} />
-                    <Stack.Screen name='Stocks' component={Stock} options={{ title: "Produktkatalog" }} />
+                    <Stack.Screen name='StockList' component={Stock} options={{ title: "Produktkatalog" }} />
+                    <Stack.Screen name='StockItem' component={StockItem} options={{ title: "Produktkatalog" }} />
                 </Stack.Navigator>
             </NavigationContainer>
         </SafeAreaView>
@@ -31,14 +33,14 @@ const styles = StyleSheet.create({
     base: {
         flex: 1,
         backgroundColor: theme.colors.white,
-        paddingHorizontal: 12,
+        paddingHorizontal: theme.container.basePaddingH,
     },
     header: {
-        fontSize: theme.typography.headerFontSize,
-        marginTop: 21,
-        marginBottom: 42,
+        alignSelf: 'center',
+        marginTop: theme.container.headerMarginT,
+        marginBottom: theme.container.headerMarginB,
         color: theme.colors.textColorDark,
-        alignSelf: 'center'
+        fontSize: theme.typography.headerFontSize,
     },
 });
 

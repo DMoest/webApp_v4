@@ -1,26 +1,35 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView } from 'react-native';
-import Stock from '../components/StockList';
-import warehouse from '../assets/img/warehouse.jpg';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import config from "../config/config.json";
 import {theme} from "../assets/themes/theme";
+import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
-const StockItem = ({item}) => {
+const StockItem = ({route}) => {
+    const [item, setItem] = useState<any[]>([]);
+
+    useEffect(() => {
+        fetch(`${config.base_url}/products/${route.params.paramKey}?api_key=${config.api_key}`)
+            .then(response => response.json())
+            .then(result => setItem(result.data));
+    }, []);
+
     return (
-        <SafeAreaView style={styles.safeArea}>
-            <View style={[styles.container]}>
-
-                <Text style={styles.text}>{item.name}</Text>
-                <Text style={styles.text}>{item.id}</Text>
-                <Text style={styles.text}>{item.location}</Text>
-                <Text style={styles.text}>{item.price}</Text>
-                <Text style={styles.text}>{item.description}</Text>
-                <Text style={styles.text}>{item.article_number}</Text>
-                <Text style={styles.text}>{item.specifiers}</Text>
-
-                <StatusBar style="auto"/>
+        <View style={[styles.container]}>
+            <View style={styles.imgContainer}>
+                <Image source={coverIMG} style={styles.image}/>
             </View>
-        </SafeAreaView>
+
+            <Text style={styles.text}>{item.id}</Text>
+            <Text style={styles.text}>{item.name}</Text>
+            <Text style={styles.text}>{item.article_number}</Text>
+            <Text style={styles.text}>{item.location}</Text>
+            <Text style={styles.text}>{item.description}</Text>
+            <Text style={styles.text}>{item.specifiers}</Text>
+            <Text style={styles.text}>{item.price}</Text>
+
+            <StatusBar style="auto"/>
+        </View>
     );
 }
 
@@ -31,40 +40,46 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.colors.white,
-        paddingHorizontal: 12,
+        paddingHorizontal: theme.container.containerPaddingH,
     },
     base: {
         flex: 1,
         backgroundColor: theme.colors.white,
-        paddingHorizontal: 12,
+        paddingHorizontal: theme.container.basePaddingH,
+    },
+    imgContainer: {
+        width: theme.images.coverWidth,
+        height: theme.images.coverHeight,
+    },
+    image: {
+        flex: 1,
+        aspectRatio: theme.images.coverAspectRation,
+        width: '100%',
+        height: undefined,
     },
     header: {
-        fontSize: 42,
-        marginTop: 21,
-        marginBottom: 42,
+        marginTop: theme.container.headerMarginT,
+        marginBottom: theme.container.headerMarginB,
         color: theme.colors.textColorDark,
+        fontSize: theme.typography.headerFontSize,
+        fontFamily: theme.typography.headerFont,
         alignSelf: 'center'
     },
     subHeader: {
-        fontSize: 21,
-        marginTop: 21,
-        marginBottom: 42,
+        alignSelf: 'center',
+        marginTop: theme.container.subHeaderMarginT,
+        marginBottom: theme.container.subHeaderMarginB,
+        fontSize: theme.typography.subHeaderFontSize,
         color: theme.colors.textColorDark,
-        alignSelf: 'center'
     },
     text: {
-        fontSize: 12,
+        fontSize: theme.typography.textFontSize,
         color: theme.colors.textColorDark,
     },
-    image: {
-        width: '100%',
-        minHeight: 200,
-        alignSelf: 'center',
-    },
     button: {
-        fontSize: theme.typography.btnFontSize,
-        paddingHorizontal: 16,
-        paddingVertical: 9,
+        fontSize: theme.typography.btnSmallFontSize,
+        paddingHorizontal: theme.container.btnPaddingH,
+        paddingVertical: theme.container.btnPaddingV,
         backgroundColor: theme.colors.primaryColor,
         color: theme.colors.textColorDark,
     }
