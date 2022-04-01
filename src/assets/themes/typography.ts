@@ -4,10 +4,10 @@ export const typography = {
     subHeaderFont: "JosefinSans_600SemiBold",
     textFont: "Merriweather_400Regular",
     quotesFont: "Merriweather_400Regular_Italic",
-    btnFont: "JosefinSans_400Regular",
+    btnFont: "Merriweather_700Bold",
 
     // Typography
-    headerFontSize: 46,
+    headerFontSize: 44,
     subHeaderFontSize: 20,
     textFontSize: 14,
     btnBigFontSize: 16,
@@ -17,4 +17,6 @@ export const typography = {
     subHeaderWeight: "400",
     paragraphWeight: "400",
     btnWeight: "600",
+
+    textLineHeight: -1.333,
 }

@@ -45,7 +45,7 @@ export const container = {
 
     // Buttons
     btnPaddingH: 15,
-    btnPaddingV: 5,
+    btnPaddingV: 8,
     btnMarginH: 10,
     btnMarginV: 10,
     btnBigMarginB: 1,
