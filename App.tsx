@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import Home from './src/screens/Home';
 import Stock from './src/screens/Stock';
 import StockItem from "./src/screens/StockItem";
+import Orders from "./src/screens/Orders";
 import {theme} from "./src/assets/themes/theme";
 import {
     useFonts,
@@ -49,12 +50,14 @@ const App =() => {
     }
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={[styles.safeArea, styles.container]}>
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen name='Home' component={Home} options={{ title: "Välkommen" }} />
                     <Stack.Screen name='StockList' component={Stock} options={{ title: "Produktkatalog" }} />
                     <Stack.Screen name='StockItem' component={StockItem} options={{ title: "Produktkatalog" }} />
+                    <Stack.Screen name='OrderList' component={Orders} options={{ title: "Orderlista" }} />
+                    {/*<Stack.Screen name='OrderItem' component={OrderItem} options={{ title: "Order" }} />*/}
                 </Stack.Navigator>
             </NavigationContainer>
         </SafeAreaView>

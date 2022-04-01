@@ -1,47 +1,36 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {theme} from '../assets/themes/theme';
-// import statusFullIMG from '../assets/img/lager_status_full.png';
-// import statusFewIMG from '../assets/img/lager_status_few.png';
-// import statusEmptyIMG from '../assets/img/lager_status_empty.png';
 
 
 /**
- * StockItem object to return a touchable link element to item detail view.
+ * OrderItem object to return a touchable link element to order detail view.
  *
  * @param navigation
- * @param item
+ * @param order
  * @constructor
  */
-const StockItem = ({navigation, item}) => {
+const OrderItem = ({navigation, order}) => {
     return (
         <TouchableOpacity
             style={styles.btnContainer}
             onPress={() => {
-                navigation.navigate('StockItem', {item})
-            }} >
-            <View key={item.id} style={[styles.listItem, styles.button]} >
-                <Text style={styles.btnText}>{item.name}</Text>
-                <Text style={styles.btnText}>{item.article_number}</Text>
-                {/*<Image source={StockItemStatus(item.stock)}/>*/}
-                <Text style={styles.btnText}>{item.stock} st</Text>
+                navigation.navigate('OrderItem', {order})
+            }}>
+            <View key={order.id} style={[styles.listItem, styles.button]}>
+                <Text style={styles.btnText}>{order.id}</Text>
+                <Text style={styles.btnText}>{order.name}</Text>
+                {/*<Text style={styles.btnText}>{order.zip}</Text>*/}
+                {/*<Text style={styles.btnText}>{order.city}</Text>*/}
+                {/*<Text style={styles.btnText}>{order.country}</Text>*/}
+                <Text style={styles.btnText}>{order.status_id}</Text>
             </View>
         </TouchableOpacity>
     )
 }
 
-// const StockItemStatus = ({stock}) => {
-//     if (stock >= 10) {
-//         return statusFullIMG;
-//     } else if (stock <= 10 && stock > 0) {
-//         return statusFewIMG;
-//     } else if (stock == 0) {
-//         return statusEmptyIMG;
-//     }
-// }
-
 /**
- * StockItem object styles.
+ * OrderItem object styles.
  */
 const styles = StyleSheet.create({
     listItem: {
@@ -82,4 +71,4 @@ const styles = StyleSheet.create({
 /**
  * Module exports.
  */
-export default StockItem;
+export default OrderItem;
