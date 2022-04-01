@@ -1,9 +1,9 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {theme} from '../assets/themes/theme';
-import statusFullIMG from '../assets/img/lager_status_full.png';
-import statusFewIMG from '../assets/img/lager_status_few.png';
-import statusEmptyIMG from '../assets/img/lager_status_empty.png';
+// import statusFullIMG from '../assets/img/lager_status_full.png';
+// import statusFewIMG from '../assets/img/lager_status_few.png';
+// import statusEmptyIMG from '../assets/img/lager_status_empty.png';
 
 
 /**
@@ -23,31 +23,29 @@ const StockItem = ({navigation, item}) => {
             <View key={item.id} style={[styles.listItem, styles.button]} >
                 <Text style={styles.btnText}>{item.name}</Text>
                 <Text style={styles.btnText}>{item.article_number}</Text>
-                {/*<View style={styles.imgStatus}>*/}
-                <Image source={StockItemStatus(item.stock)}
-                       style={[styles.imgStatus]}/>
+                {/*<Image source={StockItemStatus(item.stock)}/>*/}
                 <Text style={styles.btnText}>{item.stock} st</Text>
             </View>
         </TouchableOpacity>
     )
 }
 
-const StockItemStatus = ({stock}) => {
-    if (stock >= 10) {
-        return statusFullIMG;
-    } else if (stock <= 10 && stock > 0) {
-        return statusFewIMG;
-    } else if (stock == 0) {
-        return statusEmptyIMG;
-    }
-}
+// const StockItemStatus = ({stock}) => {
+//     if (stock >= 10) {
+//         return statusFullIMG;
+//     } else if (stock <= 10 && stock > 0) {
+//         return statusFewIMG;
+//     } else if (stock == 0) {
+//         return statusEmptyIMG;
+//     }
+// }
 
 /**
  * StockItem object styles.
  */
 const styles = StyleSheet.create({
     listItem: {
-        flex: 2,
+        flex: 3,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },

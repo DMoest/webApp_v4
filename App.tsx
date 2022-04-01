@@ -26,6 +26,7 @@ import {
     JosefinSans_600SemiBold,
 } from '@expo-google-fonts/josefin-sans'
 
+
 const Stack = createStackNavigator();
 
 const App =() => {

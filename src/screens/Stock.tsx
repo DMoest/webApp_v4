@@ -26,7 +26,7 @@ const Stock =() => {
                 <View style={styles.listDescription}>
                     <Text style={styles.btnText}>Produkt</Text>
                     <Text style={styles.btnText}>Artikel Nr.</Text>
-                    <Text style={styles.btnText}>Status</Text>
+                    {/*<Text style={styles.btnText}>Status</Text>*/}
                     <Text style={styles.btnText}>Lager</Text>
                 </View>
 
@@ -63,8 +63,9 @@ const styles = StyleSheet.create({
     },
     listDescription: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         paddingVertical: theme.Container.basePaddingV,
+        paddingHorizontal: theme.Container.basePaddingH,
     },
     imgContainer: {
         width: theme.Images.coverWidth,
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
     imgStatus: {
         flex: 1,
         aspectRatio: 18/10,
+        resizeMode: 'contain',
         width: '100%',
         height: '100%',
     },
