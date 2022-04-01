@@ -1,14 +1,14 @@
 export const typography = {
     // Fonts
-    headerFont: "OleoScriptSwashCaps-Regular",
-    subHeaderFont: "JosefinSans-SemiBold",
-    textFont: "Merriweather-Regular",
-    quotesFont: "Merriweather-Italic",
-    btnFont: "JosefinSans-Regular",
+    headerFont: "OleoScriptSwashCaps_400Regular",
+    subHeaderFont: "JosefinSans_600SemiBold",
+    textFont: "Merriweather_400Regular",
+    quotesFont: "Merriweather_400Regular_Italic",
+    btnFont: "JosefinSans_400Regular",
 
     // Typography
-    headerFontSize: 42,
-    subHeaderFontSize: 21,
+    headerFontSize: 46,
+    subHeaderFontSize: 20,
     textFontSize: 14,
     btnBigFontSize: 16,
     btnSmallFontSize: 14,

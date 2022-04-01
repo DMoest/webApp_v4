@@ -1,83 +1,101 @@
 import React from "react";
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, ImageBackground, TouchableOpacity, SafeAreaView} from 'react-native';
 import {theme} from "../assets/themes/theme";
 import coverIMG from "../assets/img/NutsAndBolts-4.jpg";
 
+
+/**
+ * Home screen/view.
+ * @param navigation
+ * @constructor
+ */
 const Home = ({navigation}) => {
     return (
-        <View style={[styles.base]}>
-            <Text style={styles.header}>Infinity Warehouses</Text>
+        <SafeAreaView style={[styles.base]}>
             <View style={styles.imgContainer}>
-                <Image source={coverIMG} style={styles.image}/>
+                <ImageBackground source={coverIMG} style={styles.image}>
+                    <Text style={styles.header}>Infinity Warehouses</Text>
+                </ImageBackground>
             </View>
 
             <View style={styles.container}>
-                <Text>Det här är ett fiktivt lager för kursen WebApp.</Text>
+                <Text style={styles.text}>Det här är ett fiktivt lager för kursen WebApp.</Text>
                 <View style={[styles.content]}>
                     <TouchableOpacity
                         style={[styles.btnContainer]}
                         onPress={() => {navigation.navigate('StockList')}}>
-                        <Text style={[styles.button]}>Produkter</Text>
+                        <Text style={styles.button}>Produkter</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
+/**
+ * Home view styles.
+ */
 const styles = StyleSheet.create({
     base: {
         flex: 1,
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.Colors.white,
     },
     content: {
         flex: 1,
-        backgroundColor: theme.colors.white,
-        paddingHorizontal: theme.container.containerPaddingH,
+        backgroundColor: theme.Colors.white,
+        paddingHorizontal: theme.Container.containerPaddingH,
     },
     container: {
         flex: 1,
-        backgroundColor: theme.colors.white
+        backgroundColor: theme.Colors.white
     },
     imgContainer: {
-        width: theme.images.coverWidth,
-        height: theme.images.coverHeight,
+        alignItems: 'center',
+        width: theme.Images.coverWidth,
+        height: theme.Images.coverHeight,
     },
     image: {
         flex: 1,
-        aspectRatio: theme.images.coverAspectRation,
+        aspectRatio: theme.Images.coverAspectRation,
         width: '100%',
         height: undefined,
     },
     header: {
         alignSelf: 'center',
-        marginTop: theme.container.headerMarginT,
-        marginBottom: theme.container.headerMarginB,
-        color: theme.colors.textColorDark,
-        fontSize: theme.typography.headerFontSize,
-        fontFamily: theme.typography.headerFont,
+        paddingVertical: theme.Container.headerPaddingV,
+        color: theme.Colors.textColorLight,
+        fontSize: theme.Typography.headerFontSize,
+        fontFamily: theme.Typography.headerFont,
+    },
+    text: {
+        fontSize: theme.Typography.textFontSize,
+        fontFamily: theme.Typography.textFont,
+        paddingHorizontal: theme.Container.containerPaddingH,
+        paddingVertical: theme.Container.containerPaddingV,
     },
     btnContainer: {
         width: '100%',
-        shadowColor: theme.colors.shadows,
-        shadowOffset: theme.abstracts.btnOffset,
-        shadowOpacity: theme.abstracts.btnOpacity,
-        shadowRadius: theme.abstracts.btnRadius,
-        elevation: theme.abstracts.btnElevation,
+        shadowColor: theme.Colors.shadows,
+        shadowOffset: theme.Abstracts.btnOffset,
+        shadowOpacity: theme.Abstracts.btnOpacity,
+        shadowRadius: theme.Abstracts.btnRadius,
+        elevation: theme.Abstracts.btnElevation,
     },
     button: {
         overflow: 'hidden',
         width: '100%',
-        paddingHorizontal: theme.container.btnPaddingH,
-        paddingVertical: theme.container.btnPaddingV,
-        marginVertical: theme.container.btnMarginV,
-        borderRadius: theme.container.bthRadius,
-
-        fontSize: theme.typography.btnBigFontSize,
-        fontWeight: theme.typography.btnWeight,
-        backgroundColor: theme.colors.primaryColor,
-        color: theme.colors.textColorDark,
+        paddingHorizontal: theme.Container.btnPaddingH,
+        paddingVertical: theme.Container.btnPaddingV,
+        marginVertical: theme.Container.btnMarginV,
+        borderRadius: theme.Container.bthRadius,
+        fontSize: theme.Typography.btnBigFontSize,
+        fontWeight: theme.Typography.btnWeight,
+        backgroundColor: theme.Colors.primaryColor,
+        color: theme.Colors.textColorDark,
     },
 });
 
+/**
+ * Module exports.
+ */
 export default Home;

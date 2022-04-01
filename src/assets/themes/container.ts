@@ -18,10 +18,11 @@ export const container = {
     containerPaddingV: 12,
     containerMarginH: 10,
     containerMarginV: 10,
+    containerMarginB: 10,
 
     // Header
     headerPaddingH: 12,
-    headerPaddingV: 10,
+    headerPaddingV: 40,
     headerMarginT: 12,
     headerMarginB: 24,
     headerMarginH: 12,
@@ -32,7 +33,7 @@ export const container = {
     subHeaderMarginH: 12,
     subHeaderMarginV: 10,
     subHeaderMarginT: 12,
-    subHeaderMarginB: 24,
+    subHeaderMarginB: 22,
 
     // Paragraph
     textPaddingH: 12,

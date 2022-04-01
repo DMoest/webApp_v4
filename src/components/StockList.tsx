@@ -1,94 +1,55 @@
-import React from "react";
-import {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import config from "../config/config.json";
-import {theme} from "../assets/themes/theme";
+import React, {useCallback, useEffect, useState} from 'react';
+import {View, FlatList, StyleSheet, RefreshControl} from 'react-native';
+import StockItem from "./StockItem";
+import config from '../config/config.json';
+// import {theme} from '../assets/themes/theme';
 
+
+/**
+ * StockList object to fetch item list from API and generate a FlatList View from response JSON object.
+ *
+ * @param navigation
+ * @constructor
+ */
 const StockList = ({navigation}) => {
-    const [products, setProducts] = useState<any[]>([]);
+    const [products, setProducts] = useState([]);
 
-    useEffect(() => {
-        fetch(`${config.base_url}/products?api_key=${config.api_key}`)
+    /**
+     * Asynchronous function to handle fetch request to API.
+     *
+     * First, fetch from API.
+     * Second, from response promise make data into JSON object.
+     * Last, set result data into a state.
+     */
+    const handleFetchProducts = useCallback(async () => {
+        await fetch(`${config.base_url}/products?api_key=${config.api_key}`)
             .then(response => response.json())
             .then(result => setProducts(result.data));
     }, []);
 
-    const StockItemLink = ({item}) => {
-        return (
-            <TouchableOpacity
-                style={styles.btnContainer}
-                onPress={() => {
-                    navigation.navigate('StockItem')
-                }} >
-                <View key={item.id} style={[styles.listItem, styles.button]} >
-                    <Text style={styles.btnText}>{item.name}</Text>
-                    <Text style={styles.btnText}>{item.stock} st</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
+    /**
+     * useEffect triggers the handle function to fetch all products.
+     */
+    useEffect(() => {
+        handleFetchProducts();
+    }, []);
 
     return (
         <View>
-            <FlatList data={products}
-                      keyExtractor={item => item.id}
-                      renderItem={({item}) => (
-                          <StockItemLink item={item}/>
-                      )} />
+            <FlatList
+                // style={}
+                data={products}
+                keyExtractor={item => item.id}
+                renderItem={({item}) => (
+                    <StockItem item={item} navigation={navigation}/>
+                )} />
         </View>
     );
 }
 
-const styles = StyleSheet.create({
-    safeArea: {
-        flex: 2,
-    },
-    listItem: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        overflow: 'hidden',
-        backgroundColor: theme.colors.white,
-        borderRadius: theme.container.bthRadius,
-        paddingHorizontal: theme.container.btnPaddingH,
-        paddingVertical: theme.container.btnPaddingV,
-        marginBottom: theme.container.btnSmallMarginB,
-        color: theme.colors.textColorDark,
-        fontFamily: theme.typography.textFont,
-    },
-    header: {
-        color: theme.colors.textColorDark,
-        fontSize: theme.typography.headerFontSize,
-        marginBottom: theme.container.headerMarginB,
-        fontFamily: theme.typography.headerFont,
-    },
-    textPadding: {
-        paddingTop: theme.container.textPaddingT,
-        paddingBottom: theme.container.textPaddingB,
-    },
-    btnContainer: {
-        width: '100%',
-        shadowColor: theme.colors.shadows,
-        shadowOffset: theme.abstracts.btnOffset,
-        shadowOpacity: theme.abstracts.btnOpacity,
-        shadowRadius: theme.abstracts.btnRadius,
-        elevation: theme.abstracts.btnElevation,
-    },
-    button: {
-        overflow: 'hidden',
-        width: '100%',
-        paddingHorizontal: theme.container.btnPaddingH,
-        paddingVertical: theme.container.btnPaddingV,
-        marginBottom: theme.container.btnSmallMarginB,
-        borderRadius: theme.container.bthRadius,
-        backgroundColor: theme.colors.primaryColor,
-        color: theme.colors.textColorDark,
-    },
-    btnText: {
-        fontSize: theme.typography.btnSmallFontSize,
-        fontWeight: theme.typography.btnWeight,
-        color: theme.colors.textColorDark,
-    },
-});
+// const styles = StyleSheet.create({});
 
+/**
+ * Module exports.
+ */
 export default StockList;

@@ -5,9 +5,9 @@ import {images} from "./images";
 import {typography} from "./typography";
 
 export const theme = {
-    abstracts: abstracts,
-    colors: colors,
-    container: container,
-    images: images,
-    typography: typography,
+    Abstracts: abstracts,
+    Colors: colors,
+    Container: container,
+    Images: images,
+    Typography: typography,
 }
