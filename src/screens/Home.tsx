@@ -20,7 +20,7 @@ const Home = ({navigation}) => {
 
             <View style={[styles.container, styles.content]}>
                 <Text style={styles.text}>Välkommen till vår fiktiva mobila lagerapp. Idag lagrar vi skruv och skrot, imorgon kanske något helt annat och den som lever då får se. Hoppas ni trivs med att använda vår app och hittar något riktigt rostigt. </Text>
-                <Text style={[styles.text, styles.lastText]}>För tillfället kan ni endast se våra lagrade produkter men innom kort tillkommer fler funktioner. </Text>
+                <Text style={[styles.text, styles.lastText]}>För tillfället finns endast begränsad funktionalitet men inom kort tillkommer mer. </Text>
 
                 <TouchableOpacity
                     style={[styles.btnContainer]}
@@ -33,6 +33,13 @@ const Home = ({navigation}) => {
                     onPress={() => {navigation.navigate('OrderList')}}>
                     <Text style={styles.button}>Orderlista</Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.btnContainer]}
+                    onPress={() => {navigation.navigate('DeliveryList')}}>
+                    <Text style={styles.button}>Leveranser</Text>
+                </TouchableOpacity>
+
             </View>
         </SafeAreaView>
     )

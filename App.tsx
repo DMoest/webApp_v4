@@ -6,17 +6,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import Home from './src/screens/Home';
 import Stock from './src/screens/Stock';
 import StockItem from "./src/screens/StockItem";
-import Orders from "./src/screens/Orders";
+import Order from "./src/screens/Order";
+import Delivery from "./src/screens/Delivery";
 import {theme} from "./src/assets/themes/theme";
-import {
-    useFonts,
-    Merriweather_300Light,
-    Merriweather_300Light_Italic,
-    Merriweather_400Regular,
-    Merriweather_400Regular_Italic,
-    Merriweather_700Bold,
-    Merriweather_700Bold_Italic,
-} from '@expo-google-fonts/merriweather'
 import {
     OleoScriptSwashCaps_400Regular,
     OleoScriptSwashCaps_700Bold,
@@ -26,10 +18,28 @@ import {
     JosefinSans_500Medium,
     JosefinSans_600SemiBold,
 } from '@expo-google-fonts/josefin-sans'
+import {
+    useFonts,
+    Merriweather_300Light,
+    Merriweather_300Light_Italic,
+    Merriweather_400Regular,
+    Merriweather_400Regular_Italic,
+    Merriweather_700Bold,
+    Merriweather_700Bold_Italic,
+} from '@expo-google-fonts/merriweather'
 
 
 const Stack = createStackNavigator();
 
+/**
+ * Main App module.
+ *
+ * Font loader to with the package expo-google-fonts.
+ * SafeAreaView with navigation container.
+ * Navigation with React-Navigation package, stack navigation type to navigate between app screens.
+ *
+ * @constructor
+ */
 const App =() => {
     const [fontsLoaded, error] = useFonts({
         OleoScriptSwashCaps_400Regular,
@@ -53,17 +63,34 @@ const App =() => {
         <SafeAreaView style={[styles.safeArea, styles.container]}>
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen name='Home' component={Home} options={{ title: "Välkommen" }} />
-                    <Stack.Screen name='StockList' component={Stock} options={{ title: "Produktkatalog" }} />
-                    <Stack.Screen name='StockItem' component={StockItem} options={{ title: "Produktkatalog" }} />
-                    <Stack.Screen name='OrderList' component={Orders} options={{ title: "Orderlista" }} />
-                    {/*<Stack.Screen name='OrderItem' component={OrderItem} options={{ title: "Order" }} />*/}
+                    <Stack.Screen name='Home'
+                                  component={Home}
+                                  options={{ title: "Välkommen" }} />
+
+                    <Stack.Screen name='StockList'
+                                  component={Stock}
+                                  options={{ title: "Produktkatalog" }} />
+
+                    <Stack.Screen name='StockItem'
+                                  component={StockItem}
+                                  options={{ title: "Produktkatalog" }} />
+
+                    <Stack.Screen name='OrderList'
+                                  component={Order}
+                                  options={{ title: "Orderlista" }} />
+
+                    <Stack.Screen name='DeliveryList'
+                                  component={Delivery}
+                                  options={{ title: "Leveranser" }} />
                 </Stack.Navigator>
             </NavigationContainer>
         </SafeAreaView>
     );
 }
 
+/**
+ * App module styles.
+ */
 const styles = StyleSheet.create({
     safeArea: {
         flex: 2,
@@ -85,4 +112,7 @@ const styles = StyleSheet.create({
     },
 });
 
+/**
+ * Module exports.
+ */
 export default App;

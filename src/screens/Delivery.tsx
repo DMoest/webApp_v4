@@ -1,36 +1,37 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {StyleSheet, Text, View, ImageBackground, Image} from 'react-native';
-import OrderList from '../components/OrderList';
+import {StyleSheet, Text, View, ImageBackground} from 'react-native';
+import DeliveryList from '../components/DeliveryList';
 import {theme} from '../assets/themes/theme';
-import coverIMG from '../assets/img/NutsAndBolts-5.jpg';
+import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
 
 
 /**
- * Orders screen/view.
+ * Delivery screen/view.
  *
  * @constructor
  */
-const Orders =() => {
+const Delivery =() => {
     return (
         <View style={styles.base}>
             <View style={styles.imgContainer}>
                 <ImageBackground source={coverIMG} style={styles.image}>
-                    <Text style={styles.header}>Order</Text>
+                    <Text style={styles.header}>Leveranser</Text>
                 </ImageBackground>
             </View>
 
             <View style={styles.content}>
-                <Text style={styles.subHeader}>Orderlista</Text>
+                <Text style={styles.subHeader}>Ser vi några leveranser?</Text>
 
-                <View style={styles.listDescription}>
-                    <Text style={styles.btnText}>Order ID</Text>
-                    <Text style={styles.btnText}>Namn</Text>
-                    <Text style={styles.btnText}>Status kod</Text>
-                </View>
+                {/*<View style={styles.listDescription}>*/}
+                {/*    <Text style={styles.btnText}>Produkt</Text>*/}
+                {/*    <Text style={styles.btnText}>Artikel Nr.</Text>*/}
+                {/*    /!*<Text style={styles.btnText}>Status</Text>*!/*/}
+                {/*    <Text style={styles.btnText}>Lager</Text>*/}
+                {/*</View>*/}
 
                 <View style={styles.list}>
-                    <OrderList />
+                    <DeliveryList />
                 </View>
             </View>
 
@@ -40,7 +41,7 @@ const Orders =() => {
 }
 
 /**
- * Orders object styles.
+ * Delivery object styles.
  */
 const styles = StyleSheet.create({
     safeArea: {
@@ -120,4 +121,4 @@ const styles = StyleSheet.create({
 /**
  * Module exports.
  */
-export default Orders;
+export default Delivery;

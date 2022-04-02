@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, FlatList, StyleSheet, RefreshControl} from 'react-native';
+import {View, FlatList} from 'react-native';
 import OrderItem from "./OrderItem";
 import config from '../config/config.json';
 // import {theme} from '../assets/themes/theme';

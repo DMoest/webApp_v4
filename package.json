@@ -11,7 +11,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "link": "react-native link",
     "eject": "expo eject",
+    "publish": "expo publish",
     "test": "jest"
   },
   "dependencies": {
