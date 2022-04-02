@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, FlatList, StyleSheet, RefreshControl} from 'react-native';
-import StockItem from "./StockItem";
+import StockListItem from "./StockListItem";
 import config from '../config/config.json';
 // import {theme} from '../assets/themes/theme';
 
@@ -41,7 +41,7 @@ const StockList = ({navigation}) => {
                 data={products}
                 keyExtractor={item => item.id}
                 renderItem={({item}) => (
-                    <StockItem item={item} navigation={navigation}/>
+                    <StockListItem item={item} navigation={navigation}/>
                 )} />
         </View>
     );

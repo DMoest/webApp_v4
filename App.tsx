@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Home from './src/screens/Home';
 import Stock from './src/screens/Stock';
-import StockItem from "./src/screens/StockItem";
+import StockListItem from "./src/screens/StockItem";
 import Order from "./src/screens/Order";
 import Delivery from "./src/screens/Delivery";
 import {theme} from "./src/assets/themes/theme";
@@ -27,6 +27,7 @@ import {
     Merriweather_700Bold,
     Merriweather_700Bold_Italic,
 } from '@expo-google-fonts/merriweather'
+import OrderListItem from "./src/components/OrderListItem";
 
 
 const Stack = createStackNavigator();
@@ -72,12 +73,16 @@ const App =() => {
                                   options={{ title: "Produktkatalog" }} />
 
                     <Stack.Screen name='StockItem'
-                                  component={StockItem}
+                                  component={StockListItem}
                                   options={{ title: "Produkt" }} />
 
                     <Stack.Screen name='OrderList'
                                   component={Order}
                                   options={{ title: "Orderlista" }} />
+
+                    <Stack.Screen name='OrderItem'
+                                  component={OrderListItem}
+                                  options={{ title: "Order" }} />
 
                     <Stack.Screen name='DeliveryList'
                                   component={Delivery}

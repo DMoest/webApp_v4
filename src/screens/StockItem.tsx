@@ -7,7 +7,7 @@ import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
 
 /**
- * StockItem screen/view.
+ * StockListItem screen/view.
  *
  * @param route
  * @constructor
@@ -43,7 +43,7 @@ const StockItem = ({route}) => {
 }
 
 /**
- * StockItem styles.
+ * StockListItem styles.
  */
 const styles = StyleSheet.create({
     safeArea: {

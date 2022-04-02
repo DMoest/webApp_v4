@@ -4,18 +4,18 @@ import {theme} from '../assets/themes/theme';
 
 
 /**
- * DeliveryItem object to return a touchable link element to delivery detail view.
+ * DeliveryListItem object to return a touchable link element to delivery detail view.
  *
  * @param navigation
  * @param delivery
  * @constructor
  */
-const DeliveryItem = ({navigation, delivery}) => {
+const DeliveryListItem = ({navigation, delivery}) => {
     return (
         <TouchableOpacity
             style={styles.btnContainer}
             onPress={() => {
-                navigation.navigate('DeliveryItem', {delivery})
+                navigation.navigate('DeliveryListItem', {delivery})
             }} >
             <View key={delivery.id} style={[styles.listItem, styles.button]} >
                 <Text>ID: {delivery.id}</Text>
@@ -27,7 +27,7 @@ const DeliveryItem = ({navigation, delivery}) => {
 }
 
 /**
- * DeliveryItem object styles.
+ * DeliveryListItem object styles.
  */
 const styles = StyleSheet.create({
     listItem: {
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
 /**
  * Module exports.
  */
-export default DeliveryItem;
+export default DeliveryListItem;

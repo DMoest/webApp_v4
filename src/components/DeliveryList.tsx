@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, FlatList, StyleSheet, RefreshControl} from 'react-native';
-import DeliveryItem from "./DeliveryItem";
+import DeliveryListItem from "./DeliveryListItem";
 import config from '../config/config.json';
 // import {theme} from '../assets/themes/theme';
 
@@ -40,8 +40,8 @@ const DeliveryList = ({navigation}) => {
                 data={deliveries}
                 keyExtractor={item => item.id}
                 renderItem={({item}) => (
-                    <DeliveryItem delivery={item}
-                                  navigation={navigation}/>
+                    <DeliveryListItem delivery={item}
+                                      navigation={navigation}/>
 
                 )} />
         </View>

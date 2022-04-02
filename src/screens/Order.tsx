@@ -25,8 +25,8 @@ const Order =() => {
 
                 <View style={styles.listDescription}>
                     <Text style={styles.btnText}>Order ID</Text>
-                    <Text style={styles.btnText}>Namn</Text>
-                    <Text style={styles.btnText}>Status kod</Text>
+                    <Text style={styles.btnText}>Beställare</Text>
+                    <Text style={styles.btnText}>Status Kod</Text>
                 </View>
 
                 <View style={styles.list}>

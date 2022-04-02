@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, FlatList} from 'react-native';
-import OrderItem from "./OrderItem";
+import OrderListItem from "./OrderListItem";
 import config from '../config/config.json';
 // import {theme} from '../assets/themes/theme';
 
@@ -41,7 +41,7 @@ const OrdersList = ({navigation}) => {
                 data={orders}
                 keyExtractor={item => item.id}
                 renderItem={({item}) => (
-                    <OrderItem order={item} navigation={navigation}/>
+                    <OrderListItem order={item} navigation={navigation}/>
                 )} />
         </View>
     );

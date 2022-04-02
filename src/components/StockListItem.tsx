@@ -7,18 +7,18 @@ import {theme} from '../assets/themes/theme';
 
 
 /**
- * StockItem object to return a touchable link element to item detail view.
+ * StockListItem object to return a touchable link element to item detail view.
  *
  * @param navigation
  * @param item
  * @constructor
  */
-const StockItem = ({navigation, item}) => {
+const StockListItem = ({navigation, item}) => {
     return (
         <TouchableOpacity
             style={styles.btnContainer}
             onPress={() => {
-                navigation.navigate('StockItem', {item})
+                navigation.navigate('StockListItem', {item})
             }} >
             <View key={item.id} style={[styles.listItem, styles.button]} >
                 <Text style={styles.btnText}>{item.name}</Text>
@@ -41,7 +41,7 @@ const StockItem = ({navigation, item}) => {
 // }
 
 /**
- * StockItem object styles.
+ * StockListItem object styles.
  */
 const styles = StyleSheet.create({
     listItem: {
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
 /**
  * Module exports.
  */
-export default StockItem;
+export default StockListItem;
