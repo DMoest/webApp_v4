@@ -16,19 +16,20 @@ const Delivery =() => {
         <View style={styles.base}>
             <View style={styles.imgContainer}>
                 <ImageBackground source={coverIMG} style={styles.image}>
-                    <Text style={styles.header}>Leveranser</Text>
+                    <Text style={styles.header}>Inleveranser</Text>
                 </ImageBackground>
             </View>
 
             <View style={styles.content}>
-                <Text style={styles.subHeader}>Ser vi några leveranser?</Text>
+                <Text style={styles.subHeader}>Inkommande Leveranser</Text>
 
-                {/*<View style={styles.listDescription}>*/}
-                {/*    <Text style={styles.btnText}>Produkt</Text>*/}
-                {/*    <Text style={styles.btnText}>Artikel Nr.</Text>*/}
-                {/*    /!*<Text style={styles.btnText}>Status</Text>*!/*/}
-                {/*    <Text style={styles.btnText}>Lager</Text>*/}
-                {/*</View>*/}
+                <View style={styles.listDescription}>
+                    <Text style={styles.btnText}>ID</Text>
+                    <Text style={styles.btnText}>Produkt</Text>
+                    <Text style={styles.btnText}>Status</Text>
+                    <Text style={styles.btnText}>Antal</Text>
+                    <Text style={styles.btnText}>Datum</Text>
+                </View>
 
                 <View style={styles.list}>
                     <DeliveryList />
