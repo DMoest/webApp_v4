@@ -16,7 +16,7 @@ const Delivery =() => {
         <View style={styles.base}>
             <View style={styles.imgContainer}>
                 <ImageBackground source={coverIMG} style={styles.image}>
-                    <Text style={styles.header}>Inleveranser</Text>
+                    <Text style={styles.header}>Leveranser</Text>
                 </ImageBackground>
             </View>
 

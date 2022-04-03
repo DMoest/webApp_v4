@@ -20,14 +20,14 @@ const Stock =() => {
                 </ImageBackground>
             </View>
 
-            <View style={styles.content}>
+            <View style={styles.container}>
                 <Text style={styles.subHeader}>Lagerförteckning</Text>
 
-                <View style={styles.listDescription}>
-                    <Text style={styles.btnText}>Produkt</Text>
-                    <Text style={styles.btnText}>Artikel Nr.</Text>
-                    {/*<Text style={styles.btnText}>Status</Text>*/}
-                    <Text style={styles.btnText}>Lager</Text>
+                <View style={styles.indicators}>
+                    <Text style={styles.subHeader2}>Produkt</Text>
+                    <Text style={styles.subHeader2}>Artikel Nr.</Text>
+                    {/*<Text style={styles.subHeader2}>Status</Text>*/}
+                    <Text style={styles.subHeader2}>Lager</Text>
                 </View>
 
                 <View style={styles.list}>
@@ -44,77 +44,83 @@ const Stock =() => {
  * Stock object styles.
  */
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-    },
     base: {
+        width: '100%',
+        height: '100%',
         flex: 1,
         backgroundColor: theme.Colors.white,
     },
-    content: {
+    container: {
         flex: 1,
-        backgroundColor: theme.Colors.white,
-        paddingHorizontal: theme.Container.basePaddingH,
+        paddingHorizontal: theme.Typography.whiteSpace75,
+        paddingVertical: theme.Typography.whiteSpace25,
     },
     list: {
         flex: 1,
         flexWrap: 'wrap',
-        marginBottom: theme.Container.containerMarginB,
     },
-    listDescription: {
+    indicators: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingVertical: theme.Container.basePaddingV,
         paddingHorizontal: theme.Container.basePaddingH,
     },
     imgContainer: {
+        alignItems: 'center',
         width: theme.Images.coverWidth,
         height: theme.Images.coverHeight,
+        marginBottom: theme.Typography.whiteSpace200
     },
     image: {
-        flex: 1,
-        aspectRatio: theme.Images.coverAspectRation,
         width: '100%',
         height: undefined,
-    },
-    imgStatus: {
         flex: 1,
-        aspectRatio: 18/10,
-        resizeMode: 'contain',
-        width: '100%',
-        height: '100%',
+        aspectRatio: theme.Images.coverAspectRation,
     },
     header: {
-        alignSelf: 'center',
-        paddingVertical: theme.Container.headerPaddingV,
-        color: theme.Colors.textColorLight,
-        fontSize: theme.Typography.headerFontSize,
+        width: '100%',
+        height: undefined,
+        paddingVertical: theme.Typography.whiteSpace200,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        textAlign: 'center',
+        fontSize: theme.Typography.h1Size,
+        fontWeight: theme.Typography.h1Weight,
         fontFamily: theme.Typography.headerFont,
+        lineHeight: theme.Typography.lineHeight,
+        color: theme.Colors.textColorLight,
     },
     subHeader: {
         alignSelf: 'center',
-        marginTop: theme.Container.subHeaderMarginT,
-        marginBottom: theme.Container.subHeaderMarginB,
-        fontSize: theme.Typography.subHeaderFontSize,
+        marginBottom: theme.Typography.whiteSpace,
+        fontSize: theme.Typography.h3Size,
+        fontWeight: theme.Typography.h3Weight,
         fontFamily: theme.Typography.subHeaderFont,
+        lineHeight: theme.Typography.lineHeight,
+        color: theme.Colors.textColorDark,
+    },
+    subHeader2: {
+        alignSelf: 'center',
+        marginTop: 0,
+        marginBottom: theme.Typography.whiteSpace25,
+        fontSize: theme.Typography.h5Size,
+        fontWeight: theme.Typography.h5Weight,
+        fontFamily: theme.Typography.subHeaderFont,
+        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
     },
     button: {
         width: '100%',
-        paddingHorizontal: theme.Container.btnPaddingH,
-        paddingVertical: theme.Container.btnPaddingV,
-        marginHorizontal: theme.Container.btnMarginH,
-        fontSize: theme.Typography.btnSmallFontSize,
+        height: undefined,
+        overflow: 'hidden',
+        paddingHorizontal: theme.Typography.whiteSpace,
+        paddingVertical: theme.Typography.whiteSpace50,
+        fontSize: theme.Typography.h5Size,
+        fontWeight: theme.Typography.h2Weight,
         fontFamily: theme.Typography.btnFont,
+        lineHeight: theme.Typography.lineHeight,
+        color: theme.Colors.textColorDark,
         backgroundColor: theme.Colors.primaryColor,
-        color: theme.Colors.textColorDark,
-    },
-    btnText: {
-        fontSize: theme.Typography.btnSmallFontSize,
-        fontFamily: theme.Typography.textFont,
-        fontWeight: theme.Typography.btnWeight,
-        lineHeight: theme.Typography.textLineHeight,
-        color: theme.Colors.textColorDark,
+        borderRadius: theme.Container.bthRadius,
     },
 });
 

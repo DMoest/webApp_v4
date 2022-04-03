@@ -14,28 +14,28 @@ const Home = ({navigation}) => {
         <SafeAreaView style={[styles.base]}>
             <View style={styles.imgContainer}>
                 <ImageBackground source={coverIMG} style={styles.image}>
-                    <Text style={styles.header}>Infinity Warehouses</Text>
+                    <Text style={styles.header}>Infinity</Text>
                 </ImageBackground>
             </View>
 
-            <View style={[styles.container, styles.content]}>
+            <View style={styles.container}>
                 <Text style={styles.text}>Välkommen till vår fiktiva mobila lagerapp. Idag lagrar vi skruv och skrot, imorgon kanske något helt annat och den som lever då får se. Hoppas ni trivs med att använda vår app och hittar något riktigt rostigt. </Text>
                 <Text style={[styles.text, styles.lastText]}>För tillfället finns endast begränsad funktionalitet men inom kort tillkommer mer. </Text>
 
                 <TouchableOpacity
-                    style={[styles.btnContainer]}
+                    style={styles.btnContainer}
                     onPress={() => {navigation.navigate('StockList')}}>
                     <Text style={styles.button}>Produkter</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={[styles.btnContainer]}
+                    style={styles.btnContainer}
                     onPress={() => {navigation.navigate('OrderList')}}>
                     <Text style={styles.button}>Orderlista</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={[styles.btnContainer]}
+                    style={styles.btnContainer}
                     onPress={() => {navigation.navigate('DeliveryList')}}>
                     <Text style={styles.button}>Leveranser</Text>
                 </TouchableOpacity>
@@ -50,14 +50,19 @@ const Home = ({navigation}) => {
  */
 const styles = StyleSheet.create({
     base: {
+        width: '100%',
+        height: '100%',
         flex: 1,
+    },
+    container: {
         backgroundColor: theme.Colors.white,
+        paddingHorizontal: theme.Typography.whiteSpace25,
     },
     imgContainer: {
         alignItems: 'center',
         width: theme.Images.coverWidth,
         height: theme.Images.coverHeight,
-        marginBottom: 14,
+        marginBottom: theme.Typography.whiteSpace200
     },
     image: {
         flex: 1,
@@ -65,17 +70,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: undefined,
     },
-    container: {
-        flex: 1,
-        backgroundColor: theme.Colors.white
-    },
-    content: {
-        flex: 1,
-        backgroundColor: theme.Colors.white,
-        paddingHorizontal: theme.Container.containerPaddingH,
-    },
     btnContainer: {
-        width: '100%',
+        width: '95%',
+        alignSelf: 'center',
         shadowColor: theme.Colors.shadows,
         shadowOffset: theme.Abstracts.btnOffset,
         shadowOpacity: theme.Abstracts.btnOpacity,
@@ -83,41 +80,44 @@ const styles = StyleSheet.create({
         elevation: theme.Abstracts.btnElevation,
     },
     button: {
-        overflow: 'hidden',
         width: '100%',
-        paddingHorizontal: theme.Container.btnPaddingH,
-        paddingVertical: theme.Container.btnPaddingV,
-        marginVertical: theme.Container.btnMarginV,
-        borderRadius: theme.Container.bthRadius,
-        fontSize: theme.Typography.btnBigFontSize,
-        fontWeight: theme.Typography.btnWeight,
+        height: undefined,
+        overflow: 'hidden',
+        paddingHorizontal: theme.Typography.whiteSpace,
+        paddingVertical: theme.Typography.whiteSpace50,
+        marginVertical: theme.Typography.whiteSpace50,
+        fontSize: theme.Typography.h5Size,
+        fontWeight: theme.Typography.h2Weight,
         fontFamily: theme.Typography.btnFont,
-        backgroundColor: theme.Colors.primaryColor,
         color: theme.Colors.textColorDark,
+        backgroundColor: theme.Colors.primaryColor,
+        borderRadius: theme.Container.bthRadius,
     },
     header: {
-        alignSelf: 'center',
-        paddingVertical: theme.Container.headerPaddingV,
-        color: theme.Colors.textColorLight,
-        fontSize: theme.Typography.headerFontSize,
+        width: '100%',
+        height: undefined,
+        paddingVertical: theme.Typography.whiteSpace200,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        textAlign: 'center',
+        fontSize: theme.Typography.h1Size,
+        fontWeight: theme.Typography.h1Weight,
         fontFamily: theme.Typography.headerFont,
-    },
-    subHeader: {
-        paddingVertical: theme.Container.subHeaderPaddingV,
-        color: theme.Colors.textColorDark,
-        fontSize: theme.Typography.subHeaderFontSize,
-        fontFamily: theme.Typography.subHeaderFont,
+        lineHeight: theme.Typography.lineHeight,
+        color: theme.Colors.textColorLight,
     },
     text: {
         width: '100%',
         height: undefined,
-        fontSize: theme.Typography.textFontSize,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        paddingVertical: theme.Typography.whiteSpace50,
+        textAlign: 'left',
+        lineHeight: theme.Typography.lineHeight,
+        fontSize: theme.Typography.textSize,
+        fontWeight: theme.Typography.textWeight,
         fontFamily: theme.Typography.textFont,
-        paddingHorizontal: theme.Container.containerPaddingH,
-        paddingVertical: theme.Container.containerPaddingV,
     },
     lastText: {
-        marginBottom: 14,
+        marginBottom: theme.Typography.whiteSpace200,
     }
 });
 

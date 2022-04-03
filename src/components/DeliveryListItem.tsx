@@ -18,9 +18,32 @@ const DeliveryListItem = ({navigation, delivery}) => {
                 navigation.navigate('DeliveryListItem', {delivery})
             }} >
             <View key={delivery.id} style={[styles.listItem, styles.button]} >
-                <Text>ID: {delivery.id}</Text>
-                <Text>Product_ID: {delivery.product_id}</Text>
-                <Text>Product Name: {delivery.product_name}</Text>
+                <View style={styles.flexRow2}>
+                    <Text style={[styles.btnText]}>{delivery.id}</Text>
+                    <Text style={[styles.btnText]}>{delivery.delivery_date}</Text>
+                </View>
+
+                <View style={styles.flexColumn3}>
+                    <View style={styles.flexRow2}>
+                        <Text style={styles.text}>Product ID: </Text>
+                        <Text style={styles.text}>{delivery.product_id}</Text>
+                    </View>
+
+                    <View style={styles.flexRow2}>
+                        <Text style={styles.text}>Product: </Text>
+                        <Text style={styles.text}>{delivery.product_name}</Text>
+                    </View>
+
+                    <View style={styles.flexRow2}>
+                        <Text style={styles.text}>Amount: </Text>
+                        <Text style={styles.text}>{delivery.amount} st</Text>
+                    </View>
+                </View>
+
+                <View style={styles.flexCol2}>
+                    <Text style={styles.text}>Comment:</Text>
+                    <Text style={styles.text}>{delivery.comment}</Text>
+                </View>
             </View>
         </TouchableOpacity>
     )
@@ -32,7 +55,7 @@ const DeliveryListItem = ({navigation, delivery}) => {
 const styles = StyleSheet.create({
     listItem: {
         flex: 3,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
     },
     btnContainer: {
@@ -61,8 +84,28 @@ const styles = StyleSheet.create({
     imgStatus: {
         width: 5,
         height: 5,
-
     },
+    flexRow2: {
+        width: '100%',
+        flex: 2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 5,
+    },
+    flexColumn3: {
+        width: '100%',
+        flex: 3,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        marginBottom: 5,
+    },
+    text: {
+        fontSize: 12,
+        fontFamily: theme.Typography.textFont
+    },
+    flexCol2: {
+
+    }
 });
 
 /**

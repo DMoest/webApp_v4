@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
 import OrderList from '../components/OrderList';
 import {theme} from '../assets/themes/theme';
-import coverIMG from '../assets/img/NutsAndBolts-5.jpg';
+import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
 
 /**
