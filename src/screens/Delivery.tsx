@@ -25,8 +25,8 @@ const Delivery =() => {
                 <Text style={[styles.text, styles.lastText]}>Listan innehåller samtliga inkommande leveraser. En leverans har ett id, ett datum, ett produkt-id, ett produktnamn och antal beställda av produkten. Sist finns en kommentar som tillhör leveransen. </Text>
 
                 <View style={styles.listDescription}>
-                    <Text style={styles.btnText}>Leverans ID</Text>
-                    <Text style={styles.btnText}>Datum</Text>
+                    <Text style={styles.subHeader2}>Leverans ID</Text>
+                    <Text style={styles.subHeader2}>Datum</Text>
                 </View>
 
                 <View style={styles.list}>
@@ -85,12 +85,14 @@ const styles = StyleSheet.create({
         fontSize: theme.Typography.h1Size,
         fontFamily: theme.Typography.headerFont,
     },
-    subHeader: {
+    subHeader2: {
         alignSelf: 'center',
-        marginTop: theme.Container.subHeaderMarginT,
-        marginBottom: theme.Container.subHeaderMarginB,
-        fontSize: theme.Typography.h3Size,
+        marginTop: 0,
+        marginBottom: theme.Typography.whiteSpace25,
+        fontSize: theme.Typography.h5Size,
+        fontWeight: theme.Typography.h5Weight,
         fontFamily: theme.Typography.subHeaderFont,
+        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
     },
     button: {
