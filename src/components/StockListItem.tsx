@@ -23,22 +23,11 @@ const StockListItem = ({navigation, item}) => {
             <View key={item.id} style={[styles.listItem, styles.button]} >
                 <Text style={styles.btnText}>{item.name}</Text>
                 <Text style={styles.btnText}>{item.article_number}</Text>
-                {/*<Image source={StockItemStatus(item.stock)}/>*/}
                 <Text style={styles.btnText}>{item.stock} st</Text>
             </View>
         </TouchableOpacity>
     )
 }
-
-// const StockItemStatus = ({stock}) => {
-//     if (stock >= 10) {
-//         return statusFullIMG;
-//     } else if (stock <= 10 && stock > 0) {
-//         return statusFewIMG;
-//     } else if (stock == 0) {
-//         return statusEmptyIMG;
-//     }
-// }
 
 /**
  * StockListItem object styles.
@@ -50,7 +39,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     btnContainer: {
-        width: '100%',
+        width: '95%',
+        alignSelf: 'center',
         shadowColor: theme.Colors.shadows,
         shadowOffset: theme.Abstracts.btnOffset,
         shadowOpacity: theme.Abstracts.btnOpacity,
@@ -68,9 +58,22 @@ const styles = StyleSheet.create({
         color: theme.Colors.textColorDark,
     },
     btnText: {
-        fontSize: theme.Typography.btnSmallFontSize,
-        fontFamily: theme.Typography.btnFont,
-        color: theme.Colors.textColorDark,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        paddingVertical: theme.Typography.whiteSpace25,
+        lineHeight: theme.Typography.lineHeight,
+        fontSize: theme.Typography.textSize,
+        fontFamily: theme.Typography.textFont,
+    },
+    text: {
+        width: '100%',
+        height: undefined,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        paddingVertical: theme.Typography.whiteSpace50,
+        textAlign: 'left',
+        lineHeight: theme.Typography.lineHeight,
+        fontSize: theme.Typography.textSize,
+        fontWeight: theme.Typography.textWeight,
+        fontFamily: theme.Typography.textFont,
     },
     imgStatus: {
         width: 5,

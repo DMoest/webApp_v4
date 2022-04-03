@@ -19,30 +19,30 @@ const DeliveryListItem = ({navigation, delivery}) => {
             }} >
             <View key={delivery.id} style={[styles.listItem, styles.button]} >
                 <View style={styles.flexRow2}>
-                    <Text style={[styles.btnText]}>{delivery.id}</Text>
-                    <Text style={[styles.btnText]}>{delivery.delivery_date}</Text>
+                    <Text style={[styles.text]}>{delivery.id}</Text>
+                    <Text style={[styles.text]}>{delivery.delivery_date}</Text>
                 </View>
 
                 <View style={styles.flexColumn3}>
                     <View style={styles.flexRow2}>
-                        <Text style={styles.text}>Product ID: </Text>
-                        <Text style={styles.text}>{delivery.product_id}</Text>
+                        <Text style={styles.dataText}>Produkt ID: </Text>
+                        <Text style={styles.dataText}>{delivery.product_id}</Text>
                     </View>
 
                     <View style={styles.flexRow2}>
-                        <Text style={styles.text}>Product: </Text>
-                        <Text style={styles.text}>{delivery.product_name}</Text>
+                        <Text style={styles.dataText}>Produktnamn: </Text>
+                        <Text style={styles.dataText}>{delivery.product_name}</Text>
                     </View>
 
                     <View style={styles.flexRow2}>
-                        <Text style={styles.text}>Amount: </Text>
-                        <Text style={styles.text}>{delivery.amount} st</Text>
+                        <Text style={styles.dataText}>Antal: </Text>
+                        <Text style={styles.dataText}>{delivery.amount} st</Text>
                     </View>
                 </View>
 
                 <View style={styles.flexCol2}>
-                    <Text style={styles.text}>Comment:</Text>
-                    <Text style={styles.text}>{delivery.comment}</Text>
+                    <Text style={styles.dataText}>Kommentar: </Text>
+                    <Text style={styles.dataText}>{delivery.comment}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     btnContainer: {
-        width: '100%',
+        alignSelf: 'center',
+        width: '95%',
         shadowColor: theme.Colors.shadows,
         shadowOffset: theme.Abstracts.btnOffset,
         shadowOpacity: theme.Abstracts.btnOpacity,
@@ -81,27 +82,29 @@ const styles = StyleSheet.create({
         fontFamily: theme.Typography.btnFont,
         color: theme.Colors.textColorDark,
     },
-    imgStatus: {
-        width: 5,
-        height: 5,
+    text: {
+        fontSize: theme.Typography.textSize,
+        fontFamily: theme.Typography.btnFont2,
+        color: theme.Colors.textColorDark,
+    },
+    dataText: {
+        fontSize: theme.Typography.textSize,
+        fontWeight: theme.Typography.textWeight,
+        fontFamily: theme.Typography.textFont,
+        lineHeight: theme.Typography.lineHeight,
     },
     flexRow2: {
         width: '100%',
         flex: 2,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 5,
+        marginBottom: theme.Typography.whiteSpace25,
     },
     flexColumn3: {
         width: '100%',
         flex: 3,
         flexDirection: 'column',
         justifyContent: 'space-between',
-        marginBottom: 5,
-    },
-    text: {
-        fontSize: 12,
-        fontFamily: theme.Typography.textFont
     },
     flexCol2: {
 

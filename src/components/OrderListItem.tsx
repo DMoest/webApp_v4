@@ -26,14 +26,14 @@ const OrderListItem = ({navigation, order}) => {
                 </View>
 
                 <View style={styles.address_container}>
-                    <Text style={styles.addressText}>{order.address}</Text>
+                    <Text style={styles.dataText}>{order.address}</Text>
 
                     <View style={styles.zipCodeAndCity}>
-                        <Text style={styles.addressText}>{order.zip}</Text>
-                        <Text style={[styles.addressText, styles.city]}>{order.city}</Text>
+                        <Text style={styles.dataText}>{order.zip}</Text>
+                        <Text style={[styles.dataText, styles.city]}>{order.city}</Text>
                     </View>
 
-                    <Text style={styles.addressText}>{order.country}</Text>
+                    <Text style={styles.dataText}>{order.country}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -51,7 +51,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     btnContainer: {
-        width: '100%',
+        width: '95%',
+        alignSelf: 'center',
+        marginHorizontal: theme.Typography.whiteSpace75,
         shadowColor: theme.Colors.shadows,
         shadowOffset: theme.Abstracts.btnOffset,
         shadowOpacity: theme.Abstracts.btnOpacity,
@@ -68,10 +70,30 @@ const styles = StyleSheet.create({
         backgroundColor: theme.Colors.primaryColor,
         color: theme.Colors.textColorDark,
     },
+    text: {
+        width: '100%',
+        height: undefined,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        paddingVertical: theme.Typography.whiteSpace50,
+        textAlign: 'left',
+        lineHeight: theme.Typography.lineHeight,
+        fontSize: theme.Typography.textSize,
+        fontWeight: theme.Typography.textWeight,
+        fontFamily: theme.Typography.textFont,
+    },
+    lastText: {
+        marginBottom: theme.Typography.whiteSpace200,
+    },
     btnText: {
         fontSize: theme.Typography.btnSmallFontSize,
-        fontFamily: theme.Typography.btnFont,
+        fontFamily: theme.Typography.btnFont2,
         color: theme.Colors.textColorDark,
+    },
+    dataText: {
+        textAlign: 'left',
+        fontSize: theme.Typography.smallFontSize,
+        fontFamily: theme.Typography.textFont,
+        lineHeight: theme.Typography.lineHeight,
     },
     imgStatus: {
         width: 5,

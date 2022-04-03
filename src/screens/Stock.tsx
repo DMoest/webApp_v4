@@ -21,7 +21,8 @@ const Stock =() => {
             </View>
 
             <View style={styles.container}>
-                <Text style={styles.subHeader}>Lagerförteckning</Text>
+                {/*<Text style={styles.subHeader}>Lagerförteckning</Text>*/}
+                <Text style={[styles.text, styles.lastText]}>Listan innehåller lagerförda produkter. Varje produkt har ett namn, ett artikelnr. och antal i lager. </Text>
 
                 <View style={styles.indicators}>
                     <Text style={styles.subHeader2}>Produkt</Text>
@@ -107,6 +108,20 @@ const styles = StyleSheet.create({
         fontFamily: theme.Typography.subHeaderFont,
         lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
+    },
+    text: {
+        width: '100%',
+        height: undefined,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        paddingVertical: theme.Typography.whiteSpace50,
+        textAlign: 'left',
+        lineHeight: theme.Typography.lineHeight,
+        fontSize: theme.Typography.textSize,
+        fontWeight: theme.Typography.textWeight,
+        fontFamily: theme.Typography.textFont,
+    },
+    lastText: {
+        marginBottom: theme.Typography.whiteSpace,
     },
     button: {
         width: '100%',

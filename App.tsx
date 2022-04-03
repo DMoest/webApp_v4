@@ -66,7 +66,7 @@ const App =() => {
                 <Stack.Navigator>
                     <Stack.Screen name='Home'
                                   component={Home}
-                                  options={{ title: "Välkommen" }} />
+                                  options={{ title: "Hem" }} />
 
                     <Stack.Screen name='StockList'
                                   component={Stock}

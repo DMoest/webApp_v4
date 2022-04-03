@@ -21,13 +21,11 @@ const Delivery =() => {
             </View>
 
             <View style={styles.content}>
-                <Text style={styles.subHeader}>Inkommande Leveranser</Text>
+                {/*<Text style={styles.subHeader}>Inkommande Leveranser</Text>*/}
+                <Text style={[styles.text, styles.lastText]}>Listan innehåller samtliga inkommande leveraser. En leverans har ett id, ett datum, ett produkt-id, ett produktnamn och antal beställda av produkten. Sist finns en kommentar som tillhör leveransen. </Text>
 
                 <View style={styles.listDescription}>
-                    <Text style={styles.btnText}>ID</Text>
-                    <Text style={styles.btnText}>Produkt</Text>
-                    <Text style={styles.btnText}>Status</Text>
-                    <Text style={styles.btnText}>Antal</Text>
+                    <Text style={styles.btnText}>Leverans ID</Text>
                     <Text style={styles.btnText}>Datum</Text>
                 </View>
 
@@ -69,8 +67,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: theme.Container.basePaddingH,
     },
     imgContainer: {
+        alignItems: 'center',
         width: theme.Images.coverWidth,
         height: theme.Images.coverHeight,
+        marginBottom: theme.Typography.whiteSpace200
     },
     image: {
         flex: 1,
@@ -78,25 +78,18 @@ const styles = StyleSheet.create({
         width: '100%',
         height: undefined,
     },
-    imgStatus: {
-        flex: 1,
-        aspectRatio: 18/10,
-        resizeMode: 'contain',
-        width: '100%',
-        height: '100%',
-    },
     header: {
         alignSelf: 'center',
-        paddingVertical: theme.Container.headerPaddingV,
+        paddingVertical: theme.Typography.whiteSpace200,
         color: theme.Colors.textColorLight,
-        fontSize: theme.Typography.headerFontSize,
+        fontSize: theme.Typography.h1Size,
         fontFamily: theme.Typography.headerFont,
     },
     subHeader: {
         alignSelf: 'center',
         marginTop: theme.Container.subHeaderMarginT,
         marginBottom: theme.Container.subHeaderMarginB,
-        fontSize: theme.Typography.subHeaderFontSize,
+        fontSize: theme.Typography.h3Size,
         fontFamily: theme.Typography.subHeaderFont,
         color: theme.Colors.textColorDark,
     },
@@ -112,11 +105,25 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontSize: theme.Typography.btnSmallFontSize,
-        fontFamily: theme.Typography.textFont,
+        fontFamily: theme.Typography.btnFont2,
         fontWeight: theme.Typography.btnWeight,
-        lineHeight: theme.Typography.textLineHeight,
+        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
     },
+    text: {
+    width: '100%',
+        height: undefined,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        paddingVertical: theme.Typography.whiteSpace50,
+        textAlign: 'left',
+        lineHeight: theme.Typography.lineHeight,
+        fontSize: theme.Typography.textSize,
+        fontWeight: theme.Typography.textWeight,
+        fontFamily: theme.Typography.textFont,
+    },
+    lastText: {
+        marginBottom: theme.Typography.whiteSpace,
+    }
 });
 
 /**

@@ -5,19 +5,11 @@ export const typography = {
     textFont: "Merriweather_400Regular",
     quotesFont: "Merriweather_400Regular_Italic",
     btnFont: "JosefinSans_600SemiBold",
+    btnFont2: "Merriweather_700Bold",
 
     // Typography
     btnBigFontSize: 16,
     btnSmallFontSize: 14,
-
-    headerFontSize: 54.71,
-    subHeader1FontSize: 41.05,
-    subHeader2FontSize: 30.79,
-    subHeader3FontSize: 23.1,
-    subHeader4FontSize: 17.33,
-    textFontSize: 13,
-    smallFontSize: 7.5,
-    miniFontSize: 5.63,
 
     // Modular scale
     h1Size: 54.71,
@@ -45,12 +37,7 @@ export const typography = {
     h4Weight: "400",
     h5Weight: "400",
     textWeight: "400",
-
-
-
-
-
-
+    btnWeight: "600",
 
     headerWeight: "400",
     subHeaderWeight: "400",

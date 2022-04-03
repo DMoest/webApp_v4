@@ -21,12 +21,12 @@ const Order =() => {
             </View>
 
             <View style={styles.content}>
-                <Text style={styles.subHeader}>Orderlista</Text>
+                <Text style={[styles.text, styles.lastText]}>Den här listan innehåller utgående ordrar till kund. Varje order ska innehålla ett id, en order status kod och en beställare. </Text>
 
                 <View style={styles.listDescription}>
-                    <Text style={styles.btnText}>Order ID</Text>
-                    <Text style={styles.btnText}>Beställare</Text>
-                    <Text style={styles.btnText}>Status Kod</Text>
+                    <Text style={styles.subHeader2}>Order ID</Text>
+                    <Text style={styles.subHeader2}>Beställare</Text>
+                    <Text style={styles.subHeader2}>Status Kod</Text>
                 </View>
 
                 <View style={styles.list}>
@@ -67,8 +67,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: theme.Container.basePaddingH,
     },
     imgContainer: {
+        alignItems: 'center',
         width: theme.Images.coverWidth,
         height: theme.Images.coverHeight,
+        marginBottom: theme.Typography.whiteSpace200
     },
     image: {
         flex: 1,
@@ -76,27 +78,41 @@ const styles = StyleSheet.create({
         width: '100%',
         height: undefined,
     },
-    imgStatus: {
-        flex: 1,
-        aspectRatio: 18/10,
-        resizeMode: 'contain',
-        width: '100%',
-        height: '100%',
-    },
     header: {
-        alignSelf: 'center',
-        paddingVertical: theme.Container.headerPaddingV,
-        color: theme.Colors.textColorLight,
-        fontSize: theme.Typography.headerFontSize,
+        width: '100%',
+        height: undefined,
+        paddingVertical: theme.Typography.whiteSpace200,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        textAlign: 'center',
+        fontSize: theme.Typography.h1Size,
+        fontWeight: theme.Typography.h1Weight,
         fontFamily: theme.Typography.headerFont,
+        lineHeight: theme.Typography.lineHeight,
+        color: theme.Colors.textColorLight,
     },
-    subHeader: {
+    subHeader2: {
         alignSelf: 'center',
-        marginTop: theme.Container.subHeaderMarginT,
-        marginBottom: theme.Container.subHeaderMarginB,
-        fontSize: theme.Typography.subHeaderFontSize,
+        marginTop: 0,
+        marginBottom: theme.Typography.whiteSpace25,
+        fontSize: theme.Typography.h5Size,
+        fontWeight: theme.Typography.h5Weight,
         fontFamily: theme.Typography.subHeaderFont,
+        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
+    },
+    text: {
+        width: '100%',
+        height: undefined,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        paddingVertical: theme.Typography.whiteSpace50,
+        textAlign: 'left',
+        lineHeight: theme.Typography.lineHeight,
+        fontSize: theme.Typography.textSize,
+        fontWeight: theme.Typography.textWeight,
+        fontFamily: theme.Typography.textFont,
+    },
+    lastText: {
+        marginBottom: theme.Typography.whiteSpace,
     },
     button: {
         width: '100%',
