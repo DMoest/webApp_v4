@@ -1,8 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, FlatList, StyleSheet, RefreshControl} from 'react-native';
+import {Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import StockListItem from "./StockListItem";
 import config from '../config/config.json';
 import {createStackNavigator} from "@react-navigation/stack";
+import {Screen} from "react-native-screens";
+import {NavigationContainer} from "@react-navigation/native";
+import {theme} from "../assets/themes/theme";
 // import {theme} from '../assets/themes/theme';
 
 
@@ -12,9 +15,11 @@ import {createStackNavigator} from "@react-navigation/stack";
  * @param navigation
  * @constructor
  */
-const StockList = ({navigation}) => {
-    const Stack = createStackNavigator();
+const StockList = ({route, navigation}) => {
+    // const Stack = createStackNavigator();
     const [products, setProducts] = useState([]);
+
+    const thisThing = route.params
 
     /**
      * Asynchronous function to handle fetch request to API.
@@ -30,6 +35,22 @@ const StockList = ({navigation}) => {
     }, []);
 
     /**
+     * Render item function.
+     *
+     * @param item
+     * @param navigation
+     */
+    const renderItem = ({ item }) => (
+        <TouchableOpacity
+            style={styles.btnContainer}
+            onPress={() => {
+                navigation.navigate('Produkt', {item: item})
+            }} >
+            <StockListItem item={item}/>
+        </TouchableOpacity>
+    );
+
+    /**
      * useEffect triggers the handle function to fetch all products.
      */
     useEffect(() => {
@@ -38,21 +59,29 @@ const StockList = ({navigation}) => {
 
     return (
         <View>
-            {/*<Stack.Navigator>*/}
-                <FlatList
-                    // style={}
-                    data={products}
-                    keyExtractor={item => item.id}
-                    renderItem={({item}) => (
-                        // <Stack.Screen name="StockListItem" component={StockListItem} />
-                        <StockListItem item={item} navigation={navigation}/>
-                    )} />
-            {/*</Stack.Navigator>*/}
+            <FlatList
+                style={styles.list}
+                data={products}
+                keyExtractor={item => item.id}
+                renderItem={renderItem} />
         </View>
     );
 }
 
-// const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    list: {
+        backgroundColor: theme.Colors.white,
+    },
+    btnContainer: {
+        width: '95%',
+        alignSelf: 'center',
+        shadowColor: theme.Colors.shadows,
+        shadowOffset: theme.Abstracts.btnOffset,
+        shadowOpacity: theme.Abstracts.btnOpacity,
+        shadowRadius: theme.Abstracts.btnRadius,
+        elevation: theme.Abstracts.btnElevation,
+    },
+});
 
 /**
  * Module exports.

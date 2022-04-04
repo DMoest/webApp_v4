@@ -1,36 +1,36 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
-import OrderList from '../components/OrderList';
+import DeliveryList from '../components/DeliveryList';
 import {theme} from '../assets/themes/theme';
-import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
+import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
 
 
 /**
- * Order screen/view.
+ * Delivery screen/view.
  *
  * @constructor
  */
-const Order =() => {
+export const Delivery: React.FC =() => {
     return (
         <View style={styles.base}>
             <View style={styles.imgContainer}>
                 <ImageBackground source={coverIMG} style={styles.image}>
-                    <Text style={styles.header}>Orderlista</Text>
+                    <Text style={styles.header}>Leveranser</Text>
                 </ImageBackground>
             </View>
 
             <View style={styles.content}>
-                <Text style={[styles.text, styles.lastText]}>Den här listan innehåller utgående ordrar till kund. Varje order ska innehålla ett id, en order status kod och en beställare. </Text>
+                {/*<Text style={styles.subHeader}>Inkommande Leveranser</Text>*/}
+                <Text style={[styles.text, styles.lastText]}>Listan innehåller samtliga inkommande leveraser. En leverans har ett id, ett datum, ett produkt-id, ett produktnamn och antal beställda av produkten. Sist finns en kommentar som tillhör leveransen. </Text>
 
                 <View style={styles.listDescription}>
-                    <Text style={styles.subHeader2}>Order ID</Text>
-                    <Text style={styles.subHeader2}>Beställare</Text>
-                    <Text style={styles.subHeader2}>Status Kod</Text>
+                    <Text style={styles.subHeader2}>Leverans ID</Text>
+                    <Text style={styles.subHeader2}>Datum</Text>
                 </View>
 
                 <View style={styles.list}>
-                    <OrderList />
+                    <DeliveryList />
                 </View>
             </View>
 
@@ -40,7 +40,7 @@ const Order =() => {
 }
 
 /**
- * Order object styles.
+ * Delivery object styles.
  */
 const styles = StyleSheet.create({
     safeArea: {
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     },
     list: {
         flex: 1,
-        flexWrap: 'wrap',
-        marginBottom: theme.Container.containerMarginB,
+        // flexWrap: 'wrap',
+        // marginBottom: theme.Container.containerMarginB,
     },
     listDescription: {
         flexDirection: 'row',
@@ -79,16 +79,11 @@ const styles = StyleSheet.create({
         height: undefined,
     },
     header: {
-        width: '100%',
-        height: undefined,
+        alignSelf: 'center',
         paddingVertical: theme.Typography.whiteSpace200,
-        paddingHorizontal: theme.Typography.whiteSpace50,
-        textAlign: 'center',
-        fontSize: theme.Typography.h1Size,
-        fontWeight: theme.Typography.h1Weight,
-        fontFamily: theme.Typography.headerFont,
-        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorLight,
+        fontSize: theme.Typography.h1Size,
+        fontFamily: theme.Typography.headerFont,
     },
     subHeader2: {
         alignSelf: 'center',
@@ -99,20 +94,6 @@ const styles = StyleSheet.create({
         fontFamily: theme.Typography.subHeaderFont,
         lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
-    },
-    text: {
-        width: '100%',
-        height: undefined,
-        paddingHorizontal: theme.Typography.whiteSpace50,
-        paddingVertical: theme.Typography.whiteSpace50,
-        textAlign: 'left',
-        lineHeight: theme.Typography.lineHeight,
-        fontSize: theme.Typography.textSize,
-        fontWeight: theme.Typography.textWeight,
-        fontFamily: theme.Typography.textFont,
-    },
-    lastText: {
-        marginBottom: theme.Typography.whiteSpace,
     },
     button: {
         width: '100%',
@@ -126,14 +107,23 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontSize: theme.Typography.btnSmallFontSize,
-        fontFamily: theme.Typography.textFont,
+        fontFamily: theme.Typography.btnFont2,
         fontWeight: theme.Typography.btnWeight,
-        lineHeight: theme.Typography.textLineHeight,
+        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
     },
+    text: {
+    width: '100%',
+        height: undefined,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        paddingVertical: theme.Typography.whiteSpace50,
+        textAlign: 'left',
+        lineHeight: theme.Typography.lineHeight,
+        fontSize: theme.Typography.textSize,
+        fontWeight: theme.Typography.textWeight,
+        fontFamily: theme.Typography.textFont,
+    },
+    lastText: {
+        marginBottom: theme.Typography.whiteSpace,
+    }
 });
-
-/**
- * Module exports.
- */
-export default Order;

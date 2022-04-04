@@ -7,12 +7,12 @@ import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
 
 /**
- * DeliveryListItem screen/view.
+ * StockListItem screen/view.
  *
  * @param route
  * @constructor
  */
-const DeliveryItem = ({route}) => {
+const OrderItem: React.FC = ({route}) => {
     // const [item, setItem] = useState<any[]>([]);
 
     // useEffect(() => {
@@ -27,15 +27,15 @@ const DeliveryItem = ({route}) => {
                 <Image source={coverIMG} style={styles.image}/>
             </View>
 
-            {/*<View style={styles.container}>*/}
-            {/*    <Text style={styles.text}>{item.id}</Text>*/}
-            {/*    <Text style={styles.text}>{item.name}</Text>*/}
-            {/*    <Text style={styles.text}>{item.article_number}</Text>*/}
-            {/*    <Text style={styles.text}>{item.location}</Text>*/}
-            {/*    <Text style={styles.text}>{item.description}</Text>*/}
-            {/*    <Text style={styles.text}>{item.specifiers}</Text>*/}
-            {/*    <Text style={styles.text}>{item.price}</Text>*/}
-            {/*</View>*/}
+            <View style={styles.container}>
+                <Text style={styles.text}>{item.id}</Text>
+                <Text style={styles.text}>{item.name}</Text>
+                <Text style={styles.text}>{item.article_number}</Text>
+                <Text style={styles.text}>{item.location}</Text>
+                <Text style={styles.text}>{item.description}</Text>
+                <Text style={styles.text}>{item.specifiers}</Text>
+                <Text style={styles.text}>{item.price}</Text>
+            </View>
 
             <StatusBar style="auto"/>
         </View>
@@ -43,7 +43,7 @@ const DeliveryItem = ({route}) => {
 }
 
 /**
- * DeliveryListItem styles.
+ * StockListItem styles.
  */
 const styles = StyleSheet.create({
     safeArea: {
@@ -100,4 +100,4 @@ const styles = StyleSheet.create({
 /**
  * Module exports.
  */
-export default DeliveryItem;
+export default OrderItem;

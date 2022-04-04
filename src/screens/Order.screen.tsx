@@ -1,38 +1,36 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
-import StockList from '../components/StockList';
+import OrderList from '../components/OrderList';
 import {theme} from '../assets/themes/theme';
-import coverIMG from '../assets/img/NutsAndBolts-5.jpg';
+import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
 
 /**
- * Stock screen/view.
+ * Order screen/view.
  *
  * @constructor
  */
-const Stock =() => {
+export const Order: React.FC =() => {
     return (
         <View style={styles.base}>
             <View style={styles.imgContainer}>
                 <ImageBackground source={coverIMG} style={styles.image}>
-                    <Text style={styles.header}>Produkter</Text>
+                    <Text style={styles.header}>Orderlista</Text>
                 </ImageBackground>
             </View>
 
-            <View style={styles.container}>
-                {/*<Text style={styles.subHeader}>Lagerförteckning</Text>*/}
-                <Text style={[styles.text, styles.lastText]}>Listan innehåller lagerförda produkter. Varje produkt har ett namn, ett artikelnr. och antal i lager. </Text>
+            <View style={styles.content}>
+                <Text style={[styles.text, styles.lastText]}>Den här listan innehåller utgående ordrar till kund. Varje order ska innehålla ett id, en order status kod och en beställare. </Text>
 
-                <View style={styles.indicators}>
-                    <Text style={styles.subHeader2}>Produkt</Text>
-                    <Text style={styles.subHeader2}>Artikel Nr.</Text>
-                    {/*<Text style={styles.subHeader2}>Status</Text>*/}
-                    <Text style={styles.subHeader2}>Lager</Text>
+                <View style={styles.listDescription}>
+                    <Text style={styles.subHeader2}>Order ID</Text>
+                    <Text style={styles.subHeader2}>Beställare</Text>
+                    <Text style={styles.subHeader2}>Status Kod</Text>
                 </View>
 
                 <View style={styles.list}>
-                    <StockList />
+                    <OrderList />
                 </View>
             </View>
 
@@ -42,25 +40,26 @@ const Stock =() => {
 }
 
 /**
- * Stock object styles.
+ * Order object styles.
  */
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+    },
     base: {
-        width: '100%',
-        height: '100%',
         flex: 1,
         backgroundColor: theme.Colors.white,
     },
-    container: {
+    content: {
         flex: 1,
-        paddingHorizontal: theme.Typography.whiteSpace75,
-        paddingVertical: theme.Typography.whiteSpace25,
+        backgroundColor: theme.Colors.white,
+        paddingHorizontal: theme.Container.basePaddingH,
     },
     list: {
         flex: 1,
-        flexWrap: 'wrap',
+        // flexWrap: 'wrap',
     },
-    indicators: {
+    listDescription: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingVertical: theme.Container.basePaddingV,
@@ -73,10 +72,10 @@ const styles = StyleSheet.create({
         marginBottom: theme.Typography.whiteSpace200
     },
     image: {
-        width: '100%',
-        height: undefined,
         flex: 1,
         aspectRatio: theme.Images.coverAspectRation,
+        width: '100%',
+        height: undefined,
     },
     header: {
         width: '100%',
@@ -89,15 +88,6 @@ const styles = StyleSheet.create({
         fontFamily: theme.Typography.headerFont,
         lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorLight,
-    },
-    subHeader: {
-        alignSelf: 'center',
-        marginBottom: theme.Typography.whiteSpace,
-        fontSize: theme.Typography.h3Size,
-        fontWeight: theme.Typography.h3Weight,
-        fontFamily: theme.Typography.subHeaderFont,
-        lineHeight: theme.Typography.lineHeight,
-        color: theme.Colors.textColorDark,
     },
     subHeader2: {
         alignSelf: 'center',
@@ -125,21 +115,19 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '100%',
-        height: undefined,
-        overflow: 'hidden',
-        paddingHorizontal: theme.Typography.whiteSpace,
-        paddingVertical: theme.Typography.whiteSpace50,
-        fontSize: theme.Typography.h5Size,
-        fontWeight: theme.Typography.h2Weight,
+        paddingHorizontal: theme.Container.btnPaddingH,
+        paddingVertical: theme.Container.btnPaddingV,
+        marginHorizontal: theme.Container.btnMarginH,
+        fontSize: theme.Typography.btnSmallFontSize,
         fontFamily: theme.Typography.btnFont,
+        backgroundColor: theme.Colors.primaryColor,
+        color: theme.Colors.textColorDark,
+    },
+    btnText: {
+        fontSize: theme.Typography.btnSmallFontSize,
+        fontFamily: theme.Typography.textFont,
+        fontWeight: theme.Typography.btnWeight,
         lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
-        backgroundColor: theme.Colors.primaryColor,
-        borderRadius: theme.Container.bthRadius,
     },
 });
-
-/**
- * Module exports.
- */
-export default Stock;

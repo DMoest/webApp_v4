@@ -12,29 +12,43 @@ import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
  * @param route
  * @constructor
  */
-const StockItem = ({route}) => {
-    // const [item, setItem] = useState<any[]>([]);
-
-    // useEffect(() => {
-    //     fetch(`${config.base_url}/products/${route.params.paramKey}?api_key=${config.api_key}`)
-    //         .then(response => response.json())
-    //         .then(result => setItem(result.data));
-    // }, []);
+const StockItem: React.FC = ({route}) => {
+    const item = route.params.item
 
     return (
         <View style={[styles.container]}>
-            <View style={styles.imgContainer}>
-                <Image source={coverIMG} style={styles.image}/>
-            </View>
-
             <View style={styles.container}>
-                <Text style={styles.text}>{item.id}</Text>
-                <Text style={styles.text}>{item.name}</Text>
-                <Text style={styles.text}>{item.article_number}</Text>
-                <Text style={styles.text}>{item.location}</Text>
-                <Text style={styles.text}>{item.description}</Text>
-                <Text style={styles.text}>{item.specifiers}</Text>
-                <Text style={styles.text}>{item.price}</Text>
+                <Text style={styles.subHeader}>{item.name}</Text>
+
+                <View style={styles.flexRow2}>
+                    <Text style={[styles.text]}>ID: </Text>
+                    <Text style={[styles.data]}>{item.id}</Text>
+                </View>
+
+                <View style={styles.flexRow2}>
+                    <Text style={[styles.text]}>Artikel nr: </Text>
+                    <Text style={[styles.data]}>{item.article_number}</Text>
+                </View>
+
+                <View style={styles.flexRow2}>
+                    <Text style={[styles.text]}>Plats: </Text>
+                    <Text style={[styles.data]}>{item.location}</Text>
+                </View>
+
+                <View style={styles.flexRow2}>
+                    <Text style={[styles.text]}>Pris: </Text>
+                    <Text style={[styles.text]}>{item.price} kr</Text>
+                </View>
+
+                <View style={styles.flexRow2}>
+                    <Text style={[styles.text]}>Beskrivning: </Text>
+                    <Text style={[styles.data]}>{item.description}</Text>
+                </View>
+
+                <View style={styles.flexRow2}>
+                    <Text style={[styles.text]}>Specifikation: </Text>
+                    <Text style={[styles.data]}>{item.specifiers}</Text>
+                </View>
             </View>
 
             <StatusBar style="auto"/>
@@ -73,7 +87,7 @@ const styles = StyleSheet.create({
         marginTop: theme.Container.headerMarginT,
         marginBottom: theme.Container.headerMarginB,
         color: theme.Colors.textColorDark,
-        fontSize: theme.Typography.headerFontSize,
+        fontSize: theme.Typography.h1Size,
         fontFamily: theme.Typography.headerFont,
         alignSelf: 'center'
     },
@@ -81,11 +95,21 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: theme.Container.subHeaderMarginT,
         marginBottom: theme.Container.subHeaderMarginB,
-        fontSize: theme.Typography.subHeaderFontSize,
+        fontSize: theme.Typography.h3Size,
         color: theme.Colors.textColorDark,
     },
     text: {
-        fontSize: theme.Typography.textFontSize,
+        textAlign: 'left',
+        fontSize: theme.Typography.textSize,
+        fontWeight: theme.Typography.textWeight,
+        fontFamily: theme.Typography.textFont,
+        color: theme.Colors.textColorDark,
+    },
+    data: {
+        textAlign: 'right',
+        fontSize: theme.Typography.textSize,
+        fontWeight: theme.Typography.textWeight,
+        fontFamily: theme.Typography.textFont,
         color: theme.Colors.textColorDark,
     },
     button: {
@@ -94,6 +118,13 @@ const styles = StyleSheet.create({
         paddingVertical: theme.Container.btnPaddingV,
         backgroundColor: theme.Colors.primaryColor,
         color: theme.Colors.textColorDark,
+    },
+    flexRow2: {
+        width: '100%',
+        height: undefined,
+        // flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     }
 });
 
