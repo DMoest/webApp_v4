@@ -33,7 +33,6 @@ export const StockNavigator: React.FC = () => {
                     <Stack.Screen name='Produktkatalog' component={StockList} />
                     <Stack.Screen name='Produkt' component={StockItem} />
                 </Stack.Navigator>
-
             </View>
 
             <StatusBar style='auto'/>

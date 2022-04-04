@@ -10,42 +10,36 @@ import {theme} from '../assets/themes/theme';
  * @param delivery
  * @constructor
  */
-export const DeliveryListItem = ({navigation, delivery}) => {
+export const DeliveryListItem = ({delivery}) => {
     return (
-        <TouchableOpacity
-            style={styles.btnContainer}
-            onPress={() => {
-                navigation.navigate('DeliveryListItem', {delivery})
-            }} >
-            <View key={delivery.id} style={[styles.listItem, styles.button]} >
+        <View key={delivery.id} style={[styles.listItem, styles.button]} >
+            <View style={styles.flexRow2}>
+                <Text style={[styles.text]}>{delivery.id}</Text>
+                <Text style={[styles.text]}>{delivery.delivery_date}</Text>
+            </View>
+
+            <View style={styles.flexColumn3}>
                 <View style={styles.flexRow2}>
-                    <Text style={[styles.text]}>{delivery.id}</Text>
-                    <Text style={[styles.text]}>{delivery.delivery_date}</Text>
+                    <Text style={styles.dataText}>Produkt ID: </Text>
+                    <Text style={styles.dataText}>{delivery.product_id}</Text>
                 </View>
 
-                <View style={styles.flexColumn3}>
-                    <View style={styles.flexRow2}>
-                        <Text style={styles.dataText}>Produkt ID: </Text>
-                        <Text style={styles.dataText}>{delivery.product_id}</Text>
-                    </View>
-
-                    <View style={styles.flexRow2}>
-                        <Text style={styles.dataText}>Produktnamn: </Text>
-                        <Text style={styles.dataText}>{delivery.product_name}</Text>
-                    </View>
-
-                    <View style={styles.flexRow2}>
-                        <Text style={styles.dataText}>Antal: </Text>
-                        <Text style={styles.dataText}>{delivery.amount} st</Text>
-                    </View>
+                <View style={styles.flexRow2}>
+                    <Text style={styles.dataText}>Produktnamn: </Text>
+                    <Text style={styles.dataText}>{delivery.product_name}</Text>
                 </View>
 
-                <View style={styles.flexCol2}>
-                    <Text style={styles.dataText}>Kommentar: </Text>
-                    <Text style={styles.dataText}>{delivery.comment}</Text>
+                <View style={styles.flexRow2}>
+                    <Text style={styles.dataText}>Antal: </Text>
+                    <Text style={styles.dataText}>{delivery.amount} st</Text>
                 </View>
             </View>
-        </TouchableOpacity>
+
+            <View style={styles.flexCol2}>
+                <Text style={styles.dataText}>Kommentar: </Text>
+                <Text style={styles.dataText}>{delivery.comment}</Text>
+            </View>
+        </View>
     )
 }
 

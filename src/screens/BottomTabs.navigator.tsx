@@ -4,7 +4,7 @@ import {FontAwesome5} from '@expo/vector-icons';
 import {Home} from './Home.screen';
 import {StockNavigator} from "./Stock.navigator";
 import {OrderNavigator} from "./Order.navigator";
-import {Delivery} from "./Delivery.screen";
+import {DeliveryNavigator} from "./Delivery.navigator";
 import {theme} from "../assets/themes/theme";
 
 
@@ -52,7 +52,7 @@ export const BottomTabsNavigator: React.FC = () => {
             <BottomTabs.Screen name='Hem' component={Home} />
             <BottomTabs.Screen name='Lager' component={StockNavigator} />
             <BottomTabs.Screen name='Order' component={OrderNavigator} />
-            <BottomTabs.Screen name='Leverans' component={Delivery} />
+            <BottomTabs.Screen name='Leverans' component={DeliveryNavigator} />
         </BottomTabs.Navigator>
     )
 };

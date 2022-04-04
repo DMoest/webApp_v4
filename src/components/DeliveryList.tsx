@@ -1,7 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, FlatList, StyleSheet, RefreshControl} from 'react-native';
+import {View, FlatList, StyleSheet, RefreshControl, TouchableOpacity} from 'react-native';
 import {DeliveryListItem} from "./DeliveryListItem";
 import config from '../config/config.json';
+import {StockListItem} from "./StockListItem";
+import {theme} from "../assets/themes/theme";
 // import {theme} from '../assets/themes/theme';
 
 
@@ -10,7 +12,7 @@ import config from '../config/config.json';
  * @param navigation
  * @constructor
  */
-export const DeliveryList = ({navigation}) => {
+export const DeliveryList = ({route, navigation}) => {
     const [deliveries, setDeliveries] = useState([]);
 
     /**
@@ -27,6 +29,22 @@ export const DeliveryList = ({navigation}) => {
     }, []);
 
     /**
+     * Render item function.
+     *
+     * @param item
+     * @param navigation
+     */
+    const renderItem = ({ item }) => (
+        <TouchableOpacity
+            style={styles.btnContainer}
+            onPress={() => {
+                navigation.navigate('Leverans', {item})
+            }} >
+            <DeliveryListItem delivery={item}/>
+        </TouchableOpacity>
+    );
+
+    /**
      * useEffect triggers the handle function to fetch all deliveries.
      */
     useEffect(() => {
@@ -39,13 +57,19 @@ export const DeliveryList = ({navigation}) => {
                 // style={}
                 data={deliveries}
                 keyExtractor={item => item.id}
-                renderItem={({item}) => (
-                    <DeliveryListItem delivery={item}
-                                      navigation={navigation}/>
-
-                )} />
+                renderItem={renderItem} />
         </View>
     );
 }
 
-// const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    btnContainer: {
+        alignSelf: 'center',
+        width: '95%',
+        shadowColor: theme.Colors.shadows,
+        shadowOffset: theme.Abstracts.btnOffset,
+        shadowOpacity: theme.Abstracts.btnOpacity,
+        shadowRadius: theme.Abstracts.btnRadius,
+        elevation: theme.Abstracts.btnElevation,
+    },
+});

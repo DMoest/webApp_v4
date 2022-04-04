@@ -1,17 +1,22 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
+import {createStackNavigator} from "@react-navigation/stack";
 import {DeliveryList} from '../components/DeliveryList';
-import {theme} from '../assets/themes/theme';
+import {DeliveryItem} from './DeliveryItem.screen';
+import { StatusBar } from 'expo-status-bar';
 import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
+import {theme} from '../assets/themes/theme';
 
+
+
+const Stack = createStackNavigator();
 
 /**
  * Delivery screen/view.
  *
  * @constructor
  */
-export const Delivery: React.FC =() => {
+export const DeliveryNavigator: React.FC =() => {
     return (
         <View style={styles.base}>
             <View style={styles.imgContainer}>
@@ -24,13 +29,18 @@ export const Delivery: React.FC =() => {
                 {/*<Text style={styles.subHeader}>Inkommande Leveranser</Text>*/}
                 <Text style={[styles.text, styles.lastText]}>Listan innehåller samtliga inkommande leveraser. En leverans har ett id, ett datum, ett produkt-id, ett produktnamn och antal beställda av produkten. Sist finns en kommentar som tillhör leveransen. </Text>
 
-                <View style={styles.listDescription}>
-                    <Text style={styles.subHeader2}>Leverans ID</Text>
-                    <Text style={styles.subHeader2}>Datum</Text>
-                </View>
+                {/*<View style={styles.listDescription}>*/}
+                {/*    <Text style={styles.subHeader2}>Leverans ID</Text>*/}
+                {/*    <Text style={styles.subHeader2}>Datum</Text>*/}
+                {/*</View>*/}
 
                 <View style={styles.list}>
-                    <DeliveryList />
+                    <Text style={[styles.text, styles.lastText]}>Listan innehåller lagerförda produkter. Varje produkt har ett namn, ett artikelnr. och antal i lager. </Text>
+
+                    <Stack.Navigator>
+                        <Stack.Screen name='Leveranslista' component={DeliveryList} />
+                        <Stack.Screen name='Leverans' component={DeliveryItem} />
+                    </Stack.Navigator>
                 </View>
             </View>
 

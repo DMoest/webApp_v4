@@ -11,31 +11,18 @@ import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
  * @param route
  * @constructor
  */
-export const DeliveryItemScreen: React.FC = ({route}) => {
-    // const [item, setItem] = useState<any[]>([]);
+export const DeliveryItem: React.FC = ({route}) => {
+    const item = route.params.item
 
-    // useEffect(() => {
-    //     fetch(`${config.base_url}/products/${route.params.paramKey}?api_key=${config.api_key}`)
-    //         .then(response => response.json())
-    //         .then(result => setItem(result.data));
-    // }, []);
+    console.log("ITEM: ", item)
 
     return (
         <View style={[styles.container]}>
-            <View style={styles.imgContainer}>
-                <Image source={coverIMG} style={styles.image}/>
-            </View>
-
-            {/*<View style={styles.container}>*/}
-            {/*    <Text style={styles.text}>{item.id}</Text>*/}
-            {/*    <Text style={styles.text}>{item.name}</Text>*/}
-            {/*    <Text style={styles.text}>{item.article_number}</Text>*/}
-            {/*    <Text style={styles.text}>{item.location}</Text>*/}
-            {/*    <Text style={styles.text}>{item.description}</Text>*/}
-            {/*    <Text style={styles.text}>{item.specifiers}</Text>*/}
-            {/*    <Text style={styles.text}>{item.price}</Text>*/}
-            {/*</View>*/}
-
+                <Text style={styles.text}>{item.id}</Text>
+                <Text style={styles.text}>{item.product_id}</Text>
+                <Text style={styles.text}>{item.product_name}</Text>
+                <Text style={styles.text}>{item.amount}</Text>
+                <Text style={styles.text}>{item.comment}</Text>
             <StatusBar style="auto"/>
         </View>
     );

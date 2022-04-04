@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import {theme} from "../assets/themes/theme";
-import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
 
 /**
@@ -14,24 +13,18 @@ import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 export const OrderItem: React.FC = ({route}) => {
     const item = route.params.item
 
-    console.log("ORDER: ", item)
+    // console.log("ORDER: ", item)
 
     return (
         <View style={[styles.container]}>
-            {/*<View style={styles.imgContainer}>*/}
-            {/*    <Image source={coverIMG} style={styles.image}/>*/}
-            {/*</View>*/}
-
             <View style={styles.container}>
                 <Text style={styles.text}>{item.id}</Text>
                 <Text style={styles.text}>{item.status}</Text>
                 <Text style={styles.text}>{item.status_id}</Text>
-
                 <Text style={styles.text}>{item.name}</Text>
                 <Text style={styles.text}>{item.address}</Text>
                 <Text style={styles.text}>{item.zip}</Text>
                 <Text style={styles.text}>{item.city}</Text>
-
             </View>
 
             {/* TODO Gör en lista av alla produkter som tillhör ordern */}
@@ -72,7 +65,7 @@ const styles = StyleSheet.create({
         marginTop: theme.Container.headerMarginT,
         marginBottom: theme.Container.headerMarginB,
         color: theme.Colors.textColorDark,
-        fontSize: theme.Typography.headerFontSize,
+        fontSize: theme.Typography.h1Size,
         fontFamily: theme.Typography.headerFont,
         alignSelf: 'center'
     },
@@ -80,11 +73,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: theme.Container.subHeaderMarginT,
         marginBottom: theme.Container.subHeaderMarginB,
-        fontSize: theme.Typography.subHeaderFontSize,
+        fontSize: theme.Typography.h3Size,
         color: theme.Colors.textColorDark,
     },
     text: {
-        fontSize: theme.Typography.textFontSize,
+        fontSize: theme.Typography.textSize,
         color: theme.Colors.textColorDark,
     },
     button: {
