@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {View, FlatList, StyleSheet, RefreshControl} from 'react-native';
 import StockListItem from "./StockListItem";
 import config from '../config/config.json';
+import {createStackNavigator} from "@react-navigation/stack";
 // import {theme} from '../assets/themes/theme';
 
 
@@ -12,6 +13,7 @@ import config from '../config/config.json';
  * @constructor
  */
 const StockList = ({navigation}) => {
+    const Stack = createStackNavigator();
     const [products, setProducts] = useState([]);
 
     /**
@@ -36,13 +38,16 @@ const StockList = ({navigation}) => {
 
     return (
         <View>
-            <FlatList
-                // style={}
-                data={products}
-                keyExtractor={item => item.id}
-                renderItem={({item}) => (
-                    <StockListItem item={item} navigation={navigation}/>
-                )} />
+            {/*<Stack.Navigator>*/}
+                <FlatList
+                    // style={}
+                    data={products}
+                    keyExtractor={item => item.id}
+                    renderItem={({item}) => (
+                        // <Stack.Screen name="StockListItem" component={StockListItem} />
+                        <StockListItem item={item} navigation={navigation}/>
+                    )} />
+            {/*</Stack.Navigator>*/}
         </View>
     );
 }

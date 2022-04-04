@@ -6,6 +6,10 @@ import {theme} from '../assets/themes/theme';
 // import statusEmptyIMG from '../assets/img/lager_status_empty.png';
 
 
+import {createStackNavigator} from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
 /**
  * StockListItem object to return a touchable link element to item detail view.
  *
@@ -16,15 +20,15 @@ import {theme} from '../assets/themes/theme';
 const StockListItem = ({navigation, item}) => {
     return (
         <TouchableOpacity
-            style={styles.btnContainer}
-            onPress={() => {
-                navigation.navigate('StockListItem', {item})
-            }} >
-            <View key={item.id} style={[styles.listItem, styles.button]} >
-                <Text style={styles.btnText}>{item.name}</Text>
-                <Text style={styles.btnText}>{item.article_number}</Text>
-                <Text style={styles.btnText}>{item.stock} st</Text>
-            </View>
+                style={styles.btnContainer}
+                onPress={() => {
+                    navigation.navigate('StockListItem', {item})
+                }} >
+                <View key={item.id} style={[styles.listItem, styles.button]} >
+                    <Text style={styles.btnText}>{item.name}</Text>
+                    <Text style={styles.btnText}>{item.article_number}</Text>
+                    <Text style={styles.btnText}>{item.stock} st</Text>
+                </View>
         </TouchableOpacity>
     )
 }
