@@ -1,12 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
-import StockListItem from "./StockListItem";
+import {View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {StockListItem} from "./StockListItem";
 import config from '../config/config.json';
-import {createStackNavigator} from "@react-navigation/stack";
-import {Screen} from "react-native-screens";
-import {NavigationContainer} from "@react-navigation/native";
 import {theme} from "../assets/themes/theme";
-// import {theme} from '../assets/themes/theme';
 
 
 /**
@@ -15,11 +11,9 @@ import {theme} from "../assets/themes/theme";
  * @param navigation
  * @constructor
  */
-const StockList = ({route, navigation}) => {
+export const StockList = ({route, navigation}) => {
     // const Stack = createStackNavigator();
     const [products, setProducts] = useState([]);
-
-    const thisThing = route.params
 
     /**
      * Asynchronous function to handle fetch request to API.
@@ -32,6 +26,13 @@ const StockList = ({route, navigation}) => {
         await fetch(`${config.base_url}/products?api_key=${config.api_key}`)
             .then(response => response.json())
             .then(result => setProducts(result.data));
+    }, []);
+
+    /**
+     * useEffect triggers the handle function to fetch all products.
+     */
+    useEffect(() => {
+        handleFetchProducts();
     }, []);
 
     /**
@@ -49,13 +50,6 @@ const StockList = ({route, navigation}) => {
             <StockListItem item={item}/>
         </TouchableOpacity>
     );
-
-    /**
-     * useEffect triggers the handle function to fetch all products.
-     */
-    useEffect(() => {
-        handleFetchProducts();
-    }, []);
 
     return (
         <View>
@@ -82,8 +76,3 @@ const styles = StyleSheet.create({
         elevation: theme.Abstracts.btnElevation,
     },
 });
-
-/**
- * Module exports.
- */
-export default StockList;

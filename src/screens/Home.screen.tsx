@@ -9,7 +9,7 @@ import coverIMG from "../assets/img/NutsAndBolts-4.jpg";
  * @param navigation
  * @constructor
  */
-const Home: React.FC = ({navigation}) => {
+export const Home: React.FC = ({navigation}) => {
     return (
         <SafeAreaView style={[styles.base]}>
             <View style={styles.imgContainer}>
@@ -101,8 +101,3 @@ const styles = StyleSheet.create({
         marginBottom: theme.Typography.whiteSpace200,
     }
 });
-
-/**
- * Module exports.
- */
-export default Home;

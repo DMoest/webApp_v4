@@ -1,10 +1,9 @@
 import React from "react";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesome5} from '@expo/vector-icons';
-import Home from './Home.screen';
-// import {Stock} from './Stock.screen';
+import {Home} from './Home.screen';
 import {StockNavigator} from "./Stock.navigator";
-import {Order} from "./Order.screen";
+import {OrderNavigator} from "./Order.navigator";
 import {Delivery} from "./Delivery.screen";
 import {theme} from "../assets/themes/theme";
 
@@ -20,6 +19,11 @@ const routeIcons = {
     "Leverans": "dolly",
 };
 
+/**
+ * Bottom Navigation Bar.
+ *
+ * @constructor
+ */
 export const BottomTabsNavigator: React.FC = () => {
     return (
         <BottomTabs.Navigator
@@ -47,7 +51,7 @@ export const BottomTabsNavigator: React.FC = () => {
             })}>
             <BottomTabs.Screen name='Hem' component={Home} />
             <BottomTabs.Screen name='Lager' component={StockNavigator} />
-            <BottomTabs.Screen name='Order' component={Order} />
+            <BottomTabs.Screen name='Order' component={OrderNavigator} />
             <BottomTabs.Screen name='Leverans' component={Delivery} />
         </BottomTabs.Navigator>
     )

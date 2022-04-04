@@ -1,17 +1,21 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
-import OrderList from '../components/OrderList';
-import {theme} from '../assets/themes/theme';
+import {createStackNavigator} from "@react-navigation/stack";
+import {StatusBar} from 'expo-status-bar';
+import {OrderList} from '../components/OrderList';
+import {OrderItem} from "./OrderItem.screen";
 import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
+import {theme} from '../assets/themes/theme';
 
+
+const Stack = createStackNavigator();
 
 /**
- * Order screen/view.
+ * Order Stack Navigator.
  *
  * @constructor
  */
-export const Order: React.FC =() => {
+export const OrderNavigator: React.FC =() => {
     return (
         <View style={styles.base}>
             <View style={styles.imgContainer}>
@@ -23,15 +27,21 @@ export const Order: React.FC =() => {
             <View style={styles.content}>
                 <Text style={[styles.text, styles.lastText]}>Den här listan innehåller utgående ordrar till kund. Varje order ska innehålla ett id, en order status kod och en beställare. </Text>
 
-                <View style={styles.listDescription}>
-                    <Text style={styles.subHeader2}>Order ID</Text>
-                    <Text style={styles.subHeader2}>Beställare</Text>
-                    <Text style={styles.subHeader2}>Status Kod</Text>
-                </View>
+                <Stack.Navigator>
+                    <Stack.Screen name='Orderlista' component={OrderList} />
+                    <Stack.Screen name='Order' component={OrderItem} />
+                </Stack.Navigator>
 
-                <View style={styles.list}>
-                    <OrderList />
-                </View>
+
+                {/*<View style={styles.listDescription}>*/}
+                {/*    <Text style={styles.subHeader2}>Order ID</Text>*/}
+                {/*    <Text style={styles.subHeader2}>Beställare</Text>*/}
+                {/*    <Text style={styles.subHeader2}>Status Kod</Text>*/}
+                {/*</View>*/}
+
+                {/*<View style={styles.list}>*/}
+                {/*    <OrderList />*/}
+                {/*</View>*/}
             </View>
 
             <StatusBar style='auto'/>

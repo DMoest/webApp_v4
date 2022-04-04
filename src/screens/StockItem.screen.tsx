@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
-// import config from "../config/config.json";
 import {theme} from "../assets/themes/theme";
-import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
+
 
 
 /**
@@ -12,7 +11,7 @@ import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
  * @param route
  * @constructor
  */
-const StockItem: React.FC = ({route}) => {
+export const StockItem: React.FC = ({route}) => {
     const item = route.params.item
 
     return (
@@ -127,8 +126,3 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     }
 });
-
-/**
- * Module exports.
- */
-export default StockItem;

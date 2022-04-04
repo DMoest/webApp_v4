@@ -1,7 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, FlatList} from 'react-native';
-import OrderListItem from "./OrderListItem";
+import {StyleSheet, View, FlatList, TouchableOpacity} from 'react-native';
+import {OrderListItem} from "./OrderListItem";
 import config from '../config/config.json';
+// import {StockListItem} from "./StockListItem";
+import {theme} from "../assets/themes/theme";
 // import {theme} from '../assets/themes/theme';
 
 
@@ -11,7 +13,7 @@ import config from '../config/config.json';
  * @param navigation
  * @constructor
  */
-const OrdersList = ({navigation}) => {
+export const OrderList = ({route, navigation}) => {
     const [orders, setOrders] = useState([]);
 
     /**
@@ -34,22 +36,42 @@ const OrdersList = ({navigation}) => {
         handleFetchOrders();
     }, []);
 
+    /**
+     * Render item function.
+     *
+     * @param item
+     * @param navigation
+     */
+    const renderItem = ({ item }) => (
+        <TouchableOpacity
+            style={styles.btnContainer}
+            onPress={() => {
+                navigation.navigate('Order', {item})
+            }} >
+            <OrderListItem item={item} />
+        </TouchableOpacity>
+    );
+
     return (
         <View>
             <FlatList
                 // style={}
                 data={orders}
                 keyExtractor={item => item.id}
-                renderItem={({item}) => (
-                    <OrderListItem order={item} navigation={navigation}/>
-                )} />
+                renderItem={renderItem} />
         </View>
     );
 }
 
-// const styles = StyleSheet.create({});
-
-/**
- * Module exports.
- */
-export default OrdersList;
+const styles = StyleSheet.create({
+    btnContainer: {
+        width: '95%',
+        alignSelf: 'center',
+        marginHorizontal: theme.Typography.whiteSpace75,
+        shadowColor: theme.Colors.shadows,
+        shadowOffset: theme.Abstracts.btnOffset,
+        shadowOpacity: theme.Abstracts.btnOpacity,
+        shadowRadius: theme.Abstracts.btnRadius,
+        elevation: theme.Abstracts.btnElevation,
+    },
+});

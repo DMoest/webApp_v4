@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, FlatList, StyleSheet, RefreshControl} from 'react-native';
-import DeliveryListItem from "./DeliveryListItem";
+import {DeliveryListItem} from "./DeliveryListItem";
 import config from '../config/config.json';
 // import {theme} from '../assets/themes/theme';
 
@@ -10,7 +10,7 @@ import config from '../config/config.json';
  * @param navigation
  * @constructor
  */
-const DeliveryList = ({navigation}) => {
+export const DeliveryList = ({navigation}) => {
     const [deliveries, setDeliveries] = useState([]);
 
     /**
@@ -48,9 +48,4 @@ const DeliveryList = ({navigation}) => {
     );
 }
 
-const styles = StyleSheet.create({});
-
-/**
- * Module exports.
- */
-export default DeliveryList;
+// const styles = StyleSheet.create({});

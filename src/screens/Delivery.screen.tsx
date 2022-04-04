@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
-import DeliveryList from '../components/DeliveryList';
+import {DeliveryList} from '../components/DeliveryList';
 import {theme} from '../assets/themes/theme';
 import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
 

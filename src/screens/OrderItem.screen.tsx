@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
-// import config from "../config/config.json";
 import {theme} from "../assets/themes/theme";
 import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
@@ -12,30 +11,30 @@ import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
  * @param route
  * @constructor
  */
-const OrderItem: React.FC = ({route}) => {
-    // const [item, setItem] = useState<any[]>([]);
+export const OrderItem: React.FC = ({route}) => {
+    const item = route.params.item
 
-    // useEffect(() => {
-    //     fetch(`${config.base_url}/products/${route.params.paramKey}?api_key=${config.api_key}`)
-    //         .then(response => response.json())
-    //         .then(result => setItem(result.data));
-    // }, []);
+    console.log("ORDER: ", item)
 
     return (
         <View style={[styles.container]}>
-            <View style={styles.imgContainer}>
-                <Image source={coverIMG} style={styles.image}/>
-            </View>
+            {/*<View style={styles.imgContainer}>*/}
+            {/*    <Image source={coverIMG} style={styles.image}/>*/}
+            {/*</View>*/}
 
             <View style={styles.container}>
                 <Text style={styles.text}>{item.id}</Text>
+                <Text style={styles.text}>{item.status}</Text>
+                <Text style={styles.text}>{item.status_id}</Text>
+
                 <Text style={styles.text}>{item.name}</Text>
-                <Text style={styles.text}>{item.article_number}</Text>
-                <Text style={styles.text}>{item.location}</Text>
-                <Text style={styles.text}>{item.description}</Text>
-                <Text style={styles.text}>{item.specifiers}</Text>
-                <Text style={styles.text}>{item.price}</Text>
+                <Text style={styles.text}>{item.address}</Text>
+                <Text style={styles.text}>{item.zip}</Text>
+                <Text style={styles.text}>{item.city}</Text>
+
             </View>
+
+            {/* TODO Gör en lista av alla produkter som tillhör ordern */}
 
             <StatusBar style="auto"/>
         </View>
@@ -96,8 +95,3 @@ const styles = StyleSheet.create({
         color: theme.Colors.textColorDark,
     }
 });
-
-/**
- * Module exports.
- */
-export default OrderItem;

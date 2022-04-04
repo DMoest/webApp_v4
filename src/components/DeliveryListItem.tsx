@@ -10,7 +10,7 @@ import {theme} from '../assets/themes/theme';
  * @param delivery
  * @constructor
  */
-const DeliveryListItem = ({navigation, delivery}) => {
+export const DeliveryListItem = ({navigation, delivery}) => {
     return (
         <TouchableOpacity
             style={styles.btnContainer}
@@ -110,8 +110,3 @@ const styles = StyleSheet.create({
 
     }
 });
-
-/**
- * Module exports.
- */
-export default DeliveryListItem;

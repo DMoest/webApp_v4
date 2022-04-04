@@ -10,33 +10,27 @@ import {theme} from '../assets/themes/theme';
  * @param order
  * @constructor
  */
-const OrderListItem = ({navigation, order}) => {
+export const OrderListItem = ({item}) => {
     return (
-        <TouchableOpacity
-            style={styles.btnContainer}
-            onPress={() => {
-                navigation.navigate('OrderListItem', {order})
-            }}>
-            <View key={order.id} style={[styles.listItem, styles.button]}>
-                <View style={styles.idContainer}>
-                    <Text style={styles.btnText}>{order.id}</Text>
-                    <Text style={styles.btnText}>{order.name}</Text>
+        <View key={item.id} style={[styles.listItem, styles.button]}>
+            <View style={styles.idContainer}>
+                <Text style={styles.btnText}>{item.id}</Text>
+                <Text style={styles.btnText}>{item.name}</Text>
 
-                    <Text style={styles.btnText}>{order.status_id}</Text>
-                </View>
-
-                <View style={styles.address_container}>
-                    <Text style={styles.dataText}>{order.address}</Text>
-
-                    <View style={styles.zipCodeAndCity}>
-                        <Text style={styles.dataText}>{order.zip}</Text>
-                        <Text style={[styles.dataText, styles.city]}>{order.city}</Text>
-                    </View>
-
-                    <Text style={styles.dataText}>{order.country}</Text>
-                </View>
+                <Text style={styles.btnText}>{item.status_id}</Text>
             </View>
-        </TouchableOpacity>
+
+            <View style={styles.address_container}>
+                <Text style={styles.dataText}>{item.address}</Text>
+
+                <View style={styles.zipCodeAndCity}>
+                    <Text style={styles.dataText}>{item.zip}</Text>
+                    <Text style={[styles.dataText, styles.city]}>{item.city}</Text>
+                </View>
+
+                <Text style={styles.dataText}>{item.country}</Text>
+            </View>
+        </View>
     )
 }
 
@@ -127,8 +121,3 @@ const styles = StyleSheet.create({
         fontFamily: theme.Typography.textFont,
     }
 });
-
-/**
- * Module exports.
- */
-export default OrderListItem;

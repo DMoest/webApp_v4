@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
-// import config from "../config/config.json";
 import {theme} from "../assets/themes/theme";
 import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
@@ -12,7 +11,7 @@ import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
  * @param route
  * @constructor
  */
-const DeliveryItemScreen: React.FC = ({route}) => {
+export const DeliveryItemScreen: React.FC = ({route}) => {
     // const [item, setItem] = useState<any[]>([]);
 
     // useEffect(() => {
@@ -96,8 +95,3 @@ const styles = StyleSheet.create({
         color: theme.Colors.textColorDark,
     }
 });
-
-/**
- * Module exports.
- */
-export default DeliveryItemScreen;

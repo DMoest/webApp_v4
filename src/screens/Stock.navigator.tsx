@@ -1,16 +1,20 @@
 import React from "react";
 import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import {createStackNavigator} from "@react-navigation/stack";
-// import {FontAwesome5} from '@expo/vector-icons';
-import {Stock} from './Stock.screen';
-import StockList from "../components/StockList";
-import StockItem from "./StockItem.screen";
+import {StockList} from "../components/StockList";
+import {StockItem} from "./StockItem.screen";
 import {StatusBar} from "expo-status-bar";
 import coverIMG from "../assets/img/NutsAndBolts-5.jpg";
 import {theme} from "../assets/themes/theme";
 
+
 const Stack = createStackNavigator();
 
+/**
+ * Stock Stack Navigator.
+ *
+ * @constructor
+ */
 export const StockNavigator: React.FC = () => {
     return (
         <View style={styles.base}>
@@ -25,12 +29,13 @@ export const StockNavigator: React.FC = () => {
             <View style={styles.container}>
                 <Text style={[styles.text, styles.lastText]}>Listan innehåller lagerförda produkter. Varje produkt har ett namn, ett artikelnr. och antal i lager. </Text>
 
-            <Stack.Navigator>
-                <Stack.Screen name='Produktkatalog' component={StockList} />
-                <Stack.Screen name='Produkt' component={StockItem} />
-            </Stack.Navigator>
+                <Stack.Navigator>
+                    <Stack.Screen name='Produktkatalog' component={StockList} />
+                    <Stack.Screen name='Produkt' component={StockItem} />
+                </Stack.Navigator>
 
             </View>
+
             <StatusBar style='auto'/>
         </View>
     )

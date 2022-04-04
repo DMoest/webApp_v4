@@ -11,7 +11,7 @@ import {theme} from '../assets/themes/theme';
  * @param item
  * @constructor
  */
-const StockListItem = ({item}) => {
+export const StockListItem = ({item}) => {
     return (
         <View key={item.id} style={[styles.listItem, styles.button]} >
             <Text style={styles.btnText}>{item.name}</Text>
@@ -64,8 +64,3 @@ const styles = StyleSheet.create({
 
     },
 });
-
-/**
- * Module exports.
- */
-export default StockListItem;
