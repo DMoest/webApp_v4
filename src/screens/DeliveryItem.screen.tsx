@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import React from "react";
+import {StatusBar} from 'expo-status-bar';
+import {StyleSheet, Text, View} from 'react-native';
 import {theme} from "../assets/themes/theme";
-import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
 
 /**
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
         marginTop: theme.Container.headerMarginT,
         marginBottom: theme.Container.headerMarginB,
         color: theme.Colors.textColorDark,
-        fontSize: theme.Typography.headerFontSize,
+        fontSize: theme.Typography.h1Size,
         fontFamily: theme.Typography.headerFont,
         alignSelf: 'center'
     },
@@ -67,11 +66,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: theme.Container.subHeaderMarginT,
         marginBottom: theme.Container.subHeaderMarginB,
-        fontSize: theme.Typography.subHeaderFontSize,
+        fontSize: theme.Typography.h3Size,
         color: theme.Colors.textColorDark,
     },
     text: {
-        fontSize: theme.Typography.textFontSize,
+        fontSize: theme.Typography.textSize,
         color: theme.Colors.textColorDark,
     },
     button: {

@@ -11,8 +11,8 @@ export const colors = {
     textColorLight: "#fafafa",
 
     // Background Colors
-    backgroundColor: "#fafafa",
-    bgLight: "#fafafa",
+    backgroundColor: "#ffffff",
+    bgLight: "#ffffff",
     bgDark: "#2a2a2a",
 
     // Shadows
@@ -24,7 +24,7 @@ export const colors = {
     gray2: "#8C8C8C",
     gray3: "#BFBFBF",
     gray4: "#F2F2F2",
-    white: "#fafafa",
+    white: "#ffffff",
 
     // Indicator colors
     positiveColor: "#00A750",

@@ -1,6 +1,6 @@
 import React from "react";
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {StatusBar} from 'expo-status-bar';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {theme} from "../assets/themes/theme";
 
 
@@ -12,23 +12,116 @@ import {theme} from "../assets/themes/theme";
  */
 export const OrderItem: React.FC = ({route}) => {
     const item = route.params.item
+    console.log("ORDER: ", item)
 
-    // console.log("ORDER: ", item)
+    const orderDetails = () => {
+        return (
+            <View style={styles.bottomSeparator}>
+                <View style={styles.flexRow}>
+                    <Text style={styles.text}>Order ID: </Text>
+                    <Text style={styles.dataRight}>{item.id}</Text>
+                </View>
 
-    return (
-        <View style={[styles.container]}>
-            <View style={styles.container}>
-                <Text style={styles.text}>{item.id}</Text>
-                <Text style={styles.text}>{item.status}</Text>
-                <Text style={styles.text}>{item.status_id}</Text>
-                <Text style={styles.text}>{item.name}</Text>
-                <Text style={styles.text}>{item.address}</Text>
-                <Text style={styles.text}>{item.zip}</Text>
-                <Text style={styles.text}>{item.city}</Text>
+                <View style={styles.flexRow}>
+                    <Text style={styles.text}>Status: </Text>
+                    <Text style={styles.dataRight}>{item.status}</Text>
+                </View>
+
+                <View style={styles.flexRow}>
+                    <Text style={styles.text}>Status kod: </Text>
+                    <Text style={styles.dataRight}>{item.status_id}</Text>
+                </View>
+
+                <View style={styles.flexRow}>
+                    <Text style={styles.text}>Beställare: </Text>
+                    <Text style={styles.dataRight}>{item.name}</Text>
+                </View>
+
+                <View style={styles.flexRow}>
+                    <Text style={styles.text}>Address: </Text>
+                    <Text style={styles.dataRight}>{item.address}</Text>
+                </View>
+
+                <View style={styles.flexRow}>
+                    <Text style={styles.text}>Postkod: </Text>
+                    <Text style={styles.dataRight}>{item.zip}</Text>
+                </View>
+
+                <View style={styles.flexRow}>
+                    <Text style={styles.text}>Stad: </Text>
+                    <Text style={styles.dataRight}>{item.city}</Text>
+                </View>
+            </View>
+        )
+    }
+
+    function checkStockStatus({orderItem}) {
+        let indicatorText;
+        let indicatorColor;
+
+        if (orderItem.amount <= orderItem.stock) {
+            indicatorColor = theme.Colors.positiveColor
+            indicatorText = "Det finns på lager, bara att plocka! "
+        } else if (orderItem.amount > orderItem.stock) {
+            indicatorColor = theme.Colors.warningColor
+            indicatorText = "Kontrollera lagerplatsen, enligt lagersaldo finns inte tillräckligt av produkten. "
+        }
+
+        return (
+            <Text style={styles.dataLeft, {color: indicatorColor}}>{indicatorText}</Text>
+        );
+    };
+
+
+
+
+    const orderItems = item.order_items.map((orderItem, index) =>
+        <View style={[styles.bottomSeparator]}>
+            <View style={[styles.flexRow]}>
+                <View style={[styles.flexCol, {flex: 1}]}>
+                    <Text style={styles.dataLeft}>{index+1}.</Text>
+                    <Text style={styles.dataLeft}> </Text>
+                    <Text style={styles.dataLeft}> </Text>
+                </View>
+
+                <View style={[styles.flexCol, {flex: 2}]}>
+                    <Text style={styles.dataLeft}>{orderItem.amount} st {orderItem.name}</Text>
+                    <Text style={styles.dataLeft}>{orderItem.product_id}</Text>
+                    <Text style={styles.dataLeft}>{orderItem.article_number}</Text>
+                </View>
+
+                <View style={[styles.flexCol, {flex: 2}]}>
+                    <Text style={styles.dataRight}> </Text>
+                    <Text style={styles.dataRight}>{orderItem.stock} st i lager</Text>
+                    <Text style={styles.dataRight}>Plats: {orderItem.location}</Text>
+                </View>
+
+                {/*<View style={styles.flexCol}>*/}
+                {/*    <Text style={styles.dataLeft}> </Text>*/}
+                {/*</View>*/}
             </View>
 
-            {/* TODO Gör en lista av alla produkter som tillhör ordern */}
+            <View style={[styles.smallContainer, styles.flexRow, {
+                // paddingHorizontal: theme.Typography.whiteSpace,
+                paddingVertical: theme.Typography.whiteSpace }]}>
 
+                <View style={[styles.flexCol, {flex: 1}]}>
+                    <Text style={styles.dataLeft}> </Text>
+                </View>
+
+                <View style={{flex: 4}}>
+                    {checkStockStatus({orderItem})}
+                </View>
+            </View>
+        </View>
+    );
+
+    return (
+        <View style={[styles.container, {paddingBottom: 0}]}>
+            <ScrollView style={styles.biggerContainer}>
+                {orderDetails()}
+                {orderItems}
+            </ScrollView>
             <StatusBar style="auto"/>
         </View>
     );
@@ -38,18 +131,24 @@ export const OrderItem: React.FC = ({route}) => {
  * StockListItem styles.
  */
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 2,
-    },
     container: {
         flex: 1,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        paddingVertical: theme.Typography.whiteSpace,
         backgroundColor: theme.Colors.white,
-        paddingHorizontal: theme.Container.containerPaddingH,
     },
-    base: {
+    smallContainer: {
         flex: 1,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        // paddingVertical: theme.Typography.whiteSpace,
         backgroundColor: theme.Colors.white,
-        paddingHorizontal: theme.Container.basePaddingH,
+    },
+    biggerContainer: {
+        flex: 2,
+        paddingHorizontal: theme.Typography.whiteSpace50,
+        paddingVertical: theme.Typography.whiteSpace,
+        backgroundColor: theme.Colors.white,
+        bottom: 0,
     },
     imgContainer: {
         width: theme.Images.coverWidth,
@@ -73,11 +172,34 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: theme.Container.subHeaderMarginT,
         marginBottom: theme.Container.subHeaderMarginB,
-        fontSize: theme.Typography.h3Size,
+        fontSize: theme.Typography.h4Size,
         color: theme.Colors.textColorDark,
     },
     text: {
         fontSize: theme.Typography.textSize,
+        fontFamily: theme.Typography.textFont,
+        lineHeight: theme.Typography.lineHeight,
+        color: theme.Colors.textColorDark,
+    },
+    dataLeft: {
+        textAlign: 'left',
+        fontSize: theme.Typography.textSize,
+        fontFamily: theme.Typography.textFont,
+        lineHeight: theme.Typography.lineHeight,
+        color: theme.Colors.textColorDark,
+    },
+    dataCenter: {
+        textAlign: 'center',
+        fontSize: theme.Typography.textSize,
+        fontFamily: theme.Typography.textFont,
+        lineHeight: theme.Typography.lineHeight,
+        color: theme.Colors.textColorDark,
+    },
+    dataRight: {
+        textAlign: 'right',
+        fontSize: theme.Typography.textSize,
+        fontFamily: theme.Typography.textFont,
+        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
     },
     button: {
@@ -86,5 +208,34 @@ const styles = StyleSheet.create({
         paddingVertical: theme.Container.btnPaddingV,
         backgroundColor: theme.Colors.primaryColor,
         color: theme.Colors.textColorDark,
+    },
+    flexRow: {
+        // flex: 4,
+        width: '95%',
+        // height: undefined,
+        alignSelf: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+    },
+    flexCol: {
+        top: 0,
+        flex: 1,
+        alignSelf: 'center',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        // justifyContent: 'space-between',
+    },
+    flexDataCol: {
+        width: '20%',
+        height: undefined,
+        alignSelf: 'center',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+    },
+    bottomSeparator: {
+        paddingVertical: theme.Typography.whiteSpace25,
+        borderBottomColor: 'black',
+        borderBottomWidth: 0.2,
     }
 });

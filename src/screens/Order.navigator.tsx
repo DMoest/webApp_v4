@@ -24,8 +24,8 @@ export const OrderNavigator: React.FC =() => {
                 </ImageBackground>
             </View>
 
-            <View style={styles.content}>
-                <Text style={[styles.text, styles.lastText]}>Den här listan innehåller utgående ordrar till kund. Varje order ska innehålla ett id, en order status kod och en beställare. </Text>
+            <View style={styles.container}>
+                <Text style={[styles.text]}>Den här listan innehåller utgående ordrar till kund. Varje order ska innehålla ett id, en order status kod och en beställare. </Text>
 
                 <Stack.Navigator>
                     <Stack.Screen name='Orderlista' component={OrderList} />
@@ -60,10 +60,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.Colors.white,
     },
-    content: {
+    container: {
         flex: 1,
+        paddingHorizontal: theme.Typography.whiteSpace75,
+        // paddingVertical: theme.Typography.whiteSpace,
         backgroundColor: theme.Colors.white,
-        paddingHorizontal: theme.Container.basePaddingH,
     },
     list: {
         flex: 1,
