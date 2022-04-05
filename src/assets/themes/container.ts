@@ -1,4 +1,37 @@
 import {Dimensions} from "react-native";
+import {theme} from "./theme";
+import {Color, Typography} from "./index";
+
+export const content = {
+    flex: 1,
+    paddingHorizontal: Typography.whiteSpace.X075,
+    backgroundColor: Color.background.light,
+}
+
+export const padding = {
+    baseH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size
+    baseV: (Dimensions.get('screen').width / 100) * 3,
+}
+
+export const margin = {
+    baseH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size,
+    baseV: (Dimensions.get('screen').width / 100) * 3,
+
+    subHeaderTop: Typography.whiteSpace.X050,
+    subHeaderBottom: Typography.whiteSpace.X1,
+}
+
+export const flexBox = {
+    row: {
+        width: '100%',
+        height: undefined,
+        paddingVertical: Typography.whiteSpace.X025,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+    },
+
+}
 
 export const container = {
     // Paddings & Margins
