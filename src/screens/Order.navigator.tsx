@@ -24,24 +24,13 @@ export const OrderNavigator: React.FC =() => {
                 </ImageBackground>
             </View>
 
-            <View style={styles.container}>
+            <View style={[styles.container]}>
                 <Text style={[styles.text]}>Den här listan innehåller utgående ordrar till kund. Varje order ska innehålla ett id, en order status kod och en beställare. </Text>
 
                 <Stack.Navigator>
                     <Stack.Screen name='Orderlista' component={OrderList} />
                     <Stack.Screen name='Order' component={OrderItem} />
                 </Stack.Navigator>
-
-
-                {/*<View style={styles.listDescription}>*/}
-                {/*    <Text style={styles.subHeader2}>Order ID</Text>*/}
-                {/*    <Text style={styles.subHeader2}>Beställare</Text>*/}
-                {/*    <Text style={styles.subHeader2}>Status Kod</Text>*/}
-                {/*</View>*/}
-
-                {/*<View style={styles.list}>*/}
-                {/*    <OrderList />*/}
-                {/*</View>*/}
             </View>
 
             <StatusBar style='auto'/>

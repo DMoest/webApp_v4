@@ -26,17 +26,9 @@ export const DeliveryNavigator: React.FC =() => {
             </View>
 
             <View style={styles.content}>
-                {/*<Text style={styles.subHeader}>Inkommande Leveranser</Text>*/}
                 <Text style={[styles.text, styles.lastText]}>Listan innehåller samtliga inkommande leveraser. En leverans har ett id, ett datum, ett produkt-id, ett produktnamn och antal beställda av produkten. Sist finns en kommentar som tillhör leveransen. </Text>
 
-                {/*<View style={styles.listDescription}>*/}
-                {/*    <Text style={styles.subHeader2}>Leverans ID</Text>*/}
-                {/*    <Text style={styles.subHeader2}>Datum</Text>*/}
-                {/*</View>*/}
-
                 <View style={styles.list}>
-                    <Text style={[styles.text, styles.lastText]}>Listan innehåller lagerförda produkter. Varje produkt har ett namn, ett artikelnr. och antal i lager. </Text>
-
                     <Stack.Navigator>
                         <Stack.Screen name='Leveranslista' component={DeliveryList} />
                         <Stack.Screen name='Leverans' component={DeliveryItem} />

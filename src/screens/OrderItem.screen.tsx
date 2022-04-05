@@ -1,6 +1,6 @@
 import React from "react";
 import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Button} from 'react-native';
 import {theme} from "../assets/themes/theme";
 
 
@@ -72,14 +72,11 @@ export const OrderItem: React.FC = ({route}) => {
         );
     };
 
-
-
-
     const orderItems = item.order_items.map((orderItem, index) =>
         <View style={[styles.bottomSeparator]}>
             <View style={[styles.flexRow]}>
                 <View style={[styles.flexCol, {flex: 1}]}>
-                    <Text style={styles.dataLeft}>{index+1}.</Text>
+                    <Text style={styles.dataLeft}>{index+1}. </Text>
                     <Text style={styles.dataLeft}> </Text>
                     <Text style={styles.dataLeft}> </Text>
                 </View>
@@ -102,14 +99,13 @@ export const OrderItem: React.FC = ({route}) => {
             </View>
 
             <View style={[styles.smallContainer, styles.flexRow, {
-                // paddingHorizontal: theme.Typography.whiteSpace,
                 paddingVertical: theme.Typography.whiteSpace }]}>
 
                 <View style={[styles.flexCol, {flex: 1}]}>
                     <Text style={styles.dataLeft}> </Text>
                 </View>
 
-                <View style={{flex: 4}}>
+                <View style={{flex: 4.5}}>
                     {checkStockStatus({orderItem})}
                 </View>
             </View>
@@ -121,6 +117,8 @@ export const OrderItem: React.FC = ({route}) => {
             <ScrollView style={styles.biggerContainer}>
                 {orderDetails()}
                 {orderItems}
+
+                {/*<Button title='Packa order' onPress={} />*/}
             </ScrollView>
             <StatusBar style="auto"/>
         </View>
@@ -132,6 +130,7 @@ export const OrderItem: React.FC = ({route}) => {
  */
 const styles = StyleSheet.create({
     container: {
+        alignSelf: 'center',
         flex: 1,
         paddingHorizontal: theme.Typography.whiteSpace50,
         paddingVertical: theme.Typography.whiteSpace,
@@ -236,6 +235,6 @@ const styles = StyleSheet.create({
     bottomSeparator: {
         paddingVertical: theme.Typography.whiteSpace25,
         borderBottomColor: 'black',
-        borderBottomWidth: 0.2,
+        borderBottomWidth: 0.5,
     }
 });

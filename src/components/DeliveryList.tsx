@@ -54,7 +54,7 @@ export const DeliveryList = ({route, navigation}) => {
     return (
         <View>
             <FlatList
-                // style={}
+                style={{backgroundColor: theme.Colors.white}}
                 data={deliveries}
                 keyExtractor={item => item.id}
                 renderItem={renderItem} />

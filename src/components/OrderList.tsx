@@ -55,7 +55,7 @@ export const OrderList = ({route, navigation}) => {
     return (
         <View>
             <FlatList
-                // style={}
+                style={{backgroundColor: theme.Colors.white}}
                 data={orders}
                 keyExtractor={item => item.id}
                 renderItem={renderItem} />

@@ -30,7 +30,7 @@ export const StockNavigator: React.FC = () => {
                 <Text style={[styles.text, styles.lastText]}>Listan innehåller lagerförda produkter. Varje produkt har ett namn, ett artikelnr. och antal i lager. </Text>
 
                 <Stack.Navigator>
-                    <Stack.Screen name='Produktkatalog' component={StockList} />
+                    <Stack.Screen name='Produkter' component={StockList} />
                     <Stack.Screen name='Produkt' component={StockItem} />
                 </Stack.Navigator>
             </View>

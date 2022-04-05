@@ -16,38 +16,36 @@ export const StockItem: React.FC = ({route}) => {
 
     return (
         <View style={[styles.container]}>
-            <View style={styles.container}>
-                <Text style={styles.subHeader}>{item.name}</Text>
+            <Text style={styles.subHeader}>{item.name}</Text>
 
-                <View style={styles.flexRow2}>
-                    <Text style={[styles.text]}>ID: </Text>
-                    <Text style={[styles.data]}>{item.id}</Text>
-                </View>
+            <View style={styles.flexRow}>
+                <Text style={[styles.text, {flex: 1}]}>ID: </Text>
+                <Text style={[styles.data, {flex: 2, flexWrap: 'wrap'}]}>{item.id}</Text>
+            </View>
 
-                <View style={styles.flexRow2}>
-                    <Text style={[styles.text]}>Artikel nr: </Text>
-                    <Text style={[styles.data]}>{item.article_number}</Text>
-                </View>
+            <View style={styles.flexRow}>
+                <Text style={[styles.text, {flex: 1}]}>Artikel nr: </Text>
+                <Text style={[styles.data, {flex: 2, flexWrap: 'wrap'}]}>{item.article_number}</Text>
+            </View>
 
-                <View style={styles.flexRow2}>
-                    <Text style={[styles.text]}>Plats: </Text>
-                    <Text style={[styles.data]}>{item.location}</Text>
-                </View>
+            <View style={styles.flexRow}>
+                <Text style={[styles.text, {flex: 1}]}>Plats: </Text>
+                <Text style={[styles.data, {flex: 2, flexWrap: 'wrap'}]}>{item.location}</Text>
+            </View>
 
-                <View style={styles.flexRow2}>
-                    <Text style={[styles.text]}>Pris: </Text>
-                    <Text style={[styles.text]}>{item.price} kr</Text>
-                </View>
+            <View style={styles.flexRow}>
+                <Text style={[styles.text, {flex: 1}]}>Pris: </Text>
+                <Text style={[styles.data, {flex: 2, flexWrap: 'wrap'}]}>{item.price} kr</Text>
+            </View>
 
-                <View style={styles.flexRow2}>
-                    <Text style={[styles.text]}>Beskrivning: </Text>
-                    <Text style={[styles.data]}>{item.description}</Text>
-                </View>
+            <View style={styles.flexRow}>
+                <Text style={[styles.text, {flex: 1}]}>Beskrivning: </Text>
+                <Text style={[styles.data, {flex: 2, flexWrap: 'wrap'}]}>{item.description}</Text>
+            </View>
 
-                <View style={styles.flexRow2}>
-                    <Text style={[styles.text]}>Specifikation: </Text>
-                    <Text style={[styles.data]}>{item.specifiers}</Text>
-                </View>
+            <View style={styles.flexRow}>
+                <Text style={[styles.text, {flex: 1}]}>Specifikation: </Text>
+                <Text style={[styles.data, {flex: 2, flexWrap: 'wrap'}]}>{item.specifiers}</Text>
             </View>
 
             <StatusBar style="auto"/>
@@ -59,9 +57,6 @@ export const StockItem: React.FC = ({route}) => {
  * StockListItem styles.
  */
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 2,
-    },
     container: {
         flex: 1,
         backgroundColor: theme.Colors.white,
@@ -83,18 +78,20 @@ const styles = StyleSheet.create({
         height: undefined,
     },
     header: {
+        alignSelf: 'center',
         marginTop: theme.Container.headerMarginT,
         marginBottom: theme.Container.headerMarginB,
-        color: theme.Colors.textColorDark,
         fontSize: theme.Typography.h1Size,
         fontFamily: theme.Typography.headerFont,
-        alignSelf: 'center'
+        color: theme.Colors.textColorDark,
     },
     subHeader: {
         alignSelf: 'center',
         marginTop: theme.Container.subHeaderMarginT,
         marginBottom: theme.Container.subHeaderMarginB,
-        fontSize: theme.Typography.h3Size,
+        fontSize: theme.Typography.h4Size,
+        fontFamily: theme.Typography.textFont,
+        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
     },
     text: {
@@ -102,6 +99,7 @@ const styles = StyleSheet.create({
         fontSize: theme.Typography.textSize,
         fontWeight: theme.Typography.textWeight,
         fontFamily: theme.Typography.textFont,
+        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
     },
     data: {
@@ -109,20 +107,24 @@ const styles = StyleSheet.create({
         fontSize: theme.Typography.textSize,
         fontWeight: theme.Typography.textWeight,
         fontFamily: theme.Typography.textFont,
+        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
     },
     button: {
-        fontSize: theme.Typography.btnSmallFontSize,
         paddingHorizontal: theme.Container.btnPaddingH,
         paddingVertical: theme.Container.btnPaddingV,
-        backgroundColor: theme.Colors.primaryColor,
+        fontSize: theme.Typography.btnSmallFontSize,
+        lineHeight: theme.Typography.lineHeight,
         color: theme.Colors.textColorDark,
+        backgroundColor: theme.Colors.primaryColor,
     },
-    flexRow2: {
+    flexRow: {
         width: '100%',
         height: undefined,
-        // flex: 1,
+        paddingVertical: theme.Typography.whiteSpace25,
         flexDirection: 'row',
+        flexWrap: 'wrap',
         justifyContent: 'space-between',
+
     }
 });
