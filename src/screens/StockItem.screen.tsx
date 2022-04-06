@@ -2,8 +2,6 @@ import React from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Style from "../assets/themes/index";
-import {theme} from "../assets/themes/theme";
-
 
 
 /**
@@ -21,32 +19,32 @@ export const StockItem: React.FC = ({route}) => {
 
             <View style={Style.Container.flexBox.row}>
                 <Text style={[Style.Typography.dataLeft, {flex: 1}]}>ID: </Text>
-                <Text style={[Style.Typography.dataRight, {flex: 2, flexWrap: 'wrap'}]}>{item.id}</Text>
+                <Text style={[Style.Typography.dataRight, {flex: 2}]}>{item.id}</Text>
             </View>
 
             <View style={Style.Container.flexBox.row}>
                 <Text style={[Style.Typography.dataLeft, {flex: 1}]}>Artikel nr: </Text>
-                <Text style={[Style.Typography.dataRight, {flex: 2, flexWrap: 'wrap'}]}>{item.article_number}</Text>
+                <Text style={[Style.Typography.dataRight, {flex: 2}]}>{item.article_number}</Text>
             </View>
 
             <View style={Style.Container.flexBox.row}>
                 <Text style={[Style.Typography.dataLeft, {flex: 1}]}>Plats: </Text>
-                <Text style={[Style.Typography.dataRight, {flex: 2, flexWrap: 'wrap'}]}>{item.location}</Text>
+                <Text style={[Style.Typography.dataRight, {flex: 2}]}>{item.location}</Text>
             </View>
 
             <View style={Style.Container.flexBox.row}>
                 <Text style={[Style.Typography.dataLeft, {flex: 1}]}>Pris: </Text>
-                <Text style={[Style.Typography.dataRight, {flex: 2, flexWrap: 'wrap'}]}>{item.price} kr</Text>
+                <Text style={[Style.Typography.dataRight, {flex: 2}]}>{item.price} kr</Text>
             </View>
 
             <View style={Style.Container.flexBox.row}>
                 <Text style={[Style.Typography.dataLeft, {flex: 1}]}>Beskrivning: </Text>
-                <Text style={[Style.Typography.dataRight, {flex: 2, flexWrap: 'wrap'}]}>{item.description}</Text>
+                <Text style={[Style.Typography.dataRight, {flex: 2}]}>{item.description}</Text>
             </View>
 
             <View style={Style.Container.flexBox.row}>
                 <Text style={[Style.Typography.dataLeft, {flex: 1}]}>Specifikation: </Text>
-                <Text style={[Style.Typography.dataRight, {flex: 2, flexWrap: 'wrap'}]}>{item.specifiers}</Text>
+                <Text style={[Style.Typography.dataRight, {flex: 2}]}>{item.specifiers}</Text>
             </View>
 
             <StatusBar style="auto"/>

@@ -1,5 +1,4 @@
 import * as Color from "./colors";
-import {theme} from "./theme";
 import * as Container from "./container";
 
 
@@ -74,8 +73,9 @@ export const header = {
 
 export const subHeader = {
     alignSelf: 'center',
-    marginTop: Container.margin.subHeaderTop,
+    paddingVertical: whiteSpace.X050,
     marginBottom: Container.margin.subHeaderBottom,
+
     fontSize: fontSize.h4,
     fontFamily: fontFamily.subHeader,
     lineHeight: lineHeight.l1,
@@ -88,6 +88,7 @@ export const paragraph = {
     paddingHorizontal: whiteSpace.X050,
     paddingVertical: whiteSpace.X050,
 
+    flexWrap: 'wrap',
     textAlign: 'left',
     lineHeight: lineHeight.l1,
     fontSize: fontSize.text,
@@ -96,11 +97,10 @@ export const paragraph = {
 }
 
 export const dataLeft = {
-    width: '100%',
-    height: undefined,
     paddingHorizontal: whiteSpace.X025,
-    paddingVertical: whiteSpace.X025,
+    paddingBottom: whiteSpace.X025,
 
+    flexWrap: 'wrap',
     textAlign: 'left',
     lineHeight: lineHeight.l1,
     fontSize: fontSize.text,
@@ -109,11 +109,10 @@ export const dataLeft = {
 }
 
 export const dataCenter = {
-    width: '100%',
-    height: undefined,
     paddingHorizontal: whiteSpace.X025,
-    paddingVertical: whiteSpace.X025,
+    paddingBottom: whiteSpace.X025,
 
+    flexWrap: 'wrap',
     textAlign: 'center',
     lineHeight: lineHeight.l1,
     fontSize: fontSize.text,
@@ -122,10 +121,8 @@ export const dataCenter = {
 }
 
 export const dataRight = {
-    width: '100%',
-    height: undefined,
     paddingHorizontal: whiteSpace.X025,
-    paddingVertical: whiteSpace.X025,
+    paddingBottom: whiteSpace.X025,
 
     textAlign: 'right',
     lineHeight: lineHeight.l1,

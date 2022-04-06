@@ -8,3 +8,9 @@ export const abstracts = {
     btnRadius: 1.5,
     btnElevation: 2,
 }
+
+export const shadow = {
+    btn: {
+
+    }
+}

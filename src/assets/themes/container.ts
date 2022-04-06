@@ -1,10 +1,22 @@
 import {Dimensions} from "react-native";
-import {theme} from "./theme";
-import {Color, Typography} from "./index";
+import * as Color from './colors'
+// import * as Typography from './typography'
+
+
+/**
+ * White Space.
+ */
+export const whiteSpace = {
+    X025: 4.55,
+    X050: 9.1,
+    X075: 13.65,
+    X1: 18.2,
+    X2: 36.4,
+}
 
 export const content = {
     flex: 1,
-    paddingHorizontal: Typography.whiteSpace.X075,
+    paddingHorizontal: whiteSpace.X075,
     backgroundColor: Color.background.light,
 }
 
@@ -17,21 +29,48 @@ export const margin = {
     baseH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size,
     baseV: (Dimensions.get('screen').width / 100) * 3,
 
-    subHeaderTop: Typography.whiteSpace.X050,
-    subHeaderBottom: Typography.whiteSpace.X1,
+    subHeaderTop: whiteSpace.X050,
+    subHeaderBottom: whiteSpace.X1,
 }
 
 export const flexBox = {
-    row: {
+    rowNoPadding: {
         width: '100%',
         height: undefined,
-        paddingVertical: Typography.whiteSpace.X025,
+        alignSelf: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
     },
-
+    row: {
+        width: '100%',
+        height: undefined,
+        alignSelf: 'center',
+        paddingVertical: whiteSpace.X025,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+    },
+    column: {
+        // top: 0,
+        // flex: 1,
+        alignSelf: 'center',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+    },
 }
+
+export const bottomSeparator = {
+    paddingVertical: whiteSpace.X025,
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'black',
+}
+
+
+
+
+
 
 export const container = {
     // Paddings & Margins
