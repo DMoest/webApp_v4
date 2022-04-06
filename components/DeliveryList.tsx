@@ -1,10 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, FlatList, StyleSheet, RefreshControl, TouchableOpacity} from 'react-native';
+import {View, FlatList, TouchableOpacity} from 'react-native';
 import {DeliveryListItem} from "./DeliveryListItem";
 import config from '../config/config.json';
-import {StockListItem} from "./StockListItem";
-import {theme} from "../assets/themes/theme";
-// import {theme} from '../assets/themes/theme';
+import * as Style from "../assets/styles";
 
 
 /**DeliveryeliveryList object to fetch item list from API and generate a FlatList View from response JSON object.
@@ -36,7 +34,7 @@ export const DeliveryList = ({route, navigation}) => {
      */
     const renderItem = ({ item }) => (
         <TouchableOpacity
-            style={styles.btnContainer}
+            style={Style.Button.buttonContainer}
             onPress={() => {
                 navigation.navigate('Leverans', {item})
             }} >
@@ -54,22 +52,10 @@ export const DeliveryList = ({route, navigation}) => {
     return (
         <View>
             <FlatList
-                style={{backgroundColor: theme.Colors.white}}
+                style={Style.Container.flatList}
                 data={deliveries}
                 keyExtractor={item => item.id}
                 renderItem={renderItem} />
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    btnContainer: {
-        alignSelf: 'center',
-        width: '95%',
-        shadowColor: theme.Colors.shadows,
-        shadowOffset: theme.Abstracts.btnOffset,
-        shadowOpacity: theme.Abstracts.btnOpacity,
-        shadowRadius: theme.Abstracts.btnRadius,
-        elevation: theme.Abstracts.btnElevation,
-    },
-});

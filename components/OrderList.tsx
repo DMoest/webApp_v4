@@ -1,10 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, View, FlatList, TouchableOpacity} from 'react-native';
+import {View, FlatList, TouchableOpacity} from 'react-native';
 import {OrderListItem} from "./OrderListItem";
 import config from '../config/config.json';
-// import {StockListItem} from "./StockListItem";
-import {theme} from "../assets/themes/theme";
-// import {theme} from '../assets/themes/theme';
+import * as Style from '../assets/styles/index';
 
 
 /**
@@ -44,9 +42,10 @@ export const OrderList = ({route, navigation}) => {
      */
     const renderItem = ({ item }) => (
         <TouchableOpacity
-            style={styles.btnContainer}
+            key={item.if}
+            style={Style.Button.buttonContainer}
             onPress={() => {
-                navigation.navigate('Order', {item})
+                navigation.navigate('OrderDetails', {item})
             }} >
             <OrderListItem item={item} />
         </TouchableOpacity>
@@ -55,23 +54,10 @@ export const OrderList = ({route, navigation}) => {
     return (
         <View>
             <FlatList
-                style={{backgroundColor: theme.Colors.white}}
+                style={Style.Container.flatList}
                 data={orders}
                 keyExtractor={item => item.id}
                 renderItem={renderItem} />
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    btnContainer: {
-        width: '95%',
-        alignSelf: 'center',
-        marginHorizontal: theme.Typography.whiteSpace75,
-        shadowColor: theme.Colors.shadows,
-        shadowOffset: theme.Abstracts.btnOffset,
-        shadowOpacity: theme.Abstracts.btnOpacity,
-        shadowRadius: theme.Abstracts.btnRadius,
-        elevation: theme.Abstracts.btnElevation,
-    },
-});

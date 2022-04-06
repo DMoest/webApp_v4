@@ -85,3 +85,7 @@ export const indicator = {
     link: "#104AA1",
     link2: "#662C91",
 }
+
+export const shadows = {
+    s1: "#3F3F3F",
+}

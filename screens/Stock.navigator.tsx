@@ -4,7 +4,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import {StockList} from "../components/StockList";
 import {StockItem} from "./StockItem.screen";
 import {StatusBar} from "expo-status-bar";
-import * as Style from "../assets/themes/index";
+import * as Style from "../assets/styles";
 import coverIMG from "../assets/img/NutsAndBolts-5.jpg";
 
 

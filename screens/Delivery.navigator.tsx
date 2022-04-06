@@ -5,7 +5,7 @@ import {DeliveryList} from '../components/DeliveryList';
 import {DeliveryItem} from './DeliveryItem.screen';
 import { StatusBar } from 'expo-status-bar';
 import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
-import * as Style from '../assets/themes/index';
+import * as Style from '../assets/styles';
 
 
 

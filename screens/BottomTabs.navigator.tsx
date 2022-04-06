@@ -5,7 +5,7 @@ import {Home} from './Home.screen';
 import {StockNavigator} from "./Stock.navigator";
 import {OrderNavigator} from "./Order.navigator";
 import {DeliveryNavigator} from "./Delivery.navigator";
-import {theme} from "../assets/themes/theme";
+import {theme} from "../assets/styles/theme";
 
 
 const BottomTabs = createBottomTabNavigator();

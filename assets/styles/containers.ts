@@ -1,6 +1,6 @@
 import {Dimensions} from "react-native";
 import * as Color from './colors'
-// import * as Typography from './typography'
+import * as Typography from './typography'
 
 
 /**
@@ -67,12 +67,25 @@ export const bottomSeparator = {
     borderBottomColor: 'black',
 }
 
+export const borderRadius = {
+    button: 5,
+}
+
+export const flatList = {
+    backgroundColor: Color.background.light,
+}
+
+export const orderRowHead = {
+        width: '100%',
+        marginBottom: Typography.whiteSpace.X1,
+        // flex: 3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+}
 
 
 
-
-
-export const container = {
+export const containers = {
     // Paddings & Margins
 
     // Markers explained:

@@ -4,7 +4,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import {StatusBar} from 'expo-status-bar';
 import {OrderList} from '../components/OrderList';
 import {OrderItem} from "./OrderItem.screen";
-import * as Style from '../assets/themes/index';
+import * as Style from '../assets/styles';
 import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
 
@@ -29,7 +29,7 @@ export const OrderNavigator: React.FC =() => {
 
                 <Stack.Navigator>
                     <Stack.Screen name='Orderlista' component={OrderList} />
-                    <Stack.Screen name='Order' component={OrderItem} />
+                    <Stack.Screen name='OrderDetails' component={OrderItem} />
                 </Stack.Navigator>
             </View>
 

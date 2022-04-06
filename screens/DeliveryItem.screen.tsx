@@ -1,7 +1,7 @@
 import React from "react";
 import {StatusBar} from 'expo-status-bar';
 import {Text, View} from 'react-native';
-import * as Style from "../assets/themes";
+import * as Style from "../assets/styles";
 
 
 /**

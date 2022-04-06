@@ -104,8 +104,8 @@ dist
 .tern-port
 
 # Lager API Configs
-/src/config/*
-/src/config/config.json
+/config/*
+/config/config.json
 
 .expo/
 

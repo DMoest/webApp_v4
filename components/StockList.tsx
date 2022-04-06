@@ -2,7 +2,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import {StockListItem} from "./StockListItem";
 import config from '../config/config.json';
-import {theme} from "../assets/themes/theme";
+import * as Style from "../assets/styles/index";
+import {theme} from "../assets/styles/theme";
 
 
 /**
@@ -43,7 +44,7 @@ export const StockList = ({route, navigation}) => {
      */
     const renderItem = ({ item }) => (
         <TouchableOpacity
-            style={styles.btnContainer}
+            style={Style.Button.buttonContainer}
             onPress={() => {
                 navigation.navigate('Produkt', {item: item})
             }} >
@@ -54,25 +55,10 @@ export const StockList = ({route, navigation}) => {
     return (
         <View>
             <FlatList
-                style={styles.list}
+                style={Style.Container.flatList}
                 data={products}
                 keyExtractor={item => item.id}
                 renderItem={renderItem} />
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    list: {
-        backgroundColor: theme.Colors.white,
-    },
-    btnContainer: {
-        width: '95%',
-        alignSelf: 'center',
-        shadowColor: theme.Colors.shadows,
-        shadowOffset: theme.Abstracts.btnOffset,
-        shadowOpacity: theme.Abstracts.btnOpacity,
-        shadowRadius: theme.Abstracts.btnRadius,
-        elevation: theme.Abstracts.btnElevation,
-    },
-});

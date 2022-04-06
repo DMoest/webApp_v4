@@ -2,8 +2,8 @@ import React from "react";
 import AppLoading from 'expo-app-loading';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {BottomTabsNavigator} from "./src/screens/BottomTabs.navigator";
-import {theme} from "./src/assets/themes/theme";
+import {BottomTabsNavigator} from "./screens/BottomTabs.navigator";
+import {theme} from "./assets/styles/theme";
 import {
     useFonts,
     OleoScriptSwashCaps_400Regular,
@@ -28,7 +28,7 @@ import {
  * Main App module.
  *
  * Font loader to with the package expo-google-fonts.
- * SafeAreaView with navigation container.
+ * SafeAreaView with navigation containers.
  * Navigation with React-Navigation package, stack navigation type to navigate between app screens.
  *
  * @constructor
