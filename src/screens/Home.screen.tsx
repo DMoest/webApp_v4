@@ -6,10 +6,10 @@ import * as Style from "../assets/themes/index";
 
 /**
  * Home screen/view.
- * @param navigation
+ *
  * @constructor
  */
-export const Home: React.FC = ({navigation}) => {
+export const Home: React.FC = () => {
     return (
         <SafeAreaView style={Style.Base.mainContainer}>
             <View style={Style.Image.imageContainer}>
