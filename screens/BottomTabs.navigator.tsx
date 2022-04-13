@@ -5,7 +5,8 @@ import {Home} from './Home.screen';
 import {StockNavigator} from "./Stock.navigator";
 import {OrderNavigator} from "./Order.navigator";
 import {DeliveryNavigator} from "./Delivery.navigator";
-import {theme} from "../assets/styles/theme";
+// import * as Product from "../models/Products";
+import * as Style from "../assets/styles/index";
 
 
 const BottomTabs = createBottomTabNavigator();
@@ -24,7 +25,9 @@ const routeIcons = {
  *
  * @constructor
  */
-export const BottomTabsNavigator: React.FC = () => {
+export const BottomTabsNavigator: React.FC = ({products, setProducts, orders, setOrders, deliveries, setDeliveries}) => {
+    // const [products, setProducts] = useState([]);
+
     return (
         <BottomTabs.Navigator
             screenOptions={({ route }) => ({
@@ -45,14 +48,21 @@ export const BottomTabsNavigator: React.FC = () => {
 
                     return <FontAwesome5 name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: theme.Colors.secondaryColor,
-                tabBarInactiveTintColor: theme.Colors.gray3,
+                tabBarActiveTintColor: Style.Color.schemeOne.secondary,
+                tabBarInactiveTintColor: Style.Color.grayScale.gray3,
                 headerShown: false,
             })}>
             <BottomTabs.Screen name='Hem' component={Home} />
-            <BottomTabs.Screen name='Lager' component={StockNavigator} />
+
+            <BottomTabs.Screen name='Lager'>
+                {() => <StockNavigator products={products} setProducts={setProducts}/>}
+            </BottomTabs.Screen>
+
             <BottomTabs.Screen name='Order' component={OrderNavigator} />
-            <BottomTabs.Screen name='Leverans' component={DeliveryNavigator} />
+
+            <BottomTabs.Screen name='Leverans'>
+                {() => <DeliveryNavigator deliveries={deliveries} setDeliveries={setDeliveries}/>}
+            </BottomTabs.Screen>
         </BottomTabs.Navigator>
     )
 };

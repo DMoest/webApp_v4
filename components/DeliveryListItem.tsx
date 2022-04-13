@@ -10,18 +10,21 @@ import * as Style from "../assets/styles";
  * @param delivery
  * @constructor
  */
-export const DeliveryListItem = ({delivery}) => {
+export const DeliveryListItem: React.FC = ({route, item}) => {
+
+    console.log("DeliveryListItem: ", item);
+
     return (
-        <View key={delivery.id} style={[Style.Container.flexBox.row, Style.Button.button]} >
+        <View key={item.id} style={[Style.Container.flexBox.row, Style.Button.button]} >
             <View style={Style.Container.flexBox.rowNoPadding}>
-                <Text style={Style.Typography.dataLeft}>{delivery.id}</Text>
-                <Text style={Style.Typography.dataRight}>{delivery.product_name}</Text>
-                <Text style={Style.Typography.dataLeft}>{delivery.delivery_date}</Text>
+                <Text style={Style.Typography.dataLeft}>{item.id}</Text>
+                <Text style={Style.Typography.dataRight}>{item.product_name}</Text>
+                <Text style={Style.Typography.dataLeft}>{item.delivery_date}</Text>
             </View>
 
             <View style={Style.Container.flexBox.column}>
                 <Text style={Style.Typography.dataLeft}>Kommentar: </Text>
-                <Text style={Style.Typography.dataLeft}>{delivery.comment}</Text>
+                <Text style={Style.Typography.dataLeft}>{item.comment}</Text>
             </View>
         </View>
     )

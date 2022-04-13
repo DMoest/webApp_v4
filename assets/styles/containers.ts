@@ -1,6 +1,5 @@
 import {Dimensions} from "react-native";
 import * as Color from './colors'
-import * as Typography from './typography'
 
 
 /**
@@ -14,25 +13,36 @@ export const whiteSpace = {
     X2: 36.4,
 }
 
+/**
+ * Content container
+ */
 export const content = {
     flex: 1,
     paddingHorizontal: whiteSpace.X075,
     backgroundColor: Color.background.light,
 }
 
+/**
+ * 3 % Padding options for padding at screen.
+ */
 export const padding = {
     baseH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size
     baseV: (Dimensions.get('screen').width / 100) * 3,
 }
 
+/**
+ * Margin options.
+ */
 export const margin = {
     baseH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size,
     baseV: (Dimensions.get('screen').width / 100) * 3,
-
     subHeaderTop: whiteSpace.X050,
     subHeaderBottom: whiteSpace.X1,
 }
 
+/**
+ * FlexBox options.
+ */
 export const flexBox = {
     rowNoPadding: {
         width: '100%',
@@ -61,12 +71,18 @@ export const flexBox = {
     },
 }
 
+/**
+ * Bottom separator line.
+ */
 export const bottomSeparator = {
     paddingVertical: whiteSpace.X025,
     borderBottomWidth: 0.5,
     borderBottomColor: 'black',
 }
 
+/**
+ * Border radius options.
+ */
 export const borderRadius = {
     button: 5,
 }
@@ -77,12 +93,11 @@ export const flatList = {
 
 export const orderRowHead = {
         width: '100%',
-        marginBottom: Typography.whiteSpace.X1,
+        marginBottom: whiteSpace.X1,
         // flex: 3,
         flexDirection: 'row',
         justifyContent: 'space-between',
 }
-
 
 
 export const containers = {
@@ -113,6 +128,7 @@ export const containers = {
     headerMarginH: 12,
     headerMarginV: 10,
 
+    // subHeader
     subHeaderPaddingH: 12,
     subHeaderPaddingV: 10,
     subHeaderMarginH: 12,

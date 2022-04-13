@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import * as Style from "../assets/styles";
 
 
@@ -12,6 +12,8 @@ import * as Style from "../assets/styles";
  */
 export const StockItem: React.FC = ({route}) => {
     const item = route.params.item
+
+    console.log("Produkt: ", item, "\n")
 
     return (
         <View style={[Style.Base.content]}>

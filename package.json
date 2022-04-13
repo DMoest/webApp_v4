@@ -4,7 +4,7 @@
   "author": "Daniel Andersson",
   "main": "node_modules/expo/AppEntry.js",
   "assets": [
-    "./src/assets/fonts/"
+    "./assets/fonts/"
   ],
   "scripts": {
     "start": "expo start",

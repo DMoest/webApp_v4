@@ -15,10 +15,9 @@ const Stack = createStackNavigator();
  *
  * @constructor
  */
-export const StockNavigator: React.FC = () => {
+export const StockNavigator: React.FC = ({products, setProducts}) => {
     return (
         <View style={Style.Base.mainContainer}>
-
             <View style={Style.Image.imageContainer}>
                 <ImageBackground source={coverIMG} style={Style.Image.image}>
                     <Text style={Style.Typography.header}>Produkter</Text>
@@ -26,11 +25,20 @@ export const StockNavigator: React.FC = () => {
             </View>
 
             <View style={Style.Base.content}>
-                <Text style={[Style.Typography.paragraph, Style.Typography.endMarginText]}>Listan innehåller lagerförda produkter. Varje produkt har ett namn, ett artikelnr. och antal i lager. </Text>
+                <Text style={[Style.Typography.paragraph, Style.Typography.endMarginText]}>
+                    Listan innehåller lagerförda produkter. Varje produkt har ett namn, ett artikelnr. och antal i lager.
+                </Text>
 
                 <Stack.Navigator>
-                    <Stack.Screen name='Produkter' component={StockList} />
-                    <Stack.Screen name='Produkt' component={StockItem} />
+                    {/*<Stack.Screen name='Produkter' component={StockList} />*/}
+                    <Stack.Screen name='Produkter'>
+                        {() => <StockList products={products} setProducts={setProducts} />}
+                    </Stack.Screen>
+
+                    {/*<Stack.Screen name='ProduktDetaljer' component={StockItem} />*/}
+                    <Stack.Screen name='Produkt'>
+                        {() => <StockItem products={products} setProducts={setProducts} />}
+                    </Stack.Screen>
                 </Stack.Navigator>
             </View>
 

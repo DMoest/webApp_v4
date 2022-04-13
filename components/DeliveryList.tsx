@@ -1,29 +1,20 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {View, FlatList, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, FlatList, TouchableOpacity, Pressable} from 'react-native';
+// import config from '../config/config.json';
 import {DeliveryListItem} from "./DeliveryListItem";
-import config from '../config/config.json';
+import * as DeliveryModel from "../models/Deliveries";
 import * as Style from "../assets/styles";
 
 
-/**DeliveryeliveryList object to fetch item list from API and generate a FlatList View from response JSON object.
+/**
+ * DeliveryList object to fetch item list from API and generate a FlatList View from response JSON object.
  *
  * @param navigation
  * @constructor
  */
-export const DeliveryList = ({route, navigation}) => {
-    const [deliveries, setDeliveries] = useState([]);
-
-    /**
-     * Asynchronous function to handle fetch request to API.
-     *
-     * First, fetch from API.
-     * Second, from response promise make data into JSON object.
-     * Last, set result data into a state.
-     */
-    const handleFetchDeliveries = useCallback(async () => {
-        await fetch(`${config.base_url}/deliveries?api_key=${config.api_key}`)
-            .then(response => response.json())
-            .then(result => setDeliveries(result.data));
+export const DeliveryList: React.FC = ({route, navigation, deliveries, setDeliveries}) => {
+    useEffect(async () => {
+        setDeliveries(await DeliveryModel.getDeliveries());
     }, []);
 
     /**
@@ -32,22 +23,23 @@ export const DeliveryList = ({route, navigation}) => {
      * @param item
      * @param navigation
      */
-    const renderItem = ({ item }) => (
-        <TouchableOpacity
-            style={Style.Button.buttonContainer}
-            onPress={() => {
-                navigation.navigate('Leverans', {item})
-            }} >
-            <DeliveryListItem delivery={item}/>
-        </TouchableOpacity>
-    );
+    const renderItem = ({item}) => (
+        // <TouchableOpacity
+        //     key={item.id}
+        //     style={Style.Button.buttonContainer}
+        //     onPress={() => {navigation.navigate('Leveransdetaljer', {item})}}>
+        //
+        //     <DeliveryListItem item={item}/>
+        // </TouchableOpacity>
 
-    /**
-     * useEffect triggers the handle function to fetch all deliveries.
-     */
-    useEffect(() => {
-        handleFetchDeliveries();
-    }, []);
+        <Pressable
+            key={item.id}
+            onPress={() => {navigation.navigate('Leveransdetaljer', {item})}}
+            style={Style.Button.buttonContainer}>
+
+            <DeliveryListItem item={item} route={route}/>
+        </Pressable>
+    );
 
     return (
         <View>

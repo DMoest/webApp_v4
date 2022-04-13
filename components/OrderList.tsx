@@ -42,7 +42,7 @@ export const OrderList = ({route, navigation}) => {
      */
     const renderItem = ({ item }) => (
         <TouchableOpacity
-            key={item.if}
+            key={item.id}
             style={Style.Button.buttonContainer}
             onPress={() => {
                 navigation.navigate('OrderDetails', {item})

@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import AppLoading from 'expo-app-loading';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {BottomTabsNavigator} from "./screens/BottomTabs.navigator";
-import {theme} from "./assets/styles/theme";
+import * as Style from "./assets/styles/index";
 import {
     useFonts,
     OleoScriptSwashCaps_400Regular,
@@ -27,6 +27,7 @@ import {
 /**
  * Main App module.
  *
+ * Build states for app.
  * Font loader to with the package expo-google-fonts.
  * SafeAreaView with navigation containers.
  * Navigation with React-Navigation package, stack navigation type to navigate between app screens.
@@ -34,6 +35,10 @@ import {
  * @constructor
  */
 export const App: React.FC =() => {
+    const [products, setProducts] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [deliveries, setDeliveries] = useState([]);
+
     const [fontsLoaded, error] = useFonts({
         OleoScriptSwashCaps_400Regular,
         OleoScriptSwashCaps_700Bold,
@@ -53,27 +58,23 @@ export const App: React.FC =() => {
     }
 
     return (
-        <SafeAreaView style={[styles.safeArea, styles.base]}>
+        <SafeAreaView style={[Style.Base.mainContainer]}>
             <NavigationContainer>
-                <BottomTabsNavigator/>
+                <BottomTabsNavigator
+                    products={products}
+                    setProducts={setProducts}
+
+                    orders={orders}
+                    setOrders={setOrders}
+
+                    deliveries={deliveries}
+                    setDeliveries={setDeliveries}
+                />
             </NavigationContainer>
         </SafeAreaView>
     );
 }
 
-/**
- * App module styles.
- */
-const styles = StyleSheet.create({
-    safeArea: {
-        flex: 2,
-    },
-    base: {
-        flex: 1,
-        backgroundColor: theme.Colors.white,
-        paddingHorizontal: theme.Typography.whiteSpace50,
-    },
-});
 
 /**
  * Module exports.
