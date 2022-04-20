@@ -1,7 +1,7 @@
 import React from "react";
 import {ImageBackground, Text, View} from "react-native";
 import {createStackNavigator} from "@react-navigation/stack";
-import {StockList} from "../components/StockList";
+import {StockList} from "../components/Stock/StockList";
 import {StockItem} from "./StockItem.screen";
 import {StatusBar} from "expo-status-bar";
 import * as Style from "../assets/styles";
@@ -13,9 +13,10 @@ const Stack = createStackNavigator();
 /**
  * Stock Stack Navigator.
  *
+ * @param props
  * @constructor
  */
-export const StockNavigator: React.FC = ({products, setProducts}) => {
+export const StockNavigator: React.FC = (props) => {
     return (
         <View style={Style.Base.mainContainer}>
             <View style={Style.Image.imageContainer}>
@@ -26,18 +27,20 @@ export const StockNavigator: React.FC = ({products, setProducts}) => {
 
             <View style={Style.Base.content}>
                 <Text style={[Style.Typography.paragraph, Style.Typography.endMarginText]}>
-                    Listan innehåller lagerförda produkter. Varje produkt har ett namn, ett artikelnr. och antal i lager.
+                    Listan innehåller lagerförda produkter. Varje produkt
+                    har ett namn, ett artikelnr. och antal i lager.
                 </Text>
 
                 <Stack.Navigator>
-                    {/*<Stack.Screen name='Produkter' component={StockList} />*/}
                     <Stack.Screen name='Produkter'>
-                        {() => <StockList products={products} setProducts={setProducts} />}
+                        {() => <StockList
+                            products={props.products}
+                            setProducts={props.setProducts} />
+                        }
                     </Stack.Screen>
 
-                    {/*<Stack.Screen name='ProduktDetaljer' component={StockItem} />*/}
-                    <Stack.Screen name='Produkt'>
-                        {() => <StockItem products={products} setProducts={setProducts} />}
+                    <Stack.Screen name='ProductDetails'>
+                        {(props) => <StockItem {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
             </View>

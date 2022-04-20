@@ -3,7 +3,7 @@ import config from '../config/config.json';
 import Stock from '../Interfaces/Stock';
 
 
-async function getProducts(): Promise<Stock[]> {
+export async function getProducts(): Promise<Stock[]> {
         let response = await fetch(`${config.base_url}/products?api_key=${config.api_key}`)
         let result = await response.json();
 
@@ -25,5 +25,3 @@ async function getProducts(): Promise<Stock[]> {
 //     });
 // }
 // }
-
-export {getProducts}

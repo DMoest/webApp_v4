@@ -1,7 +1,7 @@
 /**
  * Stock interface.
  */
-interface Stock {
+export interface Stock {
     id: number,
     article_number: string,
     name: string,
@@ -11,4 +11,4 @@ interface Stock {
     location: string,
     price: string,
     api_key: string,
-}
+};

@@ -8,12 +8,12 @@ import {
     useFonts,
     OleoScriptSwashCaps_400Regular,
     OleoScriptSwashCaps_700Bold,
-} from '@expo-google-fonts/oleo-script-swash-caps'
+} from '@expo-google-fonts/oleo-script-swash-caps';
 import {
     JosefinSans_400Regular,
     JosefinSans_500Medium,
     JosefinSans_600SemiBold,
-} from '@expo-google-fonts/josefin-sans'
+} from '@expo-google-fonts/josefin-sans';
 import {
     Merriweather_300Light,
     Merriweather_300Light_Italic,
@@ -21,7 +21,7 @@ import {
     Merriweather_400Regular_Italic,
     Merriweather_700Bold,
     Merriweather_700Bold_Italic,
-} from '@expo-google-fonts/merriweather'
+} from '@expo-google-fonts/merriweather';
 
 
 /**

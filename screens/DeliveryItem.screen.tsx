@@ -7,19 +7,33 @@ import * as Style from "../assets/styles";
 /**
  * DeliveryListItem screen/view.
  *
- * @param route
+ * @param props
  * @constructor
  */
-export const DeliveryItem: React.FC = ({route}) => {
-    const item = route.params.item
+export const DeliveryItem: React.FC = (props) => {
+    const item = props.route.params.item
 
     return (
         <View style={[Style.Container.content]}>
-                <Text style={Style.Typography.dataLeft}>{item.id}</Text>
-                <Text style={Style.Typography.dataLeft}>{item.product_id}</Text>
-                <Text style={Style.Typography.dataLeft}>{item.product_name}</Text>
-                <Text style={Style.Typography.dataLeft}>{item.amount}</Text>
-                <Text style={Style.Typography.dataLeft}>{item.comment}</Text>
+            <View style={Style.Container.flexBox.rowNoPadding}>
+                <Text style={Style.Typography.dataLeft}>Inleverans ID: </Text>
+                <Text style={Style.Typography.dataRight}>{item.id}</Text>
+            </View>
+            <View style={Style.Container.flexBox.rowNoPadding}>
+                <Text style={Style.Typography.dataLeft}>Produkt ID: </Text>
+                <Text style={Style.Typography.dataRight}>{item.product_id}</Text>
+            </View>
+            <View style={Style.Container.flexBox.rowNoPadding}>
+                <Text style={Style.Typography.dataLeft}>Produktnamn: </Text>
+                <Text style={Style.Typography.dataRight}>{item.product_name}</Text>
+            </View>
+            <View style={Style.Container.flexBox.rowNoPadding}>
+                <Text style={Style.Typography.dataLeft}>Antal: </Text>
+                <Text style={Style.Typography.dataRight}>{item.amount} st</Text>
+            </View>
+
+            <Text style={Style.Typography.dataLeft}>Kommentar: </Text>
+            <Text style={Style.Typography.dataLeft}>{item.comment}</Text>
             <StatusBar style="auto"/>
         </View>
     );

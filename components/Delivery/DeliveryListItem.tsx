@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import * as Style from "../assets/styles";
+import * as Style from "../../assets/styles";
 
 
 /**
@@ -10,9 +10,9 @@ import * as Style from "../assets/styles";
  * @param delivery
  * @constructor
  */
-export const DeliveryListItem: React.FC = ({route, item}) => {
+export const DeliveryListItem: React.FC = ({item}) => {
 
-    console.log("DeliveryListItem: ", item);
+    // console.log("DeliveryListItem: ", item);
 
     return (
         <View key={item.id} style={[Style.Container.flexBox.row, Style.Button.button]} >

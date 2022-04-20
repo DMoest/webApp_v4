@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, ImageBackground} from 'react-native';
 import {createStackNavigator} from "@react-navigation/stack";
-import {DeliveryList} from '../components/DeliveryList';
+import {DeliveryList} from '../components/Delivery/DeliveryList';
 import {DeliveryItem} from './DeliveryItem.screen';
 import {StatusBar} from 'expo-status-bar';
 import * as Style from '../assets/styles';
@@ -11,11 +11,12 @@ import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
 const Stack = createStackNavigator();
 
 /**
- * Delivery screen/view.
+ * Delivery Stack Navigator.
  *
+ * @param props
  * @constructor
  */
-export const DeliveryNavigator: React.FC =({deliveries, setDeliveries}) => {
+export const DeliveryNavigator: React.FC =(props) => {
     return (
         <View style={Style.Base.mainContainer}>
             <View style={Style.Image.imageContainer}>
@@ -32,17 +33,15 @@ export const DeliveryNavigator: React.FC =({deliveries, setDeliveries}) => {
                 </Text>
 
                 <Stack.Navigator>
-                    {/*<Stack.Screen name='Leveranslista' component={DeliveryList} />*/}
-                    {/*<Stack.Screen name='Leverans' component={DeliveryItem} />*/}
-
-                    {/*<Stack.Screen name='Produkter' component={StockList} />*/}
-                    <Stack.Screen name='Leveranser'>
-                        {() => <DeliveryList deliveries={deliveries} setDeliveries={setDeliveries} />}
+                    <Stack.Screen name='Inleveranser'>
+                        {() => <DeliveryList
+                            deliveries={props.deliveries}
+                            setDeliveries={props.setDeliveries}/>
+                        }
                     </Stack.Screen>
 
-                    {/*<Stack.Screen name='Leveransdetaljer' component={DeliveryItem} />*/}
-                    <Stack.Screen name='Leveransdetaljer'>
-                        {() => <DeliveryItem deliveries={deliveries} setDeliveries={setDeliveries} />}
+                    <Stack.Screen name='Inleveransspecifikation'>
+                        {(props) => <DeliveryItem {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
             </View>
