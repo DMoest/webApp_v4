@@ -1,6 +1,5 @@
-import {Dimensions} from "react-native";
-import * as Color from './colors'
-
+import { Dimensions } from 'react-native';
+import * as Color from './colors';
 
 /**
  * White Space.
@@ -11,7 +10,7 @@ export const whiteSpace = {
     X075: 13.65,
     X1: 18.2,
     X2: 36.4,
-}
+};
 
 /**
  * Content container
@@ -20,7 +19,7 @@ export const content = {
     flex: 1,
     paddingHorizontal: whiteSpace.X075,
     backgroundColor: Color.background.light,
-}
+};
 
 /**
  * 3 % Padding options for padding at screen.
@@ -28,7 +27,7 @@ export const content = {
 export const padding = {
     baseH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size
     baseV: (Dimensions.get('screen').width / 100) * 3,
-}
+};
 
 /**
  * Margin options.
@@ -38,7 +37,7 @@ export const margin = {
     baseV: (Dimensions.get('screen').width / 100) * 3,
     subHeaderTop: whiteSpace.X050,
     subHeaderBottom: whiteSpace.X1,
-}
+};
 
 /**
  * FlexBox options.
@@ -69,7 +68,7 @@ export const flexBox = {
         flexWrap: 'wrap',
         justifyContent: 'space-between',
     },
-}
+};
 
 /**
  * Bottom separator line.
@@ -78,27 +77,26 @@ export const bottomSeparator = {
     paddingVertical: whiteSpace.X025,
     borderBottomWidth: 0.5,
     borderBottomColor: 'black',
-}
+};
 
 /**
  * Border radius options.
  */
 export const borderRadius = {
     button: 5,
-}
+};
 
 export const flatList = {
     backgroundColor: Color.background.light,
-}
+};
 
 export const orderRowHead = {
-        width: '100%',
-        marginBottom: whiteSpace.X1,
-        // flex: 3,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-}
-
+    width: '100%',
+    marginBottom: whiteSpace.X1,
+    // flex: 3,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+};
 
 export const containers = {
     // Paddings & Margins
@@ -154,4 +152,4 @@ export const containers = {
 
     // BorderRadius
     bthRadius: 5,
-}
+};

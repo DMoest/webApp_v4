@@ -2,13 +2,13 @@
  * Stock interface.
  */
 export interface Stock {
-    id: number,
-    article_number: string,
-    name: string,
-    description: string,
-    specifiers: number,
-    stock: number,
-    location: string,
-    price: string,
-    api_key: string,
-};
+    id: number;
+    article_number: string;
+    name: string;
+    description: string;
+    specifiers: string;
+    stock: number;
+    location: string;
+    price: number;
+    api_key: string;
+}

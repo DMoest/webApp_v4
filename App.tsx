@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from 'react';
 import AppLoading from 'expo-app-loading';
-import {SafeAreaView} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {BottomTabsNavigator} from "./screens/BottomTabs.navigator";
-import * as Style from "./assets/styles/index";
+import { SafeAreaView } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { BottomTabsNavigator } from './screens/BottomTabs.navigator';
+import * as Style from './assets/styles/index';
 import {
     useFonts,
     OleoScriptSwashCaps_400Regular,
@@ -23,7 +23,6 @@ import {
     Merriweather_700Bold_Italic,
 } from '@expo-google-fonts/merriweather';
 
-
 /**
  * Main App module.
  *
@@ -34,12 +33,12 @@ import {
  *
  * @constructor
  */
-export const App: React.FC =() => {
+export const App: React.FC = () => {
     const [products, setProducts] = useState([]);
     const [orders, setOrders] = useState([]);
     const [deliveries, setDeliveries] = useState([]);
 
-    const [fontsLoaded, error] = useFonts({
+    const [fontsLoaded] = useFonts({
         OleoScriptSwashCaps_400Regular,
         OleoScriptSwashCaps_700Bold,
         JosefinSans_400Regular,
@@ -58,23 +57,20 @@ export const App: React.FC =() => {
     }
 
     return (
-        <SafeAreaView style={[Style.Base.mainContainer]}>
+        <SafeAreaView style={Style.Base.mainContainer}>
             <NavigationContainer>
                 <BottomTabsNavigator
                     products={products}
                     setProducts={setProducts}
-
                     orders={orders}
                     setOrders={setOrders}
-
                     deliveries={deliveries}
                     setDeliveries={setDeliveries}
                 />
             </NavigationContainer>
         </SafeAreaView>
     );
-}
-
+};
 
 /**
  * Module exports.

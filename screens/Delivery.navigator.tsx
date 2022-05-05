@@ -1,12 +1,12 @@
-import React from 'react';
-import {Text, View, ImageBackground} from 'react-native';
-import {createStackNavigator} from "@react-navigation/stack";
-import {DeliveryList} from '../components/Delivery/DeliveryList';
-import {DeliveryItem} from './DeliveryItem.screen';
-import {StatusBar} from 'expo-status-bar';
+import React, { PropsWithChildren } from 'react';
+import { Text, View, ImageBackground } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { DeliveryList } from '../components/Delivery/DeliveryList';
+import { DeliveryItem } from './DeliveryItem.screen';
+import { StatusBar } from 'expo-status-bar';
 import * as Style from '../assets/styles';
 import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
-
 
 const Stack = createStackNavigator();
 
@@ -16,28 +16,42 @@ const Stack = createStackNavigator();
  * @param props
  * @constructor
  */
-export const DeliveryNavigator: React.FC =(props) => {
+export const DeliveryNavigator: React.FC = (
+    props:
+        | NavigationProp<object | never>
+        | RouteProp<any>
+        | PropsWithChildren<string | number | boolean | object | []>,
+) => {
     return (
         <View style={Style.Base.mainContainer}>
             <View style={Style.Image.imageContainer}>
-                <ImageBackground source={coverIMG} style={Style.Image.image}>
+                <ImageBackground
+                    source={coverIMG}
+                    style={Style.Image.image}>
                     <Text style={Style.Typography.header}>Leveranser</Text>
                 </ImageBackground>
             </View>
 
             <View style={Style.Container.content}>
-                <Text style={[Style.Typography.paragraph, Style.Typography.endMarginText]}>
-                    Listan innehåller samtliga inkommande leveraser. En leverans har ett id, ett datum,
-                    ett produkt-id, ett produktnamn och antal beställda av produkten.
-                    Sist finns en kommentar som tillhör leveransen.
+                <Text
+                    style={[
+                        Style.Typography.paragraph,
+                        Style.Typography.endMarginText,
+                    ]}>
+                    Listan innehåller samtliga inkommande leveraser. En leverans
+                    har ett id, ett datum, ett produkt-id, ett produktnamn och
+                    antal beställda av produkten. Sist finns en kommentar som
+                    tillhör leveransen.
                 </Text>
 
                 <Stack.Navigator>
                     <Stack.Screen name='Inleveranser'>
-                        {() => <DeliveryList
-                            deliveries={props.deliveries}
-                            setDeliveries={props.setDeliveries}/>
-                        }
+                        {() => (
+                            <DeliveryList
+                                deliveries={props.deliveries}
+                                setDeliveries={props.setDeliveries}
+                            />
+                        )}
                     </Stack.Screen>
 
                     <Stack.Screen name='Inleveransspecifikation'>
@@ -46,7 +60,7 @@ export const DeliveryNavigator: React.FC =(props) => {
                 </Stack.Navigator>
             </View>
 
-            <StatusBar style='auto'/>
+            <StatusBar style='auto' />
         </View>
     );
-}
+};

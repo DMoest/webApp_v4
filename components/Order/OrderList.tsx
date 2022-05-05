@@ -1,10 +1,9 @@
-import React, {useEffect} from 'react';
-import {View, FlatList, Pressable} from 'react-native';
-import {useNavigation} from "@react-navigation/native";
-import {OrderListItem} from "./OrderListItem";
+import React, { useEffect } from 'react';
+import { View, FlatList, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { OrderListItem } from './OrderListItem';
 import * as Style from '../../assets/styles';
-import * as OrderModel from "../../models/Orders";
-
+import * as OrderModel from '../../models/Orders';
 
 /**
  * OrdersList object to fetch order list from API and generate a FlatList View from response JSON object.
@@ -17,7 +16,7 @@ export const OrderList = (props) => {
         props.setOrders(await OrderModel.getOrders());
     }, [props.orders]);
 
-    let newOrders = props.orders.filter(order => order.status == 'Ny');
+    const newOrders = props.orders.filter((order) => order.status == 'Ny');
     const navigation = useNavigation();
 
     /**
@@ -25,14 +24,13 @@ export const OrderList = (props) => {
      *
      * @param item
      */
-    const renderItem = ({item}) => (
+    const renderItem = ({ item }) => (
         <Pressable
             key={item.id}
             style={Style.Button.buttonContainer}
             onPress={() => {
-                navigation.navigate('Plocklista', {item})
-            }} >
-
+                navigation.navigate('Plocklista', { item });
+            }}>
             <OrderListItem item={item} />
         </Pressable>
     );
@@ -42,8 +40,9 @@ export const OrderList = (props) => {
             <FlatList
                 style={Style.Container.flatList}
                 data={newOrders}
-                // keyExtractor={item => item.id}
-                renderItem={renderItem} />
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={renderItem}
+            />
         </View>
     );
-}
+};

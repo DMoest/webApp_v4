@@ -7,7 +7,7 @@ export const abstracts = {
     buttonOpacity: 0.3,
     buttonRadius: 1.5,
     buttonElevation: 2,
-}
+};
 
 export const shadow = {
     // Shadow properties
@@ -18,4 +18,4 @@ export const shadow = {
     buttonOpacity: 0.3,
     buttonRadius: 1.5,
     buttonElevation: 2,
-}
+};

@@ -1,7 +1,6 @@
-import * as Abstract from "./abstracts";
+import * as Abstract from './abstracts';
 import * as Color from './colors';
 import * as Container from './containers';
-
 
 /**
  * Standard List Button.
@@ -16,7 +15,7 @@ export const button = {
     borderRadius: Container.borderRadius.button,
     backgroundColor: Color.schemeOne.primary,
     color: Color.text.dark,
-}
+};
 
 export const buttonContainer = {
     alignSelf: 'center',
@@ -29,4 +28,4 @@ export const buttonContainer = {
     shadowOpacity: Abstract.shadow.buttonOpacity,
     shadowRadius: Abstract.shadow.buttonRadius,
     elevation: Abstract.shadow.buttonElevation,
-}
+};

@@ -1,13 +1,12 @@
-import * as Color from "./colors";
-import * as Container from "./containers";
-
+import * as Color from './colors';
+import * as Container from './containers';
 
 /**
  * Line Height.
  */
 export const lineHeight = {
     l1: -1.6,
-}
+};
 
 /**
  * White Space.
@@ -18,7 +17,7 @@ export const whiteSpace = {
     X075: 13.65,
     X1: 18.2,
     X2: 36.4,
-}
+};
 
 /**
  * Modular scale font sizes.
@@ -32,29 +31,29 @@ export const fontSize = {
     text: 13,
     smallText: 7.5,
     miniText: 5.63,
-}
+};
 
 /**
  * Font Weights
  */
 export const fontWeight = {
-    h1: "400",
-    h2: "400",
-    h3: "400",
-    h4: "400",
-    h5: "400",
-    text: "400",
-    btn: "600",
-}
+    h1: '400',
+    h2: '400',
+    h3: '400',
+    h4: '400',
+    h5: '400',
+    text: '400',
+    btn: '600',
+};
 
 export const fontFamily = {
-    header: "OleoScriptSwashCaps_400Regular",
-    subHeader: "JosefinSans_600SemiBold",
-    text: "Merriweather_400Regular",
-    quotes: "Merriweather_400Regular_Italic",
-    btn: "JosefinSans_600SemiBold",
-    btn2: "Merriweather_700Bold",
-}
+    header: 'OleoScriptSwashCaps_400Regular',
+    subHeader: 'JosefinSans_600SemiBold',
+    text: 'Merriweather_400Regular',
+    quotes: 'Merriweather_400Regular_Italic',
+    btn: 'JosefinSans_600SemiBold',
+    btn2: 'Merriweather_700Bold',
+};
 
 export const header = {
     width: '100%',
@@ -69,7 +68,7 @@ export const header = {
     fontFamily: fontFamily.header,
 
     color: Color.text.light,
-}
+};
 
 export const subHeader = {
     alignSelf: 'center',
@@ -80,7 +79,7 @@ export const subHeader = {
     fontFamily: fontFamily.subHeader,
     lineHeight: lineHeight.l1,
     color: Color.text.dark,
-}
+};
 
 export const paragraph = {
     width: '100%',
@@ -94,7 +93,7 @@ export const paragraph = {
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.text,
-}
+};
 
 export const dataLeft = {
     paddingHorizontal: whiteSpace.X025,
@@ -106,7 +105,7 @@ export const dataLeft = {
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.text,
-}
+};
 
 export const dataCenter = {
     paddingHorizontal: whiteSpace.X025,
@@ -118,7 +117,7 @@ export const dataCenter = {
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.text,
-}
+};
 
 export const dataRight = {
     paddingHorizontal: whiteSpace.X025,
@@ -129,24 +128,24 @@ export const dataRight = {
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.text,
-}
+};
 
 export const endMarginText = {
     marginBottom: whiteSpace.X1,
-}
+};
 
 export const endMarginHeader = {
     marginBottom: whiteSpace.X2,
-}
+};
 
 export const typography = {
     // Fonts
-    headerFont: "OleoScriptSwashCaps_400Regular",
-    subHeaderFont: "JosefinSans_600SemiBold",
-    textFont: "Merriweather_400Regular",
-    quotesFont: "Merriweather_400Regular_Italic",
-    btnFont: "JosefinSans_600SemiBold",
-    btnFont2: "Merriweather_700Bold",
+    headerFont: 'OleoScriptSwashCaps_400Regular',
+    subHeaderFont: 'JosefinSans_600SemiBold',
+    textFont: 'Merriweather_400Regular',
+    quotesFont: 'Merriweather_400Regular_Italic',
+    btnFont: 'JosefinSans_600SemiBold',
+    btnFont2: 'Merriweather_700Bold',
 
     // Typography
     btnBigFontSize: 16,
@@ -172,16 +171,16 @@ export const typography = {
     whiteSpace200: 36.4,
 
     // Weight
-    h1Weight: "400",
-    h2Weight: "400",
-    h3Weight: "400",
-    h4Weight: "400",
-    h5Weight: "400",
-    textWeight: "400",
-    btnWeight: "600",
+    h1Weight: '400',
+    h2Weight: '400',
+    h3Weight: '400',
+    h4Weight: '400',
+    h5Weight: '400',
+    textWeight: '400',
+    btnWeight: '600',
 
-    headerWeight: "400",
-    subHeaderWeight: "400",
-    paragraphWeight: "400",
-    btnWeight: "600",
-}
+    headerWeight: '400',
+    subHeaderWeight: '400',
+    paragraphWeight: '400',
+    btnWeight: '600',
+};

@@ -1,8 +1,8 @@
-import React from "react";
-import {StatusBar} from 'expo-status-bar';
-import {Text, View} from 'react-native';
-import * as Style from "../assets/styles";
-
+import React, { PropsWithChildren } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { Text, View } from 'react-native';
+import * as Style from '../assets/styles';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 /**
  * DeliveryListItem screen/view.
@@ -10,22 +10,31 @@ import * as Style from "../assets/styles";
  * @param props
  * @constructor
  */
-export const DeliveryItem: React.FC = (props) => {
-    const item = props.route.params.item
+export const DeliveryItem: React.FC = (
+    props:
+        | NavigationProp<object | never>
+        | RouteProp<any>
+        | PropsWithChildren<string | number | boolean | object | []>,
+) => {
+    const item = props.route.params.item;
 
     return (
-        <View style={[Style.Container.content]}>
+        <View style={Style.Container.content}>
             <View style={Style.Container.flexBox.rowNoPadding}>
                 <Text style={Style.Typography.dataLeft}>Inleverans ID: </Text>
                 <Text style={Style.Typography.dataRight}>{item.id}</Text>
             </View>
             <View style={Style.Container.flexBox.rowNoPadding}>
                 <Text style={Style.Typography.dataLeft}>Produkt ID: </Text>
-                <Text style={Style.Typography.dataRight}>{item.product_id}</Text>
+                <Text style={Style.Typography.dataRight}>
+                    {item.product_id}
+                </Text>
             </View>
             <View style={Style.Container.flexBox.rowNoPadding}>
                 <Text style={Style.Typography.dataLeft}>Produktnamn: </Text>
-                <Text style={Style.Typography.dataRight}>{item.product_name}</Text>
+                <Text style={Style.Typography.dataRight}>
+                    {item.product_name}
+                </Text>
             </View>
             <View style={Style.Container.flexBox.rowNoPadding}>
                 <Text style={Style.Typography.dataLeft}>Antal: </Text>
@@ -34,7 +43,7 @@ export const DeliveryItem: React.FC = (props) => {
 
             <Text style={Style.Typography.dataLeft}>Kommentar: </Text>
             <Text style={Style.Typography.dataLeft}>{item.comment}</Text>
-            <StatusBar style="auto"/>
+            <StatusBar style='auto' />
         </View>
     );
-}
+};

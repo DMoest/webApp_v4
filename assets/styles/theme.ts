@@ -1,8 +1,8 @@
-import {abstracts} from "./abstracts";
-import {colors} from "./colors";
-import {containers} from "./containers";
-import {images} from "./images";
-import {typography} from "./typography";
+import { abstracts } from './abstracts';
+import { colors } from './colors';
+import { containers } from './containers';
+import { images } from './images';
+import { typography } from './typography';
 
 export const theme = {
     Abstracts: abstracts,
@@ -10,4 +10,4 @@ export const theme = {
     Container: containers,
     Images: images,
     Typography: typography,
-}
+};
