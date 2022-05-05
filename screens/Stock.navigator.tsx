@@ -1,14 +1,22 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
+// eslint-disable-next-line import/namespace
 import { ImageBackground, Text, View } from 'react-native';
+// eslint-disable-next-line import/no-unresolved
+import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Stock } from '../interfaces/Stock';
 import { StockList } from '../components/Stock/StockList';
 import { StockItem } from './StockItem.screen';
 import { StatusBar } from 'expo-status-bar';
 import * as Style from '../assets/styles';
 import coverIMG from '../assets/img/NutsAndBolts-5.jpg';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
 
-const Stack = createStackNavigator();
+type StockPropsType = {
+    products: Stock[];
+    setProducts: object;
+};
+
+const Stack: NativeStackNavigatorProps = createStackNavigator();
 
 /**
  * Stock Stack Navigator.
@@ -16,11 +24,8 @@ const Stack = createStackNavigator();
  * @param props
  * @constructor
  */
-export const StockNavigator: React.FC = (
-    props:
-        | NavigationProp<object | never>
-        | RouteProp<any>
-        | PropsWithChildren<string | number | boolean | object | []>,
+export const StockNavigator: (props: StockPropsType) => JSX.Element = (
+    props: StockPropTypes,
 ) => {
     return (
         <View style={Style.Base.mainContainer}>
@@ -53,7 +58,9 @@ export const StockNavigator: React.FC = (
                     </Stack.Screen>
 
                     <Stack.Screen name='Produktspecifikation'>
-                        {(props) => <StockItem {...props} />}
+                        {(props: React.PropsWithChildren<object>) => (
+                            <StockItem {...props} />
+                        )}
                     </Stack.Screen>
                 </Stack.Navigator>
             </View>

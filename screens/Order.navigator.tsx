@@ -1,14 +1,22 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
+// eslint-disable-next-line import/namespace
 import { Text, View, ImageBackground } from 'react-native';
+// eslint-disable-next-line import/no-unresolved
+import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
+import { Order } from '../interfaces/Order';
 import { OrderList } from '../components/Order/OrderList';
 import { OrderItem } from './OrderItem.screen';
+import { StatusBar } from 'expo-status-bar';
 import * as Style from '../assets/styles';
 import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 
-const Stack = createStackNavigator();
+type OrderPropsType = {
+    orders: Order[];
+    setOrders: object;
+};
+
+const Stack: NativeStackNavigatorProps = createStackNavigator();
 
 /**
  * Order Stack Navigator.
@@ -16,11 +24,8 @@ const Stack = createStackNavigator();
  * @param props
  * @constructor
  */
-export const OrderNavigator: React.FC = (
-    props:
-        | NavigationProp<object | never>
-        | RouteProp<any>
-        | PropsWithChildren<string | number | boolean | object | []>,
+export const OrderNavigator: (props: OrderPropsType) => JSX.Element = (
+    props: OrderPropsType,
 ) => {
     return (
         <View style={Style.Base.mainContainer}>
@@ -50,7 +55,7 @@ export const OrderNavigator: React.FC = (
                     </Stack.Screen>
 
                     <Stack.Screen name='Plocklista'>
-                        {(props: React.PropsWithChildren<any>) => (
+                        {(props: React.PropsWithChildren<object>) => (
                             <OrderItem {...props} />
                         )}
                     </Stack.Screen>

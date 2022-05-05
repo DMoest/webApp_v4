@@ -1,10 +1,15 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, ScrollView, Button, StyleProp } from 'react-native';
+// eslint-disable-next-line import/namespace
+import { Text, View, ScrollView, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as OrderModel from '../models/Orders';
 import * as OrderInterfaces from '../interfaces/Order';
 import * as Style from '../assets/styles';
+
+type OrderItemPropsType = {
+    route: object;
+};
 
 /**
  * StockListItem screen/view.
@@ -12,12 +17,12 @@ import * as Style from '../assets/styles';
  * @constructor
  * @param props
  */
-export const OrderItem: React.FC = (
-    props: PropsWithChildren<OrderInterfaces.Order>,
+export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
+    props: OrderItemPropsType,
 ) => {
     const item = props.route.params.item;
     const navigation = useNavigation();
-    const packable: boolean[] = [];
+    const packable: [boolean] = [];
 
     const orderDetails: React.FC<OrderInterfaces.Order> = () => {
         return (

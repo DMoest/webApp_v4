@@ -1,14 +1,22 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
+// eslint-disable-next-line import/namespace
 import { Text, View, ImageBackground } from 'react-native';
+// eslint-disable-next-line import/no-unresolved
+import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { Deliveries } from '../interfaces/Deliveries';
 import { DeliveryList } from '../components/Delivery/DeliveryList';
 import { DeliveryItem } from './DeliveryItem.screen';
 import { StatusBar } from 'expo-status-bar';
 import * as Style from '../assets/styles';
 import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
 
-const Stack = createStackNavigator();
+type DeliveriesPropsType = {
+    deliveries: Deliveries;
+    setDeliveries: object;
+};
+
+const Stack: NativeStackNavigatorProps = createStackNavigator();
 
 /**
  * Delivery Stack Navigator.
@@ -16,11 +24,8 @@ const Stack = createStackNavigator();
  * @param props
  * @constructor
  */
-export const DeliveryNavigator: React.FC = (
-    props:
-        | NavigationProp<object | never>
-        | RouteProp<any>
-        | PropsWithChildren<string | number | boolean | object | []>,
+export const DeliveryNavigator: (props: DeliveriesPropsType) => JSX.Element = (
+    props: DeliveriesPropsType,
 ) => {
     return (
         <View style={Style.Base.mainContainer}>
@@ -55,7 +60,9 @@ export const DeliveryNavigator: React.FC = (
                     </Stack.Screen>
 
                     <Stack.Screen name='Inleveransspecifikation'>
-                        {(props) => <DeliveryItem {...props} />}
+                        {(props: React.PropsWithChildren<object>) => (
+                            <DeliveryItem {...props} />
+                        )}
                     </Stack.Screen>
                 </Stack.Navigator>
             </View>

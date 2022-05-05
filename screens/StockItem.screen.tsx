@@ -1,8 +1,12 @@
-import React, { PropsWithChildren } from 'react';
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+// eslint-disable-next-line import/namespace
 import { Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import * as Style from '../assets/styles';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
+
+type StockItemPropsType = {
+    route: object;
+};
 
 /**
  * StockListItem screen/view.
@@ -10,17 +14,13 @@ import { NavigationProp, RouteProp } from '@react-navigation/native';
  * @constructor
  * @param props
  */
-export const StockItem: React.FC = (
-    props:
-        | NavigationProp<object | never>
-        | RouteProp<any>
-        | PropsWithChildren<string | number | boolean | object | []>,
+export const StockItem: (props: StockItemPropsType) => JSX.Element = (
+    props: StockItemPropsType,
 ) => {
     const product = props.route.params.item;
 
     return (
         <View style={[Style.Base.content]}>
-            {/*<Text>Hej här ska det vara en produkt-view!!! ...vart är dina props?</Text>*/}
             <Text style={Style.Typography.subHeader}>{product.name}</Text>
 
             <View style={Style.Container.flexBox.row}>

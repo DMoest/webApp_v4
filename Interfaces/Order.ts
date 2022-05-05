@@ -10,7 +10,7 @@ export interface Order {
     country: string;
     status_id: string;
     api_key: string;
-    order_items?: object;
+    order_items?: OrderItem[];
 }
 
 /**

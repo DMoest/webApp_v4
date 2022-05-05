@@ -1,28 +1,29 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
+// eslint-disable-next-line import/no-unresolved
+import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Home } from './Home.screen';
 import { StockNavigator } from './Stock.navigator';
 import { OrderNavigator } from './Order.navigator';
 import { DeliveryNavigator } from './Delivery.navigator';
-import { Deliveries } from '../interfaces/Deliveries';
-import { Order } from '../interfaces/Order';
-import { Stock } from '../interfaces/Stock';
 import * as Style from '../assets/styles/index';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
 
-const BottomTabs = createBottomTabNavigator();
+type BottomTabsProps = {
+    products: object;
+    setProducts: object;
+    orders: object;
+    setOrders: object;
+    deliveries: object;
+    setDeliveries: object;
+};
+
+const BottomTabs: NativeStackNavigatorProps = createBottomTabNavigator();
 const routeIcons = {
     Home: 'home',
     Lager: 'layer-group',
     Order: 'truck',
     Inleveranser: 'dolly',
-};
-
-export type SetStateProps = {
-    setProducts: object;
-    setOrders: object;
-    setDeliveries: object;
 };
 
 /**
@@ -31,19 +32,11 @@ export type SetStateProps = {
  * @param props
  * @constructor
  */
-export const BottomTabsNavigator: React.FC = (
-    props:
-        | SetStateProps
-        | Deliveries
-        | NavigationProp<object>
-        | Order
-        | PropsWithChildren<any>
-        | RouteProp<any>
-        | Stock,
+export const BottomTabsNavigator: (props: BottomTabsProps) => JSX.Element = (
+    props: BottomTabsProps,
 ) => {
     return (
         <BottomTabs.Navigator
-            s
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
