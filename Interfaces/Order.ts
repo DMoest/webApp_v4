@@ -8,6 +8,7 @@ export interface Order {
     zip: string;
     city: string;
     country: string;
+    status: string;
     status_id: string;
     api_key: string;
     order_items?: OrderItem[];

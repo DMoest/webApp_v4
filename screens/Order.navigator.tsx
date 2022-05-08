@@ -8,8 +8,10 @@ import { Order } from '../interfaces/Order';
 import { OrderList } from '../components/Order/OrderList';
 import { OrderItem } from './OrderItem.screen';
 import { StatusBar } from 'expo-status-bar';
-import * as Style from '../assets/styles';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
+import * as Style from '../assets/styles';
 
 type OrderPropsType = {
     orders: Order[];
@@ -55,7 +57,7 @@ export const OrderNavigator: (props: OrderPropsType) => JSX.Element = (
                     </Stack.Screen>
 
                     <Stack.Screen name='Plocklista'>
-                        {(props: React.PropsWithChildren<object>) => (
+                        {(props: React.PropsWithChildren<never>) => (
                             <OrderItem {...props} />
                         )}
                     </Stack.Screen>

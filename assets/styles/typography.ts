@@ -1,5 +1,7 @@
+/**
+ * Module imports.
+ */
 import * as Color from './colors';
-import * as Container from './containers';
 
 /**
  * Line Height.
@@ -46,6 +48,9 @@ export const fontWeight = {
     btn: '600',
 };
 
+/**
+ * Font Family attributes.
+ */
 export const fontFamily = {
     header: 'OleoScriptSwashCaps_400Regular',
     subHeader: 'JosefinSans_600SemiBold',
@@ -55,6 +60,9 @@ export const fontFamily = {
     btn2: 'Merriweather_700Bold',
 };
 
+/**
+ * Header attributes.
+ */
 export const header = {
     width: '100%',
     height: undefined,
@@ -70,10 +78,13 @@ export const header = {
     color: Color.text.light,
 };
 
+/**
+ * Sub Header attributes.
+ */
 export const subHeader = {
     alignSelf: 'center',
     paddingVertical: whiteSpace.X050,
-    marginBottom: Container.margin.subHeaderBottom,
+    marginBottom: whiteSpace.X1,
 
     fontSize: fontSize.h4,
     fontFamily: fontFamily.subHeader,
@@ -81,6 +92,9 @@ export const subHeader = {
     color: Color.text.dark,
 };
 
+/**
+ * Paragraph attributes.
+ */
 export const paragraph = {
     width: '100%',
     height: undefined,
@@ -95,6 +109,9 @@ export const paragraph = {
     fontFamily: fontFamily.text,
 };
 
+/**
+ * Data to the left attributes.
+ */
 export const dataLeft = {
     paddingHorizontal: whiteSpace.X025,
     paddingBottom: whiteSpace.X025,
@@ -107,6 +124,9 @@ export const dataLeft = {
     fontFamily: fontFamily.text,
 };
 
+/**
+ * Data placed centered attributes.
+ */
 export const dataCenter = {
     paddingHorizontal: whiteSpace.X025,
     paddingBottom: whiteSpace.X025,
@@ -119,6 +139,9 @@ export const dataCenter = {
     fontFamily: fontFamily.text,
 };
 
+/**
+ * Data to the right attributes.
+ */
 export const dataRight = {
     paddingHorizontal: whiteSpace.X025,
     paddingBottom: whiteSpace.X025,
@@ -130,14 +153,23 @@ export const dataRight = {
     fontFamily: fontFamily.text,
 };
 
+/**
+ * End margin text attributes.
+ */
 export const endMarginText = {
     marginBottom: whiteSpace.X1,
 };
 
-export const endMarginHeader = {
-    marginBottom: whiteSpace.X2,
-};
+/**
+ * End margin header attributes.
+ */
+// export const endMarginHeader = {
+//     marginBottom: whiteSpace.X2,
+// };
 
+/**
+ * Typography attributes.
+ */
 export const typography = {
     // Fonts
     headerFont: 'OleoScriptSwashCaps_400Regular',
@@ -182,5 +214,4 @@ export const typography = {
     headerWeight: '400',
     subHeaderWeight: '400',
     paragraphWeight: '400',
-    btnWeight: '600',
 };

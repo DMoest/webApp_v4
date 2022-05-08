@@ -1,30 +1,39 @@
+/**
+ * Module Imports.
+ */
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 // eslint-disable-next-line import/namespace
-import { Text, View, ScrollView, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import * as OrderModel from '../models/Orders';
+import { Text, View, ScrollView } from 'react-native';
 import * as OrderInterfaces from '../interfaces/Order';
+// import * as OrderInterfaces from '../interfaces/Order';
 import * as Style from '../assets/styles';
 
+/**
+ * Module Props Type.
+ */
 type OrderItemPropsType = {
-    route: object;
+    route: {
+        params: {
+            item: OrderInterfaces.Order;
+        };
+    };
 };
 
 /**
- * StockListItem screen/view.
+ * OrderItem screen/view.
  *
- * @constructor
  * @param props
+ * @constructor
  */
 export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
     props: OrderItemPropsType,
 ) => {
-    const item = props.route.params.item;
-    const navigation = useNavigation();
-    const packable: [boolean] = [];
+    const item: OrderInterfaces.Order = props.route.params.item;
 
-    const orderDetails: React.FC<OrderInterfaces.Order> = () => {
+    // console.log('ORDER: ', item);
+
+    const orderDetails = () => {
         return (
             <View style={Style.Container.bottomSeparator}>
                 <View style={Style.Container.flexBox.rowNoPadding}>
@@ -59,7 +68,7 @@ export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
                 </View>
 
                 <View style={Style.Container.flexBox.rowNoPadding}>
-                    <Text style={Style.Typography.dataLeft}>Postnummer: </Text>
+                    <Text style={Style.Typography.dataLeft}>Postkod: </Text>
                     <Text style={Style.Typography.dataRight}>{item.zip}</Text>
                 </View>
 
@@ -71,24 +80,20 @@ export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
         );
     };
 
-    function checkStockStatus({
-        orderItem,
-    }: OrderInterfaces.OrderItem): JSX.Element {
+    function checkStockStatus(
+        orderItem: OrderInterfaces.OrderItem,
+    ): JSX.Element {
         let indicatorText;
         let indicatorColor;
 
         if (orderItem.amount <= orderItem.stock) {
             indicatorColor = Style.Color.indicator.positive;
             indicatorText = 'Det finns på lager, bara att plocka! ';
-            packable.push(true);
         } else if (orderItem.amount > orderItem.stock) {
             indicatorColor = Style.Color.indicator.warning;
             indicatorText =
                 'Kontrollera lagerplatsen, enligt lagersaldo finns inte tillräckligt av produkten. ';
-            packable.push(false);
         }
-
-        console.log(`Packable: ${packable}`);
 
         return (
             <Text
@@ -98,50 +103,8 @@ export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
         );
     }
 
-    async function checkOrderPackingStatus({ orderItems }): Promise<object> {
-        const packableOrder: boolean[] = [];
-        let outputElement: object;
-
-        await orderItems.forEach(
-            (item: { amount: number; stock: number }): void => {
-                if (item.amount <= item.stock) {
-                    packableOrder.push(true);
-                } else {
-                    packableOrder.push(false);
-                }
-            },
-        );
-
-        console.log(`PackableOrder: ${packableOrder}`);
-
-        if (!packableOrder.includes(false)) {
-            outputElement = () => (
-                <Button
-                    style={Style.Button.buttonContainer}
-                    title='Packa order'
-                    onPress={async () => {
-                        await OrderModel.pickOrder(item.order_items);
-                        navigation.navigate('Orderlista');
-                    }}>
-                    Packa ordern!
-                </Button>
-            );
-        } else {
-            outputElement = () => (
-                <View>
-                    <Text style={{ width: '100%', height: undefined }}>
-                        Det går inte att packa orden för tillfället pga lågt
-                        produktsaldo.
-                    </Text>
-                </View>
-            );
-        }
-
-        return outputElement;
-    }
-
     const orderItems = item.order_items.map(
-        (orderItem: OrderInterfaces.OrderItem, index: number): JSX.Element => (
+        (orderItem: OrderInterfaces.OrderItem, index: number) => (
             <View
                 key={index}
                 style={Style.Container.bottomSeparator}>
@@ -178,19 +141,19 @@ export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
                 </View>
 
                 <View
-                    style={
-                        (Style.Container.content,
+                    style={[
+                        Style.Container.content,
                         Style.Container.flexBox.rowNoPadding,
                         {
                             paddingVertical: Style.Typography.whiteSpace.X1,
-                        })
-                    }>
+                        },
+                    ]}>
                     <View style={(Style.Container.flexBox.column, { flex: 1 })}>
                         <Text style={Style.Typography.dataLeft}> </Text>
                     </View>
 
                     <View style={{ flex: 4.5 }}>
-                        {checkStockStatus({ orderItem })}
+                        {checkStockStatus(orderItem)}
                     </View>
                 </View>
             </View>
@@ -200,9 +163,10 @@ export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
     return (
         <View style={[Style.Container.content, { paddingBottom: 0 }]}>
             <ScrollView style={Style.Container.content}>
-                {orderDetails}
-
+                {orderDetails()}
                 {orderItems}
+
+                {/*<Button title='Packa order' onPress={} />*/}
             </ScrollView>
             <StatusBar style='auto' />
         </View>

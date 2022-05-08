@@ -1,3 +1,6 @@
+/**
+ * All Standard Colors.
+ */
 export const colors = {
     // Colors
     primaryColor: '#A4CFBE',
@@ -36,7 +39,7 @@ export const colors = {
 };
 
 /**
- * Color Scheme.
+ * Color Scheme One.
  */
 export const schemeOne = {
     primary: '#A4CFBE',
@@ -86,6 +89,9 @@ export const indicator = {
     link2: '#662C91',
 };
 
+/**
+ * Shadow colors.
+ */
 export const shadows = {
     s1: '#3F3F3F',
 };

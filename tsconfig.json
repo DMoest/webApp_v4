@@ -2,7 +2,7 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "types": ["node"]
+    "types": ["node"],
+    "skipLibCheck": true,
   },
-  "skipLibCheck": true,
 }

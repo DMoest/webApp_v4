@@ -1,3 +1,6 @@
+/**
+ * Module imports.
+ */
 import * as Abstract from './abstracts';
 import * as Color from './colors';
 import * as Container from './containers';
@@ -17,6 +20,9 @@ export const button = {
     color: Color.text.dark,
 };
 
+/**
+ * Standard Button Container.
+ */
 export const buttonContainer = {
     alignSelf: 'center',
     width: '95%',

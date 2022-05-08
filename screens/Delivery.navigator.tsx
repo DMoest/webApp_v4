@@ -50,7 +50,7 @@ export const DeliveryNavigator: (props: DeliveriesPropsType) => JSX.Element = (
                 </Text>
 
                 <Stack.Navigator>
-                    <Stack.Screen name='Inleveranser'>
+                    <Stack.Screen name='Inkommande leveranser'>
                         {() => (
                             <DeliveryList
                                 deliveries={props.deliveries}

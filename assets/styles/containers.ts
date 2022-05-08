@@ -1,3 +1,7 @@
+/**
+ * Module imports.
+ */
+// eslint-disable-next-line import/namespace
 import { Dimensions } from 'react-native';
 import * as Color from './colors';
 
@@ -22,21 +26,11 @@ export const content = {
 };
 
 /**
- * 3 % Padding options for padding at screen.
- */
-export const padding = {
-    baseH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size
-    baseV: (Dimensions.get('screen').width / 100) * 3,
-};
-
-/**
  * Margin options.
  */
 export const margin = {
     baseH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size,
     baseV: (Dimensions.get('screen').width / 100) * 3,
-    subHeaderTop: whiteSpace.X050,
-    subHeaderBottom: whiteSpace.X1,
 };
 
 /**
@@ -61,8 +55,6 @@ export const flexBox = {
         justifyContent: 'space-between',
     },
     column: {
-        // top: 0,
-        // flex: 1,
         alignSelf: 'center',
         flexDirection: 'column',
         flexWrap: 'wrap',
@@ -86,18 +78,16 @@ export const borderRadius = {
     button: 5,
 };
 
+/**
+ * Flatlist background color.
+ */
 export const flatList = {
     backgroundColor: Color.background.light,
 };
 
-export const orderRowHead = {
-    width: '100%',
-    marginBottom: whiteSpace.X1,
-    // flex: 3,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-};
-
+/**
+ * Containers.
+ */
 export const containers = {
     // Paddings & Margins
 

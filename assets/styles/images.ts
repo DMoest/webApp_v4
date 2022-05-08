@@ -1,17 +1,29 @@
+/**
+ * Module imports.
+ */
+// eslint-disable-next-line import/namespace
 import { Dimensions } from 'react-native';
 import * as Typography from './typography';
-import { theme } from './theme';
 
+/**
+ * Cover Aspect Ratio attributes.
+ */
 export const coverAspectRation = {
     aspectRation: 16 / 6,
 };
 
+/**
+ * Cover Image attributes.
+ */
 export const images = {
     coverAspectRation: 16 / 6,
     coverWidth: Dimensions.get('screen').width,
     coverHeight: (Dimensions.get('screen').width / 16) * 6,
 };
 
+/**
+ * Image attributes.
+ */
 export const image = {
     flex: 1,
     width: '100%',
@@ -19,6 +31,9 @@ export const image = {
     aspectRatio: coverAspectRation.aspectRation,
 };
 
+/**
+ * Image Container attributes.
+ */
 export const imageContainer = {
     alignItems: 'center',
     width: Dimensions.get('screen').width,

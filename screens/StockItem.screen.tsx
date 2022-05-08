@@ -1,11 +1,16 @@
 import React from 'react';
 // eslint-disable-next-line import/namespace
 import { Text, View } from 'react-native';
+import * as StockInterfaces from '../interfaces/Stock';
 import { StatusBar } from 'expo-status-bar';
 import * as Style from '../assets/styles';
 
 type StockItemPropsType = {
-    route: object;
+    route: {
+        params: {
+            item: StockInterfaces.Stock;
+        };
+    };
 };
 
 /**

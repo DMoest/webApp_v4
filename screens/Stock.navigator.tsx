@@ -4,12 +4,14 @@ import { ImageBackground, Text, View } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Stock } from '../interfaces/Stock';
 import { StockList } from '../components/Stock/StockList';
 import { StockItem } from './StockItem.screen';
+import { Stock } from '../interfaces/Stock';
 import { StatusBar } from 'expo-status-bar';
-import * as Style from '../assets/styles';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import coverIMG from '../assets/img/NutsAndBolts-5.jpg';
+import * as Style from '../assets/styles';
 
 type StockPropsType = {
     products: Stock[];
@@ -25,7 +27,7 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
  * @constructor
  */
 export const StockNavigator: (props: StockPropsType) => JSX.Element = (
-    props: StockPropTypes,
+    props: StockPropsType,
 ) => {
     return (
         <View style={Style.Base.mainContainer}>

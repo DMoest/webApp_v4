@@ -1,3 +1,6 @@
+/**
+ * Abstracts Attributes.
+ */
 export const abstracts = {
     // Shadow properties
     buttonOffset: {
@@ -9,8 +12,10 @@ export const abstracts = {
     buttonElevation: 2,
 };
 
+/**
+ * Shadows Attributes.
+ */
 export const shadow = {
-    // Shadow properties
     buttonOffset: {
         width: 0.5,
         height: 1.5,
