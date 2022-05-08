@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AppLoading from 'expo-app-loading';
 // eslint-disable-next-line import/namespace
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { BottomTabsNavigator } from './screens/BottomTabs.navigator';
 import * as Style from './assets/styles/index';
@@ -23,6 +23,8 @@ import {
     Merriweather_700Bold,
     Merriweather_700Bold_Italic,
 } from '@expo-google-fonts/merriweather';
+
+LogBox.ignoreLogs(['Remote debugger']);
 
 /**
  * Main App module.

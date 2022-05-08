@@ -7,14 +7,17 @@ import { Home } from './Home.screen';
 import { StockNavigator } from './Stock.navigator';
 import { OrderNavigator } from './Order.navigator';
 import { DeliveryNavigator } from './Delivery.navigator';
+import * as StockInterfaces from '../interfaces/Stock';
+import * as OrderInterfaces from '../interfaces/Order';
+import * as DeliveriesInterfaces from '../interfaces/Deliveries';
 import * as Style from '../assets/styles/index';
 
 type BottomTabsProps = {
-    products: object;
+    products: StockInterfaces.Stock;
     setProducts: object;
-    orders: object;
+    orders: OrderInterfaces.Order;
     setOrders: object;
-    deliveries: object;
+    deliveries: DeliveriesInterfaces.Deliveries;
     setDeliveries: object;
 };
 
@@ -38,7 +41,7 @@ export const BottomTabsNavigator: (props: BottomTabsProps) => JSX.Element = (
     return (
         <BottomTabs.Navigator
             screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
+                tabBarIcon: ({ color, size }) => {
                     let iconName;
 
                     if (route.name === 'Hem') {

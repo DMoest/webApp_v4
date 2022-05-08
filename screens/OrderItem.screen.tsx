@@ -1,12 +1,14 @@
 /**
  * Module Imports.
  */
-import React from 'react';
-import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useState } from 'react';
 // eslint-disable-next-line import/namespace
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, Pressable } from 'react-native';
+// eslint-disable-next-line import/no-unresolved
+import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
+import { StatusBar } from 'expo-status-bar';
 import * as OrderInterfaces from '../interfaces/Order';
-// import * as OrderInterfaces from '../interfaces/Order';
+import * as OrderModel from '../models/Orders';
 import * as Style from '../assets/styles';
 
 /**
@@ -18,6 +20,89 @@ type OrderItemPropsType = {
             item: OrderInterfaces.Order;
         };
     };
+    navigation: NativeStackNavigatorProps;
+};
+
+/**
+ * Function to check product stock.
+ *
+ * @param orderItem
+ */
+function checkProductStock(orderItem: OrderInterfaces.OrderItem): JSX.Element {
+    let indicatorText;
+    let indicatorColor;
+
+    if (orderItem.amount <= orderItem.stock) {
+        indicatorColor = Style.Color.indicator.positive;
+        indicatorText = 'Produkten finns på lager. ';
+    } else if (orderItem.amount > orderItem.stock) {
+        indicatorColor = Style.Color.indicator.warning;
+        indicatorText = 'Det finns inte tillräckligt av produkten. ';
+    }
+
+    return (
+        <Text style={(Style.Typography.dataLeft, { color: indicatorColor })}>
+            {indicatorText}
+        </Text>
+    );
+}
+
+/**
+ * Function to check if order is packable or if product stock is not sufficient.
+ *
+ * @param theOrderItems
+ * @param navigation
+ */
+const checkPackingStatus = (
+    theOrderItems: OrderInterfaces.Order,
+    navigation: NativeStackNavigatorProps,
+): JSX.Element => {
+    const numberOfItems: number = theOrderItems.order_items.length;
+    let isPackable: boolean;
+    let outputElement: JSX.Element;
+
+    if (numberOfItems > 0) {
+        isPackable = theOrderItems.order_items.every(
+            (item) => item.amount <= item.stock,
+        );
+    } else {
+        isPackable = false;
+    }
+
+    if (isPackable) {
+        outputElement = (
+            <Pressable
+                style={Style.Button.buttonContainer}
+                onPress={async () => {
+                    try {
+                        await OrderModel.pickOrder(theOrderItems);
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                        await navigation.goBack();
+                    } catch (error) {
+                        console.log('Error: ', error);
+                    }
+                }}>
+                <Text style={Style.Button.button}>Packetera Ordern</Text>
+            </Pressable>
+        );
+    } else if (!isPackable) {
+        outputElement = (
+            <View style={Style.Button.buttonContainer}>
+                <Text
+                    style={
+                        (Style.Container.containers,
+                        { backgroundColor: Style.Color.indicator.warning })
+                    }>
+                    Ordern går inte att slutföra pga att lagersaldo saknas för
+                    en eller flera produkter.
+                </Text>
+            </View>
+        );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return outputElement;
 };
 
 /**
@@ -30,8 +115,12 @@ export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
     props: OrderItemPropsType,
 ) => {
     const item: OrderInterfaces.Order = props.route.params.item;
+    const [isPackable, setIsPackable] = useState(false);
 
-    // console.log('ORDER: ', item);
+    useEffect(
+        () => setIsPackable(checkPackingStatus(item, props.navigation)),
+        [item, props.navigation],
+    );
 
     const orderDetails = () => {
         return (
@@ -79,29 +168,6 @@ export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
             </View>
         );
     };
-
-    function checkStockStatus(
-        orderItem: OrderInterfaces.OrderItem,
-    ): JSX.Element {
-        let indicatorText;
-        let indicatorColor;
-
-        if (orderItem.amount <= orderItem.stock) {
-            indicatorColor = Style.Color.indicator.positive;
-            indicatorText = 'Det finns på lager, bara att plocka! ';
-        } else if (orderItem.amount > orderItem.stock) {
-            indicatorColor = Style.Color.indicator.warning;
-            indicatorText =
-                'Kontrollera lagerplatsen, enligt lagersaldo finns inte tillräckligt av produkten. ';
-        }
-
-        return (
-            <Text
-                style={(Style.Typography.dataLeft, { color: indicatorColor })}>
-                {indicatorText}
-            </Text>
-        );
-    }
 
     const orderItems = item.order_items.map(
         (orderItem: OrderInterfaces.OrderItem, index: number) => (
@@ -153,7 +219,7 @@ export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
                     </View>
 
                     <View style={{ flex: 4.5 }}>
-                        {checkStockStatus(orderItem)}
+                        {checkProductStock(orderItem)}
                     </View>
                 </View>
             </View>
@@ -165,8 +231,7 @@ export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
             <ScrollView style={Style.Container.content}>
                 {orderDetails()}
                 {orderItems}
-
-                {/*<Button title='Packa order' onPress={} />*/}
+                {isPackable}
             </ScrollView>
             <StatusBar style='auto' />
         </View>

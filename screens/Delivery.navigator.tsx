@@ -9,6 +9,8 @@ import { DeliveryList } from '../components/Delivery/DeliveryList';
 import { DeliveryItem } from './DeliveryItem.screen';
 import { StatusBar } from 'expo-status-bar';
 import * as Style from '../assets/styles';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
 
 type DeliveriesPropsType = {
@@ -50,7 +52,7 @@ export const DeliveryNavigator: (props: DeliveriesPropsType) => JSX.Element = (
                 </Text>
 
                 <Stack.Navigator>
-                    <Stack.Screen name='Inkommande leveranser'>
+                    <Stack.Screen name='Inleveranslista'>
                         {() => (
                             <DeliveryList
                                 deliveries={props.deliveries}

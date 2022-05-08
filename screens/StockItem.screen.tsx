@@ -29,55 +29,48 @@ export const StockItem: (props: StockItemPropsType) => JSX.Element = (
             <Text style={Style.Typography.subHeader}>{product.name}</Text>
 
             <View style={Style.Container.flexBox.row}>
-                <Text style={(Style.Typography.dataLeft, { flex: 1 })}>
-                    ID:{' '}
-                </Text>
-                <Text style={(Style.Typography.dataRight, { flex: 2 })}>
-                    {product.id}
-                </Text>
+                <Text style={Style.Typography.dataLeft}>Produkt id: </Text>
+                <Text style={Style.Typography.dataRight}>{product.id}</Text>
             </View>
 
             <View style={Style.Container.flexBox.row}>
-                <Text style={(Style.Typography.dataLeft, { flex: 1 })}>
-                    Artikel nr:{' '}
-                </Text>
-                <Text style={(Style.Typography.dataRight, { flex: 2 })}>
+                <Text style={Style.Typography.dataLeft}>Artikel nr: </Text>
+                <Text style={Style.Typography.dataRight}>
                     {product.article_number}
                 </Text>
             </View>
 
             <View style={Style.Container.flexBox.row}>
-                <Text style={(Style.Typography.dataLeft, { flex: 1 })}>
-                    Plats:{' '}
-                </Text>
-                <Text style={(Style.Typography.dataRight, { flex: 2 })}>
-                    {product.location}
-                </Text>
-            </View>
-
-            <View style={Style.Container.flexBox.row}>
-                <Text style={(Style.Typography.dataLeft, { flex: 1 })}>
-                    Pris:{' '}
-                </Text>
-                <Text style={(Style.Typography.dataRight, { flex: 2 })}>
-                    {product.price} kr
-                </Text>
-            </View>
-
-            <View style={Style.Container.flexBox.row}>
-                <Text style={(Style.Typography.dataLeft, { flex: 1 })}>
-                    Beskrivning:{' '}
-                </Text>
-                <Text style={(Style.Typography.dataRight, { flex: 2 })}>
+                <Text style={Style.Typography.dataLeft}>Beskrivning: </Text>
+                <Text style={Style.Typography.dataRight}>
                     {product.description}
                 </Text>
             </View>
 
             <View style={Style.Container.flexBox.row}>
-                <Text style={(Style.Typography.dataLeft, { flex: 1 })}>
-                    Specifikation:{' '}
+                <Text style={Style.Typography.dataLeft}>Lagerplats: </Text>
+                <Text style={Style.Typography.dataRight}>
+                    {product.location}
                 </Text>
-                <Text style={(Style.Typography.dataRight, { flex: 2 })}>
+            </View>
+
+            <View style={Style.Container.flexBox.row}>
+                <Text style={Style.Typography.dataLeft}>Antal: </Text>
+                <Text style={Style.Typography.dataRight}>
+                    {product.stock} st
+                </Text>
+            </View>
+
+            <View style={Style.Container.flexBox.row}>
+                <Text style={Style.Typography.dataLeft}>Pris: </Text>
+                <Text style={Style.Typography.dataRight}>
+                    {product.price} kr / st
+                </Text>
+            </View>
+
+            <View style={Style.Container.flexBox.row}>
+                <Text style={Style.Typography.dataLeft}>Specifikation: </Text>
+                <Text style={Style.Typography.dataRight}>
                     {product.specifiers}
                 </Text>
             </View>
