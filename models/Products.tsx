@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import config from '../config/config.json';
+// eslint-disable-next-line import/no-unresolved
 import { Stock } from '../interfaces/Stock';
 
 export async function getProducts(): Promise<Stock[]> {
