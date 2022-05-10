@@ -43,6 +43,7 @@ export const DeliveryItem: React.FC = (
 
             <Text style={Style.Typography.dataLeft}>Kommentar: </Text>
             <Text style={Style.Typography.dataLeft}>{item.comment}</Text>
+
             <StatusBar style='auto' />
         </View>
     );

@@ -94,6 +94,8 @@ export const BottomTabsNavigator: (props: BottomTabsProps) => JSX.Element = (
             <BottomTabs.Screen name='Inleveranser'>
                 {() => (
                     <DeliveryNavigator
+                        products={props.products}
+                        setProducts={props.setProducts}
                         deliveries={props.deliveries}
                         setDeliveries={props.setDeliveries}
                     />

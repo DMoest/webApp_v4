@@ -9,6 +9,7 @@ import * as Color from './colors';
  * White Space.
  */
 export const whiteSpace = {
+    X010: 1.82,
     X025: 4.55,
     X050: 9.1,
     X075: 13.65,

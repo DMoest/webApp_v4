@@ -1,20 +1,24 @@
 import React from 'react';
 // eslint-disable-next-line import/namespace
 import { Text, View, ImageBackground } from 'react-native';
+import { Router } from '@react-navigation/native';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Stock } from '../interfaces/Stock';
 import { Deliveries } from '../interfaces/Deliveries';
 import { DeliveryList } from '../components/Delivery/DeliveryList';
 import { DeliveryItem } from './DeliveryItem.screen';
+import { DeliveryCreationForm } from './DeliveryForm.screen';
 import { StatusBar } from 'expo-status-bar';
 import * as Style from '../assets/styles';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
-import { Router } from '@react-navigation/native';
 
 type DeliveriesPropsType = {
+    products: Stock;
+    setProducts: object;
     deliveries: Deliveries;
     setDeliveries: object;
     navigation: NativeStackNavigatorProps;
@@ -72,9 +76,11 @@ export const DeliveryNavigator: (props: DeliveriesPropsType) => JSX.Element = (
 
                     <Stack.Screen name='Inleverasformulär'>
                         {(props: React.PropsWithChildren<object>) => (
-                            // TODO Här ska en ny komponent importeras och användas. Komponenten/screen ska vara ett formulär som skapar en ny inleverans enligt kraven.
-                            // TODO: När en ny komponent/screen har skapats, byt ut DeliveryItem mot den.
-                            <DeliveryItem {...props} />
+                            <DeliveryCreationForm
+                                deliveries={props.deliveries}
+                                setDeliveries={props.setDeliveries}
+                                {...props}
+                            />
                         )}
                     </Stack.Screen>
                 </Stack.Navigator>

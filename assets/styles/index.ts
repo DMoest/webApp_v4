@@ -8,6 +8,7 @@ import * as Base from './base';
 import * as Button from './buttons';
 import * as Color from './colors';
 import * as Container from './containers';
+import * as Form from './forms';
 import * as Image from './images';
 import * as Typography from './typography';
 
@@ -16,4 +17,4 @@ import * as Typography from './typography';
  *
  * Exports all imported stylesheets for easier usage.
  */
-export { Abstract, Base, Button, Color, Container, Image, Typography };
+export { Abstract, Base, Button, Color, Container, Form, Image, Typography };

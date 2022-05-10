@@ -2,6 +2,7 @@
  * Module imports.
  */
 import * as Color from './colors';
+import * as Container from './containers';
 
 /**
  * Line Height.
@@ -161,11 +162,18 @@ export const endMarginText = {
 };
 
 /**
- * End margin header attributes.
+ * Typography for
  */
-// export const endMarginHeader = {
-//     marginBottom: whiteSpace.X2,
-// };
+export const buttonText = {
+    width: '100%',
+    height: undefined,
+    paddingVertical: Container.whiteSpace.X050,
+    paddingHorizontal: Container.whiteSpace.X050,
+    alignSelf: 'center',
+    fontFamily: fontFamily.btn,
+    fontSize: fontSize.h5,
+    textAlign: 'center',
+};
 
 /**
  * Typography attributes.

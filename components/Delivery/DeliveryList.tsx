@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
-import { View, FlatList, Pressable } from 'react-native';
+// eslint-disable-next-line import/namespace
+import { View, FlatList, Pressable, Button, Text } from 'react-native';
 import { DeliveryListItem } from './DeliveryListItem';
 import * as DeliveryModel from '../../models/Deliveries';
 import * as Style from '../../assets/styles';
 import { useNavigation } from '@react-navigation/native';
+import { buttonSecondary, buttonSTD } from '../../assets/styles/buttons';
 
 /**
  * DeliveryList object to fetch item list from API and generate a FlatList View from response JSON object.
@@ -35,10 +37,22 @@ export const DeliveryList: React.FC = (props) => {
 
     return (
         <View>
+            {/*<View style={Style.Button.buttonContainer}>*/}
+            <Pressable
+                style={Style.Button.buttonSTD}
+                onPress={() => {
+                    navigation.navigate('Inleverasformulär', { ...props });
+                }}>
+                <Text style={Style.Typography.buttonText}>
+                    Skapa Ny Inleverans
+                </Text>
+            </Pressable>
+            {/*</View>*/}
+
             <FlatList
                 style={Style.Container.flatList}
                 data={props.deliveries}
-                // keyExtractor={item => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
             />
         </View>
