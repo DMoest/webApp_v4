@@ -24,7 +24,7 @@ import {
     Merriweather_700Bold_Italic,
 } from '@expo-google-fonts/merriweather';
 
-LogBox.ignoreLogs(['Remote debugger']);
+// LogBox.ignoreLogs(['Remote debugger']);
 
 /**
  * Main App module.

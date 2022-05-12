@@ -13,7 +13,7 @@ import * as Style from '../../assets/styles';
 export const StockList = (props) => {
     useEffect(async () => {
         props.setProducts(await ProductModel.getProducts());
-    }, [props.products]);
+    }, [props, props.products]);
 
     const navigation = useNavigation();
 

@@ -1,7 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line import/namespace
 import { Text, View, ImageBackground } from 'react-native';
-import { Router } from '@react-navigation/native';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -17,12 +16,12 @@ import * as Style from '../assets/styles';
 import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
 
 type DeliveriesPropsType = {
-    products: Stock;
+    products: Stock[];
     setProducts: object;
     deliveries: Deliveries;
     setDeliveries: object;
     navigation: NativeStackNavigatorProps;
-    route: Router<any, any>;
+    route: never;
 };
 
 const Stack: NativeStackNavigatorProps = createStackNavigator();
@@ -52,18 +51,19 @@ export const DeliveryNavigator: (props: DeliveriesPropsType) => JSX.Element = (
                         Style.Typography.paragraph,
                         Style.Typography.endMarginText,
                     ]}>
-                    Listan innehåller samtliga inkommande leveraser. En leverans
-                    har ett id, ett datum, ett produkt-id, ett produktnamn och
-                    antal beställda av produkten. Sist finns en kommentar som
-                    tillhör leveransen.
+                    Här kan ni se inleveranser och skapa nya.
                 </Text>
 
                 <Stack.Navigator>
                     <Stack.Screen name='Inleveranslista'>
                         {() => (
                             <DeliveryList
+                                route={props.route}
+                                navigation={props.navigation}
                                 deliveries={props.deliveries}
                                 setDeliveries={props.setDeliveries}
+                                products={props.products}
+                                setProducts={props.setProducts}
                             />
                         )}
                     </Stack.Screen>
@@ -76,11 +76,7 @@ export const DeliveryNavigator: (props: DeliveriesPropsType) => JSX.Element = (
 
                     <Stack.Screen name='Inleverasformulär'>
                         {(props: React.PropsWithChildren<object>) => (
-                            <DeliveryCreationForm
-                                deliveries={props.deliveries}
-                                setDeliveries={props.setDeliveries}
-                                {...props}
-                            />
+                            <DeliveryCreationForm {...props} />
                         )}
                     </Stack.Screen>
                 </Stack.Navigator>
