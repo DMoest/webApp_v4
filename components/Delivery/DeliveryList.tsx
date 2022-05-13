@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 // eslint-disable-next-line import/namespace
 import { View, FlatList, Pressable, Text } from 'react-native';
 import { DeliveryListItem } from './DeliveryListItem';
+import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as DeliveryModel from '../../models/Deliveries';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
 import { useNavigation } from '@react-navigation/native';
+import { warningFlashMessageContainer } from '../../assets/styles/containers';
 // import { buttonSecondary, buttonSTD } from '../../assets/styles/buttons';
 
 /**
@@ -37,6 +39,29 @@ export const DeliveryList: React.FC = (props) => {
         </Pressable>
     );
 
+    const renderDeliveriesList = (
+        deliveries: Partial<DeliveriesInterfaces.Deliveries>,
+    ) => {
+        if (props.deliveries.length < 1) {
+            return (
+                <View style={Style.Container.warningFlashMessageContainer}>
+                    <Text style={Style.Typography.warningFlashMessageText}>
+                        Det finns inte några inleveranser...
+                    </Text>
+                </View>
+            );
+        } else {
+            return (
+                <FlatList
+                    style={Style.Container.flatList}
+                    data={deliveries}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={renderItem}
+                />
+            );
+        }
+    };
+
     return (
         <View>
             <Pressable
@@ -44,6 +69,8 @@ export const DeliveryList: React.FC = (props) => {
                 onPress={() => {
                     navigation.navigate('Inleverasformulär', {
                         products: props.products,
+                        deliveries: props.deliveries,
+                        setDeliveries: props.setDeliveries,
                         // setProducts: props.setProducts,
                     });
                 }}>
@@ -52,12 +79,7 @@ export const DeliveryList: React.FC = (props) => {
                 </Text>
             </Pressable>
 
-            <FlatList
-                style={Style.Container.flatList}
-                data={props.deliveries}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={renderItem}
-            />
+            {renderDeliveriesList(props.deliveries)}
         </View>
     );
 };

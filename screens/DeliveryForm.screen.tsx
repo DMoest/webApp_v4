@@ -28,42 +28,49 @@ import * as Style from '../assets/styles/index';
  */
 export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
     /**
-     * Inital values for object to represent a new delivery.
-     * We use let to declare so we can rewrite this later while we set state.
-     */
-    let initialDeliveryValues = {
-        product_id: '',
-        delivery_date: Date.now().toString(),
-        amount: 0,
-        comment: '',
-        api_key: config.api_key,
-    };
-
-    /**
      * Constant and function to set and hold state of new delivery.
      */
     const [newDelivery, setNewDelivery] = useState<
         Partial<DeliveriesInterfaces.Deliveries>
-    >(initialDeliveryValues);
+    >({});
+
+    const setDeliveries = props.route.params.setDeliveries;
 
     /**
      * Submit handler function.
+     * Creates new delivery from state object newDelivery with Delivery Model.
+     * Gets the specific product to update by product_id  in the newDelivery object.
+     * Update the product stock from delivery details and product fetch by product_id.
+     * Set new state for all deliveries in main list from fetch all deliveries call.
+     * Alert user a new delivery has been created.
+     * Navigate back to deliveries list.
      */
     const handleSubmit = useCallback(async () => {
         try {
-            const thisDelivery = await DeliveryModel.createDelivery(
+            console.log('NewDelivery: \n', newDelivery);
+
+            const newDeliveryResponse = await DeliveryModel.createDelivery(
                 newDelivery,
             );
 
-            console.log('Click!\n* -> NewDelivery: ', newDelivery);
-            Alert.alert(
-                `Ny inleverans skapad.\nproduct_id: ${newDelivery.product_id}\ndelivery_date: ${newDelivery.delivery_date}\namount: ${newDelivery.amount}\ncomment: ${newDelivery.comment}\n`,
+            // console.log('Props: ', props);
+            // console.log('Input newDelivery: ', newDelivery);
+            // console.log('Response newDeliveryResponse: ', newDeliveryResponse);
+
+            const productToUpdate = await ProductModel.getProductById(
+                newDelivery.product_id,
             );
 
-            // TODO GET request for a specific product by thisDelivery.product_id
-
             await ProductModel.updateProductStockFromDelivery(
-                thisDelivery.data,
+                productToUpdate,
+                newDeliveryResponse,
+            );
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+            setDeliveries(await DeliveryModel.getDeliveries());
+
+            Alert.alert(
+                `Ny inleverans skapad.\nproduct_id: ${newDelivery.product_id}\ndelivery_date: ${newDelivery.delivery_date}\namount: ${newDelivery.amount}\ncomment: ${newDelivery.comment}\n`,
             );
 
             props.navigation.goBack();
@@ -76,12 +83,9 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
      * Hook to set initial values from
      */
     useEffect(() => {
-        // console.log('Delivery Form PROPS: ', props);
-        const dateNow = Date.now();
-
-        initialDeliveryValues = {
+        const initialDeliveryValues = {
             product_id: props.route.params.products[0].id.toString(),
-            delivery_date: dateNow.toLocaleString(),
+            delivery_date: new Date().toLocaleDateString('se-SV'),
             amount: 0,
             comment: '',
             api_key: config.api_key,

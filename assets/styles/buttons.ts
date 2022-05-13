@@ -38,7 +38,7 @@ export const buttonContainer = {
 };
 
 export const buttonSTD = {
-    // width: '100%',
+    width: '95%',
     height: undefined,
     overflow: 'hidden',
     paddingHorizontal: Container.whiteSpace.X075,
@@ -47,6 +47,6 @@ export const buttonSTD = {
     marginHorizontal: Container.whiteSpace.X050,
 
     borderRadius: Container.borderRadius.button,
-    backgroundColor: Color.schemeOne.secondary,
+    backgroundColor: Color.schemeOne.primary,
     color: Color.text.dark,
 };

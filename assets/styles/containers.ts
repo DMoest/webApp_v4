@@ -4,6 +4,7 @@
 // eslint-disable-next-line import/namespace
 import { Dimensions } from 'react-native';
 import * as Color from './colors';
+import * as Abstract from './abstracts';
 
 /**
  * White Space.
@@ -84,6 +85,18 @@ export const borderRadius = {
  */
 export const flatList = {
     backgroundColor: Color.background.light,
+};
+
+export const warningFlashMessageContainer = {
+    width: '95%',
+    height: undefined,
+    paddingHorizontal: whiteSpace.X1,
+    paddingVertical: whiteSpace.X050,
+
+    backgroundColor: Color.indicator.caution,
+
+    alignSelf: 'center',
+    borderRadius: 5,
 };
 
 /**

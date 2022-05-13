@@ -176,6 +176,17 @@ export const buttonText = {
 };
 
 /**
+ * Typography for flashmessage text.
+ */
+export const warningFlashMessageText = {
+    textAlign: 'center',
+    fontSize: fontSize.text,
+    fontWeight: fontWeight.text,
+    fontFamily: fontFamily.text,
+    colors: Color.text.dark,
+};
+
+/**
  * Typography attributes.
  */
 export const typography = {

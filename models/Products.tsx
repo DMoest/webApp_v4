@@ -6,23 +6,31 @@ import { Stock } from '../interfaces/Stock';
 import { Deliveries } from '../interfaces/Deliveries';
 
 export async function getProducts(): Promise<Stock[]> {
-    const response = await fetch(
-        `${config.base_url}/products?api_key=${config.api_key}`,
-    );
+    try {
+        const response = await fetch(
+            `${config.base_url}/products?api_key=${config.api_key}`,
+        );
 
-    const result = await response.json();
+        const result = await response.json();
 
-    return result.data;
+        return result.data;
+    } catch (error) {
+        console.log('Error: ', error);
+    }
 }
 
-export async function getProductById(product_id: number): Promise<Stock> {
-    const response = await fetch(
-        `${config.base_url}/products/${product_id}?api_key=${config.api_key}`,
-    );
+export async function getProductById(product_id: string): Promise<Stock> {
+    try {
+        const response = await fetch(
+            `${config.base_url}/products/${product_id}?api_key=${config.api_key}`,
+        );
 
-    const result = await response.json();
+        const result = await response.json();
 
-    return result;
+        return result;
+    } catch (error) {
+        console.log('Error: ', error);
+    }
 }
 
 export async function updateProduct(product: Partial<Stock>) {
@@ -55,11 +63,6 @@ export async function updateProductStockFromDelivery(
     product: Partial<Stock>,
     delivery: Partial<Deliveries>,
 ) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    console.log(
-        `Updating product stock for ${product.name} (${product.id}) with ${delivery.amount} pieces from delivery ${delivery.id}`,
-    );
-
     try {
         const newStock = product.stock + delivery.amount;
 
@@ -80,6 +83,6 @@ export async function updateProductStockFromDelivery(
             },
         );
     } catch (error) {
-        console.log('Update Products Error: ', error);
+        console.log('Update Product from Delivery Error: ', error);
     }
 }
