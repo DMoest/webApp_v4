@@ -1,10 +1,14 @@
+import config from '../config/config.json';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
-import config from '../config/config.json';
 // eslint-disable-next-line import/no-unresolved
 import { Stock } from '../interfaces/Stock';
 import { Deliveries } from '../interfaces/Deliveries';
+import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
 
+/**
+ * Getter Model Method for getting all avaliable products from the API.
+ */
 export async function getProducts(): Promise<Stock[]> {
     try {
         const response = await fetch(
@@ -15,10 +19,15 @@ export async function getProducts(): Promise<Stock[]> {
 
         return result.data;
     } catch (error) {
-        console.log('Error: ', error);
+        RequestErrorHandler(error);
     }
 }
 
+/**
+ * Getter Model Method to request a specific product by id from API.
+ *
+ * @param product_id
+ */
 export async function getProductById(product_id: string): Promise<Stock> {
     try {
         const response = await fetch(
@@ -29,10 +38,15 @@ export async function getProductById(product_id: string): Promise<Stock> {
 
         return result;
     } catch (error) {
-        console.log('Error: ', error);
+        RequestErrorHandler(error);
     }
 }
 
+/**
+ * Setter Model Method to update a products in API.
+ *
+ * @param product
+ */
 export async function updateProduct(product: Partial<Stock>) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     console.log(`Updating product ${product.id} - ${product.name}`);
@@ -55,10 +69,16 @@ export async function updateProduct(product: Partial<Stock>) {
             },
         );
     } catch (error) {
-        console.log('Update Products Error: ', error);
+        RequestErrorHandler(error);
     }
 }
 
+/**
+ * Setter Model Method to update a product in the API from a delivery.
+ *
+ * @param product
+ * @param delivery
+ */
 export async function updateProductStockFromDelivery(
     product: Partial<Stock>,
     delivery: Partial<Deliveries>,
@@ -83,6 +103,6 @@ export async function updateProductStockFromDelivery(
             },
         );
     } catch (error) {
-        console.log('Update Product from Delivery Error: ', error);
+        RequestErrorHandler(error);
     }
 }

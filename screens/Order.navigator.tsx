@@ -7,12 +7,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Order } from '../interfaces/Order';
 import { OrderList } from '../components/Order/OrderList';
 import { OrderItem } from './OrderItem.screen';
+import { CoverImage } from '../components/Utils/CoverImage';
 import { StatusBar } from 'expo-status-bar';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 import * as Style from '../assets/styles';
 
+/**
+ * Order props type.
+ */
 type OrderPropsType = {
     orders: Order[];
     setOrders: object;
@@ -31,19 +35,13 @@ export const OrderNavigator: (props: OrderPropsType) => JSX.Element = (
 ) => {
     return (
         <View style={Style.Base.mainContainer}>
-            <View style={Style.Image.imageContainer}>
-                <ImageBackground
-                    source={coverIMG}
-                    style={Style.Image.image}>
-                    <Text style={Style.Typography.header}>Orderlista</Text>
-                </ImageBackground>
-            </View>
+            {CoverImage({ headerText: 'Order', image: coverIMG })}
 
             <View style={Style.Container.content}>
                 <Text style={Style.Typography.paragraph}>
                     Den här listan innehåller utgående ordrar till kund. Varje
                     order ska innehålla ett id, en order status kod och en
-                    beställare.{' '}
+                    beställare.
                 </Text>
 
                 <Stack.Navigator>

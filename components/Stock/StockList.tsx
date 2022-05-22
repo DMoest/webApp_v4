@@ -1,5 +1,9 @@
+/**
+ * Module imports.
+ */
 import React, { useEffect } from 'react';
-import { View, Pressable, FlatList } from 'react-native';
+// eslint-disable-next-line import/namespace
+import { Pressable, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StockListItem } from './StockListItem';
 import * as ProductModel from '../../models/Products';
@@ -13,8 +17,11 @@ import * as Style from '../../assets/styles';
 export const StockList = (props) => {
     useEffect(async () => {
         props.setProducts(await ProductModel.getProducts());
-    }, [props, props.products]);
+    }, []);
 
+    /**
+     * Navigation constant.
+     */
     const navigation = useNavigation();
 
     /**
@@ -34,13 +41,11 @@ export const StockList = (props) => {
     );
 
     return (
-        <View>
-            <FlatList
-                style={Style.Container.flatList}
-                data={props.products}
-                // keyExtractor={item => item.id}
-                renderItem={renderItem}
-            />
-        </View>
+        <FlatList
+            style={Style.Container.flatList}
+            data={props.products}
+            keyExtractor={(item) => item.id}
+            renderItem={renderItem}
+        />
     );
 };

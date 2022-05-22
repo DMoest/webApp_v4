@@ -1,14 +1,16 @@
+/**
+ * Module imports.
+ */
 import React, { useState, useEffect, useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
+    Button,
     ScrollView,
     Text,
     TextInput,
-    Pressable,
-    Alert,
-    View,
     Platform,
-    Button,
+    Pressable,
+    View,
     // eslint-disable-next-line import/namespace
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -28,13 +30,15 @@ import * as Style from '../assets/styles/index';
  */
 export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
     /**
-     * Constant and function to set and hold state of new delivery.
+     * Constants and functions to set and hold state of new delivery and current product to update.
      */
     const [newDelivery, setNewDelivery] = useState<
         Partial<DeliveriesInterfaces.Deliveries>
     >({});
-
-    const setDeliveries = props.route.params.setDeliveries;
+    const [currentProduct, setCurrentProduct] = useState<
+        Partial<StockInterfaces.Stock>
+    >({});
+    const navigation = props.navigation;
 
     /**
      * Submit handler function.
@@ -47,37 +51,24 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
      */
     const handleSubmit = useCallback(async () => {
         try {
-            console.log('NewDelivery: \n', newDelivery);
+            const updatedProduct = {
+                ...currentProduct,
+                stock: (currentProduct.stock || 0) + (newDelivery.amount || 0),
+            };
 
-            const newDeliveryResponse = await DeliveryModel.createDelivery(
-                newDelivery,
-            );
+            console.log('NewDelivery: ', newDelivery);
+            console.log('UpdatedProduct: ', updatedProduct);
 
-            // console.log('Props: ', props);
-            // console.log('Input newDelivery: ', newDelivery);
-            // console.log('Response newDeliveryResponse: ', newDeliveryResponse);
-
-            const productToUpdate = await ProductModel.getProductById(
-                newDelivery.product_id,
-            );
-
-            await ProductModel.updateProductStockFromDelivery(
-                productToUpdate,
-                newDeliveryResponse,
-            );
-
+            await DeliveryModel.createDelivery(newDelivery);
+            await ProductModel.updateProduct(updatedProduct);
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            setDeliveries(await DeliveryModel.getDeliveries());
-
-            Alert.alert(
-                `Ny inleverans skapad.\nproduct_id: ${newDelivery.product_id}\ndelivery_date: ${newDelivery.delivery_date}\namount: ${newDelivery.amount}\ncomment: ${newDelivery.comment}\n`,
-            );
-
-            props.navigation.goBack();
+            await navigation.navigate('Inleveranslista', {
+                reload: true,
+            });
         } catch (error) {
             console.log('Error: ', error);
         }
-    }, [newDelivery, props.navigation]);
+    }, []);
 
     /**
      * Hook to set initial values from
@@ -140,6 +131,8 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
                 setNewDelivery={setNewDelivery}
                 products={props.route.params.products}
                 setProducts={props.route.params.setProducts}
+                currentProduct={currentProduct}
+                setCurrentProduct={setCurrentProduct}
             />
 
             <Text style={Style.Form.labelInputField}>Antal: </Text>
@@ -148,7 +141,7 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
                 onChangeText={(inputAmount: string) => {
                     setNewDelivery({
                         ...newDelivery,
-                        amount: parseInt(inputAmount),
+                        amount: parseInt(inputAmount) || 0,
                     });
                 }}
                 value={newDelivery?.amount?.toString()}

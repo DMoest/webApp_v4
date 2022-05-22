@@ -7,6 +7,9 @@ import * as StockInterfaces from '../../interfaces/Stock';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles/index';
 
+/**
+ * Type for DeliveryProductPicker Component input props.
+ */
 type NewDeliveryPropsType = {
     newDelivery: Partial<DeliveriesInterfaces.Deliveries>;
     setNewDelivery: any;
@@ -23,8 +26,8 @@ type NewDeliveryPropsType = {
 export const DeliveryProductPicker: (
     props: NewDeliveryPropsType,
 ) => JSX.Element = (props: NewDeliveryPropsType): JSX.Element => {
-    const [products, setProducts] = useState([]);
-    // const productsHash: any = {};
+    const [products, setProducts] = useState<Product[]>([]);
+    const productsHash: any = {};
 
     useEffect(async () => {
         setProducts(await ProductModel.getProducts());
@@ -32,7 +35,7 @@ export const DeliveryProductPicker: (
 
     const pickerProductsList = products.map(
         (product: StockInterfaces.Stock, index: number) => {
-            // productsHash[product.id] = product;
+            productsHash[product.id] = product;
 
             return (
                 <Picker.Item
@@ -50,11 +53,14 @@ export const DeliveryProductPicker: (
             <Picker
                 selectedValue={props.newDelivery?.product_id}
                 onValueChange={(productIdValue: string) => {
+                    props.setCurrentProduct(
+                        productsHash[parseInt(productIdValue)],
+                    );
+
                     props.setNewDelivery({
                         ...props.newDelivery,
                         product_id: parseInt(productIdValue),
                     });
-                    // props.setCurrentProduct(productsHash[productIdValue]);
                 }}>
                 {pickerProductsList}
             </Picker>

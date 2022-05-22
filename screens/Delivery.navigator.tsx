@@ -1,6 +1,9 @@
+/**
+ * Module imports.
+ */
 import React from 'react';
 // eslint-disable-next-line import/namespace
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground, SafeAreaView } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,19 +12,21 @@ import { Deliveries } from '../interfaces/Deliveries';
 import { DeliveryList } from '../components/Delivery/DeliveryList';
 import { DeliveryItem } from './DeliveryItem.screen';
 import { DeliveryCreationForm } from './DeliveryForm.screen';
+import { CoverImage } from '../components/Utils/CoverImage';
 import { StatusBar } from 'expo-status-bar';
 import * as Style from '../assets/styles';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
 
+/**
+ * Deliveries props type.
+ */
 type DeliveriesPropsType = {
     products: Stock[];
     setProducts: object;
-    deliveries: Deliveries;
+    deliveries: Deliveries[];
     setDeliveries: object;
-    navigation: NativeStackNavigatorProps;
-    route: never;
 };
 
 const Stack: NativeStackNavigatorProps = createStackNavigator();
@@ -37,20 +42,14 @@ export const DeliveryNavigator: (props: DeliveriesPropsType) => JSX.Element = (
 ) => {
     return (
         <View style={Style.Base.mainContainer}>
-            <View style={Style.Image.imageContainer}>
-                <ImageBackground
-                    source={coverIMG}
-                    style={Style.Image.image}>
-                    <Text style={Style.Typography.header}>Leveranser</Text>
-                </ImageBackground>
-            </View>
+            {CoverImage({ headerText: 'Inleveranser', image: coverIMG })}
 
-            <View style={Style.Container.content}>
+            <View style={Style.Base.content}>
                 <Text
-                    style={[
-                        Style.Typography.paragraph,
-                        Style.Typography.endMarginText,
-                    ]}>
+                    style={
+                        (Style.Typography.paragraph,
+                        Style.Typography.endMarginText)
+                    }>
                     Här kan ni se inleveranser och skapa nya.
                 </Text>
 

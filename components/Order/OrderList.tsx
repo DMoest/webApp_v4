@@ -1,9 +1,13 @@
+/**
+ * Module imports.
+ */
 import React, { useEffect } from 'react';
-import { View, FlatList, Pressable } from 'react-native';
+// eslint-disable-next-line import/namespace
+import { FlatList, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { OrderListItem } from './OrderListItem';
-import * as Style from '../../assets/styles';
 import * as OrderModel from '../../models/Orders';
+import * as Style from '../../assets/styles';
 
 /**
  * OrdersList object to fetch order list from API and generate a FlatList View from response JSON object.
@@ -12,12 +16,22 @@ import * as OrderModel from '../../models/Orders';
  * @constructor
  */
 export const OrderList = (props) => {
+    /**
+     * Navigation constant.
+     */
+    const navigation = useNavigation();
+
+    /**
+     * React Hook.
+     */
     useEffect(async () => {
         props.setOrders(await OrderModel.getOrders());
-    }, [props.orders]);
+    }, []);
 
+    /**
+     * Filter Orders to only show new once.
+     */
     const newOrders = props.orders.filter((order) => order.status == 'Ny');
-    const navigation = useNavigation();
 
     /**
      * Render item function.
@@ -36,13 +50,11 @@ export const OrderList = (props) => {
     );
 
     return (
-        <View>
-            <FlatList
-                style={Style.Container.flatList}
-                data={newOrders}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={renderItem}
-            />
-        </View>
+        <FlatList
+            style={Style.Container.flatList}
+            data={newOrders}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderItem}
+        />
     );
 };

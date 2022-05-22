@@ -8,11 +8,15 @@ import { StockList } from '../components/Stock/StockList';
 import { StockItem } from './StockItem.screen';
 import { Stock } from '../interfaces/Stock';
 import { StatusBar } from 'expo-status-bar';
+import { CoverImage } from '../components/Utils/CoverImage';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import coverIMG from '../assets/img/NutsAndBolts-5.jpg';
 import * as Style from '../assets/styles';
 
+/**
+ * Stock props type.
+ */
 type StockPropsType = {
     products: Stock[];
     setProducts: object;
@@ -31,13 +35,7 @@ export const StockNavigator: (props: StockPropsType) => JSX.Element = (
 ) => {
     return (
         <View style={Style.Base.mainContainer}>
-            <View style={Style.Image.imageContainer}>
-                <ImageBackground
-                    source={coverIMG}
-                    style={Style.Image.image}>
-                    <Text style={Style.Typography.header}>Produkter</Text>
-                </ImageBackground>
-            </View>
+            {CoverImage({ headerText: 'Lager', image: coverIMG })}
 
             <View style={Style.Base.content}>
                 <Text

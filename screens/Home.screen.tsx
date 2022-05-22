@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, ImageBackground, SafeAreaView } from 'react-native';
+import { CoverImage } from '../components/Utils/CoverImage';
 import coverIMG from '../assets/img/NutsAndBolts-4.jpg';
 import * as Style from '../assets/styles';
 

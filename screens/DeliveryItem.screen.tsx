@@ -1,8 +1,12 @@
+/**
+ * Module imports.
+ */
 import React, { PropsWithChildren } from 'react';
-import { StatusBar } from 'expo-status-bar';
+// eslint-disable-next-line import/namespace
 import { Text, View } from 'react-native';
-import * as Style from '../assets/styles';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+import * as Style from '../assets/styles';
 
 /**
  * DeliveryListItem screen/view.

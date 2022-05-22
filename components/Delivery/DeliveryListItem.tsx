@@ -1,4 +1,8 @@
+/**
+ * Module imports.
+ */
 import React from 'react';
+// eslint-disable-next-line import/namespace
 import { Text, View } from 'react-native';
 import * as Style from '../../assets/styles';
 
@@ -10,12 +14,10 @@ import * as Style from '../../assets/styles';
  * @constructor
  */
 export const DeliveryListItem: React.FC = ({ item }) => {
-    // console.log("DeliveryListItem: ", item);
-
     return (
         <View
             key={item.id}
-            style={[Style.Container.flexBox.row, Style.Button.button]}>
+            style={Style.Button.listButton}>
             <View style={Style.Container.flexBox.rowNoPadding}>
                 <Text style={Style.Typography.dataLeft}>{item.id}</Text>
                 <Text style={Style.Typography.dataRight}>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import AppLoading from 'expo-app-loading';
 // eslint-disable-next-line import/namespace
-import { SafeAreaView, LogBox } from 'react-native';
+// import { LogBox } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { BottomTabsNavigator } from './screens/BottomTabs.navigator';
 import * as Style from './assets/styles/index';

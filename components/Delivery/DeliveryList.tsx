@@ -1,14 +1,15 @@
+/**
+ * Module imports.
+ */
 import React, { useEffect } from 'react';
 // eslint-disable-next-line import/namespace
 import { View, FlatList, Pressable, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { DeliveryListItem } from './DeliveryListItem';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as DeliveryModel from '../../models/Deliveries';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
-import { useNavigation } from '@react-navigation/native';
-import { warningFlashMessageContainer } from '../../assets/styles/containers';
-// import { buttonSecondary, buttonSTD } from '../../assets/styles/buttons';
 
 /**
  * DeliveryList object to fetch item list from API and generate a FlatList View from response JSON object.
@@ -17,10 +18,18 @@ import { warningFlashMessageContainer } from '../../assets/styles/containers';
  */
 export const DeliveryList: React.FC = (props) => {
     const navigation = useNavigation();
+    const setProducts = props.setProducts;
+    const setDeliveries = props.setDeliveries;
 
+    /**
+     * Use Effect Hook to set state of products and deliveries.
+     */
     useEffect(async () => {
-        props.setDeliveries(await DeliveryModel.getDeliveries());
-        props.setProducts(await ProductModel.getProducts());
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        setDeliveries(await DeliveryModel.getDeliveries());
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        setProducts(await ProductModel.getProducts());
     }, []);
 
     /**
@@ -71,7 +80,6 @@ export const DeliveryList: React.FC = (props) => {
                         products: props.products,
                         deliveries: props.deliveries,
                         setDeliveries: props.setDeliveries,
-                        // setProducts: props.setProducts,
                     });
                 }}>
                 <Text style={Style.Typography.buttonText}>
