@@ -4,7 +4,6 @@
 // eslint-disable-next-line import/namespace
 import { Dimensions } from 'react-native';
 import * as Color from './colors';
-import * as Abstract from './abstracts';
 
 /**
  * White Space.
@@ -30,10 +29,10 @@ export const content = {
 /**
  * Margin options.
  */
-export const margin = {
-    baseH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size,
-    baseV: (Dimensions.get('screen').width / 100) * 3,
-};
+// export const margin = {
+//     baseH: (Dimensions.get('screen').width / 100) * 3, // 3% of screen size,
+//     baseV: (Dimensions.get('screen').width / 100) * 3,
+// };
 
 /**
  * FlexBox options.
@@ -89,7 +88,7 @@ export const flatList = {
 
 export const warningFlashMessageContainer = {
     width: '95%',
-    height: undefined,
+    // height: undefined,
     paddingHorizontal: whiteSpace.X1,
     paddingVertical: whiteSpace.X050,
 

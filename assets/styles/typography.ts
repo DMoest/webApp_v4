@@ -5,13 +5,6 @@ import * as Color from './colors';
 import * as Container from './containers';
 
 /**
- * Line Height.
- */
-export const lineHeight = {
-    l1: -1.6,
-};
-
-/**
  * White Space.
  */
 export const whiteSpace = {
@@ -71,7 +64,6 @@ export const header = {
     paddingHorizontal: whiteSpace.X1,
 
     textAlign: 'center',
-    lineHeight: lineHeight.l1,
     fontSize: fontSize.h1,
     fontWeight: fontWeight.h1,
     fontFamily: fontFamily.header,
@@ -86,11 +78,10 @@ export const subHeader = {
     alignSelf: 'center',
     paddingVertical: whiteSpace.X050,
     marginBottom: whiteSpace.X1,
-
     fontSize: fontSize.h4,
     fontFamily: fontFamily.subHeader,
-    lineHeight: lineHeight.l1,
     color: Color.text.dark,
+    textTransform: 'uppercase',
 };
 
 /**
@@ -101,10 +92,8 @@ export const paragraph = {
     height: undefined,
     paddingHorizontal: whiteSpace.X050,
     paddingVertical: whiteSpace.X050,
-
     flexWrap: 'wrap',
     textAlign: 'left',
-    lineHeight: lineHeight.l1,
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.text,
@@ -116,10 +105,8 @@ export const paragraph = {
 export const dataLeft = {
     paddingHorizontal: whiteSpace.X025,
     paddingBottom: whiteSpace.X025,
-
     flexWrap: 'wrap',
     textAlign: 'left',
-    lineHeight: lineHeight.l1,
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.text,
@@ -131,10 +118,8 @@ export const dataLeft = {
 export const dataCenter = {
     paddingHorizontal: whiteSpace.X025,
     paddingBottom: whiteSpace.X025,
-
     flexWrap: 'wrap',
     textAlign: 'center',
-    lineHeight: lineHeight.l1,
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.text,
@@ -146,9 +131,7 @@ export const dataCenter = {
 export const dataRight = {
     paddingHorizontal: whiteSpace.X025,
     paddingBottom: whiteSpace.X025,
-
     textAlign: 'right',
-    lineHeight: lineHeight.l1,
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.text,
@@ -183,7 +166,7 @@ export const warningFlashMessageText = {
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.text,
-    colors: Color.text.dark,
+    color: Color.text.dark,
 };
 
 /**
@@ -211,8 +194,6 @@ export const typography = {
     textSize: 13,
     textSmallSize: 7.5,
     textMiniSize: 5.63,
-
-    lineHeight: -1.6,
 
     // Whitespace
     whiteSpace25: 4.55,
