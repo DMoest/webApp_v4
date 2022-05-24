@@ -48,14 +48,6 @@ export const DeliveryNavigator: (props: DeliveriesPropsType) => JSX.Element = (
             {CoverImage({ headerText: 'Inleveranser', image: coverIMG })}
 
             <View style={Style.Base.content}>
-                <Text
-                    style={
-                        (Style.Typography.paragraph,
-                        Style.Typography.endMarginText)
-                    }>
-                    Här kan ni se inleveranser och skapa nya.
-                </Text>
-
                 <Stack.Navigator>
                     <Stack.Screen name='Inleveranslista'>
                         {() => (

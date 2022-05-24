@@ -156,6 +156,7 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
                 }}
                 value={newDelivery?.amount?.toString()}
                 keyboardType={'numeric'}
+                placeholder='Antal av levererad produkt.'
             />
 
             <View style={Style.Container.flexBox.row}>
