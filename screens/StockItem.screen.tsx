@@ -1,3 +1,6 @@
+/**
+ * Module imports.
+ */
 import React from 'react';
 // eslint-disable-next-line import/namespace
 import { Text, View } from 'react-native';

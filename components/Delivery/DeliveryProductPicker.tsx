@@ -1,3 +1,6 @@
+/**
+ * Module imports.
+ */
 import React, { useEffect, useState } from 'react';
 // eslint-disable-next-line import/namespace
 import { Text, View } from 'react-native';
@@ -13,8 +16,7 @@ import * as Style from '../../assets/styles/index';
 type NewDeliveryPropsType = {
     newDelivery: Partial<DeliveriesInterfaces.Deliveries>;
     setNewDelivery: any;
-    currentProduct: StockInterfaces.Stock;
-    setCurrentProduct: any;
+    setSelectedProduct: any;
 };
 
 /**
@@ -26,8 +28,9 @@ type NewDeliveryPropsType = {
 export const DeliveryProductPicker: (
     props: NewDeliveryPropsType,
 ) => JSX.Element = (props: NewDeliveryPropsType): JSX.Element => {
-    const [products, setProducts] = useState<Product[]>([]);
-    const productsHash: any = {};
+    const [products, setProducts] = useState<StockInterfaces.Stock[]>([]);
+    // eslint-disable-next-line prefer-const
+    let productsHash: any = {};
 
     useEffect(async () => {
         setProducts(await ProductModel.getProducts());
@@ -38,6 +41,8 @@ export const DeliveryProductPicker: (
             productsHash[product.id] = product;
 
             return (
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 <Picker.Item
                     key={index}
                     label={product.name}
@@ -50,17 +55,15 @@ export const DeliveryProductPicker: (
     return (
         <View>
             <Text style={Style.Form.labelInputField}>Produkt: </Text>
+
             <Picker
                 selectedValue={props.newDelivery?.product_id}
                 onValueChange={(productIdValue: string) => {
-                    props.setCurrentProduct(
-                        productsHash[parseInt(productIdValue)],
-                    );
-
                     props.setNewDelivery({
                         ...props.newDelivery,
-                        product_id: parseInt(productIdValue),
+                        product_id: productIdValue,
                     });
+                    props.setSelectedProduct(productsHash[productIdValue]);
                 }}>
                 {pickerProductsList}
             </Picker>

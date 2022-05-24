@@ -30,7 +30,7 @@ export const DeliveryList: React.FC = (props) => {
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         setProducts(await ProductModel.getProducts());
-    }, []);
+    }, [setDeliveries, setProducts]);
 
     /**
      * Render item function.

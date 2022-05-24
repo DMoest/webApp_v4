@@ -1,10 +1,13 @@
-import config from '../config/config.json';
+/**
+ * Module imports.
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 // eslint-disable-next-line import/no-unresolved
 import { Stock } from '../interfaces/Stock';
 import { Deliveries } from '../interfaces/Deliveries';
 import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
+import config from '../config/config.json';
 
 /**
  * Getter Model Method for getting all avaliable products from the API.
@@ -24,7 +27,7 @@ export async function getProducts(): Promise<Stock[]> {
 }
 
 /**
- * Getter Model Method to request a specific product by id from API.
+ * Getter model method to request a specific product by id from API.
  *
  * @param product_id
  */

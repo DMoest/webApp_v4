@@ -1,3 +1,6 @@
+/**
+ * Module imports.
+ */
 import React from 'react';
 import { Text, View, ImageBackground, SafeAreaView } from 'react-native';
 import { CoverImage } from '../components/Utils/CoverImage';

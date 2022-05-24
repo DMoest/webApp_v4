@@ -1,8 +1,10 @@
+/**
+ * Module imports.
+ */
 import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { Home } from './Home.screen';
 import { StockNavigator } from './Stock.navigator';
 import { OrderNavigator } from './Order.navigator';
@@ -10,8 +12,12 @@ import { DeliveryNavigator } from './Delivery.navigator';
 import * as StockInterfaces from '../interfaces/Stock';
 import * as OrderInterfaces from '../interfaces/Order';
 import * as DeliveriesInterfaces from '../interfaces/Deliveries';
+import { FontAwesome5 } from '@expo/vector-icons';
 import * as Style from '../assets/styles/index';
 
+/**
+ * Bottom tab props type.
+ */
 type BottomTabsProps = {
     products: StockInterfaces.Stock;
     setProducts: object;
@@ -21,6 +27,9 @@ type BottomTabsProps = {
     setDeliveries: object;
 };
 
+/**
+ * Bottom tabs navigator & route icons.
+ */
 const BottomTabs: NativeStackNavigatorProps = createBottomTabNavigator();
 const routeIcons = {
     Home: 'home',

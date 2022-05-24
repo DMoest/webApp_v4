@@ -4,13 +4,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
+    Alert,
     Button,
     ScrollView,
     Text,
     TextInput,
     Platform,
-    Pressable,
     View,
+    TouchableOpacity,
     // eslint-disable-next-line import/namespace
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -32,49 +33,25 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
     /**
      * Constants and functions to set and hold state of new delivery and current product to update.
      */
+    let initialDeliveryValues = {
+        product_id: props.route.params.products[0].id.toString(),
+        delivery_date: new Date().toLocaleDateString('se-SV'),
+        amount: 0,
+        comment: '',
+        api_key: config.api_key,
+    };
+    const navigation = props.navigation;
     const [newDelivery, setNewDelivery] = useState<
         Partial<DeliveriesInterfaces.Deliveries>
-    >({});
-    const [currentProduct, setCurrentProduct] = useState<
-        Partial<StockInterfaces.Stock>
-    >({});
-    const navigation = props.navigation;
-
-    /**
-     * Submit handler function.
-     * Creates new delivery from state object newDelivery with Delivery Model.
-     * Gets the specific product to update by product_id  in the newDelivery object.
-     * Update the product stock from delivery details and product fetch by product_id.
-     * Set new state for all deliveries in main list from fetch all deliveries call.
-     * Alert user a new delivery has been created.
-     * Navigate back to deliveries list.
-     */
-    const handleSubmit = useCallback(async () => {
-        try {
-            const updatedProduct = {
-                ...currentProduct,
-                stock: (currentProduct.stock || 0) + (newDelivery.amount || 0),
-            };
-
-            console.log('NewDelivery: ', newDelivery);
-            console.log('UpdatedProduct: ', updatedProduct);
-
-            await DeliveryModel.createDelivery(newDelivery);
-            await ProductModel.updateProduct(updatedProduct);
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            await navigation.navigate('Inleveranslista', {
-                reload: true,
-            });
-        } catch (error) {
-            console.log('Error: ', error);
-        }
-    }, []);
+    >(initialDeliveryValues);
+    const [selectedProduct, setSelectedProduct] =
+        useState<StockInterfaces.Stock>(props.route.params.products[0]);
 
     /**
      * Hook to set initial values from
      */
     useEffect(() => {
-        const initialDeliveryValues = {
+        initialDeliveryValues = {
             product_id: props.route.params.products[0].id.toString(),
             delivery_date: new Date().toLocaleDateString('se-SV'),
             amount: 0,
@@ -124,15 +101,48 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
         );
     }
 
+    /**
+     * Submit handler function.
+     * Creates new delivery from state object newDelivery with Delivery Model.
+     * Gets the specific product to update by product_id  in the newDelivery object.
+     * Update the product stock from delivery details and product fetch by product_id.
+     * Set new state for all deliveries in main list from fetch all deliveries call.
+     * Alert user a new delivery has been created.
+     * Navigate back to deliveries list.
+     */
+    const handleSubmit = useCallback(async () => {
+        try {
+            const updatedProduct = {
+                ...selectedProduct,
+                stock: (selectedProduct.stock || 0) + (newDelivery.amount || 0),
+            };
+
+            await DeliveryModel.createDelivery(newDelivery);
+            await ProductModel.updateProduct(updatedProduct);
+
+            Alert.alert(
+                'Ny Inleverans har skapats.\n \n' +
+                    `Product_id: ${newDelivery.product_id}\n` +
+                    `Antal: ${newDelivery.amount}\n` +
+                    `Delivery date: ${newDelivery.delivery_date}` +
+                    `Antal: ${newDelivery.comment}\n`,
+            );
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+            navigation.navigate('Inleveranslista', {
+                reload: true,
+            });
+        } catch (error) {
+            console.log('Handle Submit Error: ', error);
+        }
+    }, [selectedProduct, navigation, newDelivery]);
+
     return (
         <ScrollView style={Style.Container.content}>
             <DeliveryProductPicker
                 newDelivery={newDelivery}
                 setNewDelivery={setNewDelivery}
-                products={props.route.params.products}
-                setProducts={props.route.params.setProducts}
-                currentProduct={currentProduct}
-                setCurrentProduct={setCurrentProduct}
+                setSelectedProduct={setSelectedProduct}
             />
 
             <Text style={Style.Form.labelInputField}>Antal: </Text>
@@ -150,7 +160,7 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
 
             <View style={Style.Container.flexBox.row}>
                 <Text style={(Style.Form.labelInputField, { width: '50%' })}>
-                    Leveransdatum:{' '}
+                    Leveransdatum:
                 </Text>
                 {DeliveryDatePicker()}
             </View>
@@ -164,13 +174,13 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
                 value={newDelivery?.comment}
             />
 
-            <Pressable
+            <TouchableOpacity
                 style={Style.Button.button}
                 onPress={handleSubmit}>
                 <Text style={Style.Typography.buttonText}>
                     Skapa Ny Inleverans
                 </Text>
-            </Pressable>
+            </TouchableOpacity>
 
             <StatusBar style='auto' />
         </ScrollView>

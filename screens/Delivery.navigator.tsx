@@ -29,6 +29,9 @@ type DeliveriesPropsType = {
     setDeliveries: object;
 };
 
+/**
+ * Stack navigator.
+ */
 const Stack: NativeStackNavigatorProps = createStackNavigator();
 
 /**

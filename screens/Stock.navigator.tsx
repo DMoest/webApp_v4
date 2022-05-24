@@ -1,3 +1,6 @@
+/**
+ * Module imports.
+ */
 import React from 'react';
 // eslint-disable-next-line import/namespace
 import { ImageBackground, Text, View } from 'react-native';
