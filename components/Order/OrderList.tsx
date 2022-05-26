@@ -3,7 +3,8 @@
  */
 import React, { useEffect } from 'react';
 // eslint-disable-next-line import/namespace
-import { FlatList, Pressable } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
+import { useAppContext } from '../../providers/App.provider';
 import { useNavigation } from '@react-navigation/native';
 import { OrderListItem } from './OrderListItem';
 import * as OrderModel from '../../models/Orders';
@@ -15,23 +16,21 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const OrderList = (props) => {
-    /**
-     * Navigation constant.
-     */
+export const OrderList = () => {
+    const appContext = useAppContext();
     const navigation = useNavigation();
 
     /**
      * React Hook.
      */
     useEffect(async () => {
-        props.setOrders(await OrderModel.getOrders());
+        appContext.setOrders(await OrderModel.getOrders());
     }, []);
 
     /**
      * Filter Orders to only show new once.
      */
-    const newOrders = props.orders.filter((order) => order.status == 'Ny');
+    const newOrders = appContext.orders.filter((order) => order.status == 'Ny');
 
     /**
      * Render item function.
@@ -39,14 +38,14 @@ export const OrderList = (props) => {
      * @param item
      */
     const renderItem = ({ item }) => (
-        <Pressable
-            key={item.id}
+        <TouchableOpacity
+            key={item.id.toString()}
             style={Style.Button.buttonContainer}
             onPress={() => {
                 navigation.navigate('Plocklista', { item });
             }}>
             <OrderListItem item={item} />
-        </Pressable>
+        </TouchableOpacity>
     );
 
     return (

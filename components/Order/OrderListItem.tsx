@@ -5,7 +5,6 @@ import React from 'react';
 // eslint-disable-next-line import/namespace
 import { Text, View } from 'react-native';
 import * as Style from '../../assets/styles';
-import { listButton } from '../../assets/styles/buttons';
 
 /**
  * Order list item props type object. Used to type input props to component OrderListItem.

@@ -3,11 +3,10 @@
  */
 import React from 'react';
 // eslint-disable-next-line import/namespace
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Order } from '../interfaces/Order';
 import { OrderList } from '../components/Order/OrderList';
 import { OrderItem } from './OrderItem.screen';
 import { CoverImage } from '../components/Utils/CoverImage';
@@ -18,24 +17,16 @@ import coverIMG from '../assets/img/NutsAndBolts-3.jpg';
 import * as Style from '../assets/styles';
 
 /**
- * Order props type.
+ * Stack navigator for orders.
  */
-type OrderPropsType = {
-    orders: Order[];
-    setOrders: object;
-};
-
 const Stack: NativeStackNavigatorProps = createStackNavigator();
 
 /**
  * Order Stack Navigator.
  *
- * @param props
  * @constructor
  */
-export const OrderNavigator: (props: OrderPropsType) => JSX.Element = (
-    props: OrderPropsType,
-) => {
+export const OrderNavigator: () => JSX.Element = () => {
     return (
         <View style={Style.Base.mainContainer}>
             {CoverImage({ headerText: 'Order', image: coverIMG })}
@@ -48,20 +39,15 @@ export const OrderNavigator: (props: OrderPropsType) => JSX.Element = (
                 </Text>
 
                 <Stack.Navigator>
-                    <Stack.Screen name='Orderlista'>
-                        {() => (
-                            <OrderList
-                                orders={props.orders}
-                                setOrders={props.setOrders}
-                            />
-                        )}
-                    </Stack.Screen>
+                    <Stack.Screen
+                        name='Orderlista'
+                        component={OrderList}
+                    />
 
-                    <Stack.Screen name='Plocklista'>
-                        {(props: React.PropsWithChildren<never>) => (
-                            <OrderItem {...props} />
-                        )}
-                    </Stack.Screen>
+                    <Stack.Screen
+                        name='Plocklista'
+                        component={OrderItem}
+                    />
                 </Stack.Navigator>
             </View>
 
