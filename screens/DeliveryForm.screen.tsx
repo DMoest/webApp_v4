@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { DeliveryProductPicker } from '../components/Delivery/DeliveryProductPicker';
-import * as StockInterfaces from '../interfaces/Stock';
+import * as StockInterfaces from '../interfaces/Product';
 import * as DeliveriesInterfaces from '../interfaces/Deliveries';
 import * as DeliveryModel from '../models/Deliveries';
 import * as ProductModel from '../models/Products';
@@ -45,7 +45,7 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
         Partial<DeliveriesInterfaces.Deliveries>
     >(initialDeliveryValues);
     const [selectedProduct, setSelectedProduct] =
-        useState<StockInterfaces.Stock>(props.route.params.products[0]);
+        useState<StockInterfaces.Product>(props.route.params.products[0]);
 
     /**
      * Hook to set initial values from

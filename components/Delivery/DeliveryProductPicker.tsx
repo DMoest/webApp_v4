@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
-import * as StockInterfaces from '../../interfaces/Stock';
+import * as StockInterfaces from '../../interfaces/Product';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles/index';
 
@@ -28,7 +28,7 @@ type NewDeliveryPropsType = {
 export const DeliveryProductPicker: (
     props: NewDeliveryPropsType,
 ) => JSX.Element = (props: NewDeliveryPropsType): JSX.Element => {
-    const [products, setProducts] = useState<StockInterfaces.Stock[]>([]);
+    const [products, setProducts] = useState<StockInterfaces.Product[]>([]);
     // eslint-disable-next-line prefer-const
     let productsHash: any = {};
 
@@ -37,7 +37,7 @@ export const DeliveryProductPicker: (
     }, []);
 
     const pickerProductsList = products.map(
-        (product: StockInterfaces.Stock, index: number) => {
+        (product: StockInterfaces.Product, index: number) => {
             productsHash[product.id] = product;
 
             return (

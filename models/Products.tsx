@@ -4,7 +4,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 // eslint-disable-next-line import/no-unresolved
-import { Stock } from '../interfaces/Stock';
+import { Product } from '../interfaces/Product';
 import { Deliveries } from '../interfaces/Deliveries';
 import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
 import config from '../config/config.json';
@@ -12,7 +12,7 @@ import config from '../config/config.json';
 /**
  * Getter Model Method for getting all avaliable products from the API.
  */
-export async function getProducts(): Promise<Stock[]> {
+export async function getProducts(): Promise<Product[]> {
     try {
         const response = await fetch(
             `${config.base_url}/products?api_key=${config.api_key}`,
@@ -31,7 +31,7 @@ export async function getProducts(): Promise<Stock[]> {
  *
  * @param product_id
  */
-export async function getProductById(product_id: string): Promise<Stock> {
+export async function getProductById(product_id: string): Promise<Product> {
     try {
         const response = await fetch(
             `${config.base_url}/products/${product_id}?api_key=${config.api_key}`,
@@ -50,7 +50,7 @@ export async function getProductById(product_id: string): Promise<Stock> {
  *
  * @param product
  */
-export async function updateProduct(product: Partial<Stock>) {
+export async function updateProduct(product: Partial<Product>) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     console.log(`Updating product ${product.id} - ${product.name}`);
 
@@ -83,7 +83,7 @@ export async function updateProduct(product: Partial<Stock>) {
  * @param delivery
  */
 export async function updateProductStockFromDelivery(
-    product: Partial<Stock>,
+    product: Partial<Product>,
     delivery: Partial<Deliveries>,
 ) {
     try {

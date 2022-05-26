@@ -7,7 +7,7 @@ import { Text, View, ImageBackground, SafeAreaView } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Stock } from '../interfaces/Stock';
+import { Product } from '../interfaces/Product';
 import { Deliveries } from '../interfaces/Deliveries';
 import { DeliveryList } from '../components/Delivery/DeliveryList';
 import { DeliveryItem } from './DeliveryItem.screen';
@@ -23,7 +23,7 @@ import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
  * Deliveries props type.
  */
 type DeliveriesPropsType = {
-    products: Stock[];
+    products: Product[];
     setProducts: object;
     deliveries: Deliveries[];
     setDeliveries: object;

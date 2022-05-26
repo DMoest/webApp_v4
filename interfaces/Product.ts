@@ -1,7 +1,7 @@
 /**
  * Products interface.
  */
-export interface Stock {
+export interface Product {
     id: number;
     article_number: string;
     name: string;

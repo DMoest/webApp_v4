@@ -7,9 +7,9 @@ import { ImageBackground, Text, View } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StockList } from '../components/Products/StockList';
-import { StockItem } from './StockItem.screen';
-import { Stock } from '../interfaces/Stock';
+import { ProductList } from '../components/Products/ProductList';
+import { StockItem } from './ProductItem.screen';
+import { Product } from '../interfaces/Product';
 import { StatusBar } from 'expo-status-bar';
 import { CoverImage } from '../components/Utils/CoverImage';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -21,7 +21,7 @@ import * as Style from '../assets/styles';
  * Products props type.
  */
 type StockPropsType = {
-    products: Stock[];
+    products: Product[];
     setProducts: object;
 };
 
@@ -33,7 +33,7 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
  * @param props
  * @constructor
  */
-export const StockNavigator: (props: StockPropsType) => JSX.Element = (
+export const ProductsNavigator: (props: StockPropsType) => JSX.Element = (
     props: StockPropsType,
 ) => {
     return (
@@ -53,7 +53,7 @@ export const StockNavigator: (props: StockPropsType) => JSX.Element = (
                 <Stack.Navigator>
                     <Stack.Screen name='Produkter'>
                         {() => (
-                            <StockList
+                            <ProductList
                                 products={props.products}
                                 setProducts={props.setProducts}
                             />

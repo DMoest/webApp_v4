@@ -8,7 +8,7 @@ import * as Style from '../../assets/styles';
 import { listButton } from '../../assets/styles/buttons';
 
 /**
- * Products list item props type object. Used to type input props to component StockListItem.
+ * Products list item props type object. Used to type input props to component ProductListItem.
  */
 type StockListItemPropsType = {
     item: {
@@ -19,12 +19,12 @@ type StockListItemPropsType = {
 };
 
 /**
- * StockListItem object to return a touchable link element to item detail view.
+ * ProductListItem object to return a touchable link element to item detail view.
  *
  * @constructor
  * @param props
  */
-export const StockListItem = (props: StockListItemPropsType) => {
+export const ProductListItem = (props: StockListItemPropsType) => {
     return (
         <View
             key={props.item.id.toString()}

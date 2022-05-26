@@ -6,10 +6,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { Home } from './Home.screen';
-import { StockNavigator } from './Stock.navigator';
+import { ProductsNavigator } from './Products.navigator';
 import { OrderNavigator } from './Order.navigator';
 import { DeliveryNavigator } from './Delivery.navigator';
-import * as StockInterfaces from '../interfaces/Stock';
+import * as StockInterfaces from '../interfaces/Product';
 import * as OrderInterfaces from '../interfaces/Order';
 import * as DeliveriesInterfaces from '../interfaces/Deliveries';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -19,7 +19,7 @@ import * as Style from '../assets/styles/index';
  * Bottom tab props type.
  */
 type BottomTabsProps = {
-    products: StockInterfaces.Stock;
+    products: StockInterfaces.Product;
     setProducts: object;
     orders: OrderInterfaces.Order;
     setOrders: object;
@@ -84,7 +84,7 @@ export const BottomTabsNavigator: (props: BottomTabsProps) => JSX.Element = (
 
             <BottomTabs.Screen name='Lager'>
                 {() => (
-                    <StockNavigator
+                    <ProductsNavigator
                         products={props.products}
                         setProducts={props.setProducts}
                     />

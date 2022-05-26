@@ -5,16 +5,16 @@ import React, { useEffect } from 'react';
 // eslint-disable-next-line import/namespace
 import { Pressable, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { StockListItem } from './StockListItem';
+import { ProductListItem } from './ProductListItem';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
 
 /**
- * StockList object to fetch item list from API and generate a FlatList View from response JSON object.
+ * ProductList object to fetch item list from API and generate a FlatList View from response JSON object.
  *
  * @constructor
  */
-export const StockList = (props) => {
+export const ProductList = (props) => {
     useEffect(async () => {
         props.setProducts(await ProductModel.getProducts());
     }, []);
@@ -36,7 +36,7 @@ export const StockList = (props) => {
             onPress={() => {
                 navigation.navigate('Produktspecifikation', { item });
             }}>
-            <StockListItem item={item} />
+            <ProductListItem item={item} />
         </Pressable>
     );
 
