@@ -20,16 +20,6 @@ import * as Style from '../assets/styles';
 import coverIMG from '../assets/img/NutsAndBolts-6.jpg';
 
 /**
- * Deliveries props type.
- */
-type DeliveriesPropsType = {
-    products: Product[];
-    setProducts: object;
-    deliveries: Deliveries[];
-    setDeliveries: object;
-};
-
-/**
  * Stack navigator.
  */
 const Stack: NativeStackNavigatorProps = createStackNavigator();
@@ -37,42 +27,29 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
 /**
  * Delivery Stack Navigator.
  *
- * @param props
  * @constructor
  */
-export const DeliveryNavigator: (props: DeliveriesPropsType) => JSX.Element = (
-    props: DeliveriesPropsType,
-) => {
+export const DeliveryNavigator: () => JSX.Element = () => {
     return (
         <View style={Style.Base.mainContainer}>
             {CoverImage({ headerText: 'Inleveranser', image: coverIMG })}
 
             <View style={Style.Base.content}>
                 <Stack.Navigator>
-                    <Stack.Screen name='Inleveranslista'>
-                        {() => (
-                            <DeliveryList
-                                route={props.route}
-                                navigation={props.navigation}
-                                deliveries={props.deliveries}
-                                setDeliveries={props.setDeliveries}
-                                products={props.products}
-                                setProducts={props.setProducts}
-                            />
-                        )}
-                    </Stack.Screen>
+                    <Stack.Screen
+                        name='Inleveranslista'
+                        component={DeliveryList}
+                    />
 
-                    <Stack.Screen name='Inleveransspecifikation'>
-                        {(props: React.PropsWithChildren<object>) => (
-                            <DeliveryItem {...props} />
-                        )}
-                    </Stack.Screen>
+                    <Stack.Screen
+                        name='Inleveransspecifikation'
+                        component={DeliveryItem}
+                    />
 
-                    <Stack.Screen name='Inleverasformulär'>
-                        {(props: React.PropsWithChildren<object>) => (
-                            <DeliveryCreationForm {...props} />
-                        )}
-                    </Stack.Screen>
+                    <Stack.Screen
+                        name='Inleverasformulär'
+                        component={DeliveryCreationForm}
+                    />
                 </Stack.Navigator>
             </View>
 

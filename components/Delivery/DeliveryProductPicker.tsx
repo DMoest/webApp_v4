@@ -6,8 +6,8 @@ import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
-import * as StockInterfaces from '../../interfaces/Product';
 import * as ProductModel from '../../models/Products';
+import * as StockInterfaces from '../../interfaces/Product';
 import * as Style from '../../assets/styles/index';
 
 /**
