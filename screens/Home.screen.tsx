@@ -15,13 +15,7 @@ import * as Style from '../assets/styles';
 export const Home: React.FC = () => {
     return (
         <SafeAreaView style={Style.Base.mainContainer}>
-            <View style={Style.Image.imageContainer}>
-                <ImageBackground
-                    source={coverIMG}
-                    style={Style.Image.image}>
-                    <Text style={Style.Typography.header}>Infinity</Text>
-                </ImageBackground>
-            </View>
+            {CoverImage({ headerText: 'Infinity', image: coverIMG })}
 
             <View
                 style={[
