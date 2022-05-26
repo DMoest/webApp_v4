@@ -1,5 +1,5 @@
 /**
- * Stock interface.
+ * Products interface.
  */
 export interface Stock {
     id: number;

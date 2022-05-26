@@ -8,7 +8,7 @@ import * as Style from '../../assets/styles';
 import { listButton } from '../../assets/styles/buttons';
 
 /**
- * Stock list item props type object. Used to type input props to component StockListItem.
+ * Products list item props type object. Used to type input props to component StockListItem.
  */
 type StockListItemPropsType = {
     item: {

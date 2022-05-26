@@ -24,6 +24,7 @@ import {
     Merriweather_700Bold,
     Merriweather_700Bold_Italic,
 } from '@expo-google-fonts/merriweather';
+import { AppProvider } from './App.provider';
 
 LogBox.ignoreLogs([
     'Remote debugger',
@@ -65,16 +66,18 @@ export const App: React.FC = () => {
 
     return (
         <SafeAreaView style={Style.Base.mainContainer}>
-            <NavigationContainer>
-                <BottomTabsNavigator
-                    products={products}
-                    setProducts={setProducts}
-                    orders={orders}
-                    setOrders={setOrders}
-                    deliveries={deliveries}
-                    setDeliveries={setDeliveries}
-                />
-            </NavigationContainer>
+            <AppProvider>
+                <NavigationContainer>
+                    <BottomTabsNavigator
+                        products={products}
+                        setProducts={setProducts}
+                        orders={orders}
+                        setOrders={setOrders}
+                        deliveries={deliveries}
+                        setDeliveries={setDeliveries}
+                    />
+                </NavigationContainer>
+            </AppProvider>
         </SafeAreaView>
     );
 };
