@@ -17,9 +17,31 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const DeliveryList: React.FC = () => {
+export const DeliveryList: React.FC = ({ route }) => {
     const appContext = useAppContext();
     const navigation = useNavigation();
+    const reload = route.params?.reload ?? false;
+
+    /**
+     * If reload is true fetch orders from API.
+     */
+    if (reload) {
+        reloadDeliveries();
+    }
+
+    /**
+     * Function to fetch orders from API.
+     */
+    async function reloadDeliveries() {
+        appContext.setDeliveries(await DeliveryModel.getDeliveries());
+    }
+
+    /**
+     * React Hook to reload orders.
+     */
+    useEffect(() => {
+        reloadDeliveries();
+    }, []);
 
     /**
      * Use Effect Hook to set state of products and deliveries.

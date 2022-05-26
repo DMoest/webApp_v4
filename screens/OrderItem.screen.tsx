@@ -77,7 +77,9 @@ const checkPackingStatus = (
                     try {
                         await OrderModel.pickOrder(theOrderItems);
                         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-                        await navigation.goBack();
+                        await navigation.navigate('Orderlista', {
+                            reload: true,
+                        });
                     } catch (error) {
                         console.log('Error: ', error);
                     }

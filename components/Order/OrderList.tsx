@@ -16,14 +16,38 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const OrderList = () => {
+export const OrderList = ({ route }) => {
     const appContext = useAppContext();
     const navigation = useNavigation();
+    const reload = route.params?.reload ?? false;
+
+    /**
+     * If reload is true fetch orders from API.
+     */
+    if (reload) {
+        reloadOrders();
+    }
+
+    /**
+     * Function to fetch orders from API.
+     */
+    async function reloadOrders() {
+        appContext.setOrders(await OrderModel.getOrders());
+    }
+
+    /**
+     * React Hook to reload orders.
+     */
+    useEffect(() => {
+        reloadOrders();
+    }, []);
 
     /**
      * React Hook.
      */
     useEffect(async () => {
+        console.log('App Context: ', appContext);
+        console.log('Route: ', route);
         appContext.setOrders(await OrderModel.getOrders());
     }, []);
 

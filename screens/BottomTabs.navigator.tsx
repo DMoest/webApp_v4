@@ -6,25 +6,25 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { Home } from './Home.screen';
-import { ProductsNavigator } from './Products.navigator';
-import { OrderNavigator } from './Order.navigator';
 import { DeliveryNavigator } from './Delivery.navigator';
-import * as StockInterfaces from '../interfaces/Product';
-import * as OrderInterfaces from '../interfaces/Order';
+import { OrderNavigator } from './Order.navigator';
+import { ProductsNavigator } from './Products.navigator';
 import * as DeliveriesInterfaces from '../interfaces/Deliveries';
-import { FontAwesome5 } from '@expo/vector-icons';
+import * as OrderInterfaces from '../interfaces/Order';
+import * as ProductInterfaces from '../interfaces/Product';
 import * as Style from '../assets/styles/index';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 /**
  * Bottom tab props type.
  */
 type BottomTabsProps = {
-    products: StockInterfaces.Product;
-    setProducts: object;
+    products: ProductInterfaces.Product;
+    setProducts: () => void;
     orders: OrderInterfaces.Order;
-    setOrders: object;
+    setOrders: () => void;
     deliveries: DeliveriesInterfaces.Deliveries;
-    setDeliveries: object;
+    setDeliveries: () => void;
 };
 
 /**
@@ -82,34 +82,20 @@ export const BottomTabsNavigator: (props: BottomTabsProps) => JSX.Element = (
                 component={Home}
             />
 
-            <BottomTabs.Screen name='Lager'>
-                {() => (
-                    <ProductsNavigator
-                        products={props.products}
-                        setProducts={props.setProducts}
-                    />
-                )}
-            </BottomTabs.Screen>
+            <BottomTabs.Screen
+                name='Lager'
+                component={ProductsNavigator}
+            />
 
-            <BottomTabs.Screen name='Order'>
-                {() => (
-                    <OrderNavigator
-                        orders={props.orders}
-                        setOrders={props.setOrders}
-                    />
-                )}
-            </BottomTabs.Screen>
+            <BottomTabs.Screen
+                name='Order'
+                component={OrderNavigator}
+            />
 
-            <BottomTabs.Screen name='Inleveranser'>
-                {() => (
-                    <DeliveryNavigator
-                        products={props.products}
-                        setProducts={props.setProducts}
-                        deliveries={props.deliveries}
-                        setDeliveries={props.setDeliveries}
-                    />
-                )}
-            </BottomTabs.Screen>
+            <BottomTabs.Screen
+                name='Inleveranser'
+                component={DeliveryNavigator}
+            />
         </BottomTabs.Navigator>
     );
 };

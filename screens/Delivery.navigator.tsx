@@ -3,12 +3,10 @@
  */
 import React from 'react';
 // eslint-disable-next-line import/namespace
-import { Text, View, ImageBackground, SafeAreaView } from 'react-native';
+import { View } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Product } from '../interfaces/Product';
-import { Deliveries } from '../interfaces/Deliveries';
 import { DeliveryList } from '../components/Delivery/DeliveryList';
 import { DeliveryItem } from './DeliveryItem.screen';
 import { DeliveryCreationForm } from './DeliveryForm.screen';
