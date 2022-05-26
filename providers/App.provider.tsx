@@ -7,15 +7,15 @@ import * as OrdersInterfaces from '../interfaces/Orders';
 import * as DeliveriesInterfaces from '../interfaces/Deliveries';
 
 /**
- *
+ * Application context types.
  */
 type AppContextType = {
     products: ProductsInterfaces.Products[];
-    setProducts: object;
+    setProducts: () => void;
     orders: OrdersInterfaces.Orders[];
-    setOrders: object;
+    setOrders: () => void;
     deliveries: DeliveriesInterfaces.Deliveries[];
-    setDeliveries: object;
+    setDeliveries: () => void;
 };
 
 /**
@@ -30,6 +30,12 @@ const AppContext = createContext<AppContextType>({
     setDeliveries: () => [],
 });
 
+/**
+ * App context provider.
+ *
+ * @param children
+ * @constructor
+ */
 export const AppProvider: React.FC = ({ children }) => {
     const [products, setProducts] = React.useState<
         ProductsInterfaces.Products[]
@@ -54,4 +60,7 @@ export const AppProvider: React.FC = ({ children }) => {
     );
 };
 
+/**
+ * Module exports.
+ */
 export const useAppContext = () => React.useContext(AppContext);

@@ -24,7 +24,7 @@ import {
     Merriweather_700Bold,
     Merriweather_700Bold_Italic,
 } from '@expo-google-fonts/merriweather';
-import { AppProvider } from './App.provider';
+import { AppProvider } from './providers/App.provider';
 
 LogBox.ignoreLogs([
     'Remote debugger',
@@ -42,8 +42,6 @@ LogBox.ignoreLogs([
  * @constructor
  */
 export const App: React.FC = () => {
-    const [products, setProducts] = useState([]);
-    const [orders, setOrders] = useState([]);
     const [deliveries, setDeliveries] = useState([]);
 
     const [fontsLoaded] = useFonts({
@@ -69,10 +67,6 @@ export const App: React.FC = () => {
             <AppProvider>
                 <NavigationContainer>
                     <BottomTabsNavigator
-                        products={products}
-                        setProducts={setProducts}
-                        orders={orders}
-                        setOrders={setOrders}
                         deliveries={deliveries}
                         setDeliveries={setDeliveries}
                     />

@@ -5,7 +5,6 @@ import React from 'react';
 // eslint-disable-next-line import/namespace
 import { View, Text } from 'react-native';
 import * as Style from '../../assets/styles';
-import { listButton } from '../../assets/styles/buttons';
 
 /**
  * Products list item props type object. Used to type input props to component ProductListItem.

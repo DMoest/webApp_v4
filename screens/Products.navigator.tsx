@@ -3,13 +3,12 @@
  */
 import React from 'react';
 // eslint-disable-next-line import/namespace
-import { ImageBackground, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ProductList } from '../components/Products/ProductList';
 import { StockItem } from './ProductItem.screen';
-import { Product } from '../interfaces/Product';
 import { StatusBar } from 'expo-status-bar';
 import { CoverImage } from '../components/Utils/CoverImage';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -18,29 +17,21 @@ import coverIMG from '../assets/img/NutsAndBolts-5.jpg';
 import * as Style from '../assets/styles';
 
 /**
- * Products props type.
+ * Stack navigator for products.
  */
-type StockPropsType = {
-    products: Product[];
-    setProducts: object;
-};
-
 const Stack: NativeStackNavigatorProps = createStackNavigator();
 
 /**
  * Products Stack Navigator.
  *
- * @param props
  * @constructor
  */
-export const ProductsNavigator: (props: StockPropsType) => JSX.Element = (
-    props: StockPropsType,
-) => {
+export const ProductsNavigator: () => JSX.Element = () => {
     return (
         <View style={Style.Base.mainContainer}>
             {CoverImage({ headerText: 'Lager', image: coverIMG })}
 
-            <View style={Style.Base.content}>
+            <View>
                 <Text
                     style={[
                         Style.Typography.paragraph,
@@ -49,22 +40,19 @@ export const ProductsNavigator: (props: StockPropsType) => JSX.Element = (
                     Listan innehåller lagerförda produkter. Varje produkt har
                     ett namn, ett artikelnr. och antal i lager.
                 </Text>
+            </View>
 
+            <View style={Style.Base.content}>
                 <Stack.Navigator>
-                    <Stack.Screen name='Produkter'>
-                        {() => (
-                            <ProductList
-                                products={props.products}
-                                setProducts={props.setProducts}
-                            />
-                        )}
-                    </Stack.Screen>
+                    <Stack.Screen
+                        name='Produkter'
+                        component={ProductList}
+                    />
 
-                    <Stack.Screen name='Produktspecifikation'>
-                        {(props: React.PropsWithChildren<object>) => (
-                            <StockItem {...props} />
-                        )}
-                    </Stack.Screen>
+                    <Stack.Screen
+                        name='Produktspecifikation'
+                        component={StockItem}
+                    />
                 </Stack.Navigator>
             </View>
 

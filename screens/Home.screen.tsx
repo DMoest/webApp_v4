@@ -2,8 +2,11 @@
  * Module imports.
  */
 import React from 'react';
-import { Text, View, ImageBackground, SafeAreaView } from 'react-native';
+// eslint-disable-next-line import/namespace
+import { Text, View, SafeAreaView } from 'react-native';
 import { CoverImage } from '../components/Utils/CoverImage';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import coverIMG from '../assets/img/NutsAndBolts-4.jpg';
 import * as Style from '../assets/styles';
 

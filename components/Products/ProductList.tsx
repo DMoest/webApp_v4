@@ -3,8 +3,9 @@
  */
 import React, { useEffect } from 'react';
 // eslint-disable-next-line import/namespace
-import { Pressable, FlatList } from 'react-native';
+import { TouchableOpacity, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useAppContext } from '../../providers/App.provider';
 import { ProductListItem } from './ProductListItem';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
@@ -14,15 +15,13 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const ProductList = (props) => {
-    useEffect(async () => {
-        props.setProducts(await ProductModel.getProducts());
-    }, []);
-
-    /**
-     * Navigation constant.
-     */
+export const ProductList = () => {
+    const appContext = useAppContext();
     const navigation = useNavigation();
+
+    useEffect(async () => {
+        appContext.setProducts(await ProductModel.getProducts());
+    }, []);
 
     /**
      * Render item function.
@@ -30,21 +29,21 @@ export const ProductList = (props) => {
      * @param item
      */
     const renderItem = ({ item }) => (
-        <Pressable
+        <TouchableOpacity
             key={item.id}
             style={Style.Button.buttonContainer}
             onPress={() => {
                 navigation.navigate('Produktspecifikation', { item });
             }}>
             <ProductListItem item={item} />
-        </Pressable>
+        </TouchableOpacity>
     );
 
     return (
         <FlatList
             style={Style.Container.flatList}
-            data={props.products}
-            keyExtractor={(item) => item.id}
+            data={appContext.products}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={renderItem}
         />
     );
