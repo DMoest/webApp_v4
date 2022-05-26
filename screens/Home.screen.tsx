@@ -34,7 +34,9 @@ export const Home: React.FC = () => {
                         Style.Typography.endMarginText,
                     ]}>
                     För tillfället finns endast begränsad funktionalitet men
-                    inom kort tillkommer mer.{' '}
+                    inom kort tillkommer mer. Ni kan se vårat produktlager,
+                    titta på ordrar av produkter och hantera inleveranser av
+                    produkter.
                 </Text>
             </View>
         </SafeAreaView>
