@@ -1,13 +1,14 @@
 /**
  * Module imports.
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 // eslint-disable-next-line import/namespace
 import { Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { useAppContext } from '../../providers/App.provider';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
-import * as ProductModel from '../../models/Products';
 import * as StockInterfaces from '../../interfaces/Product';
+import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles/index';
 
 /**
@@ -15,8 +16,8 @@ import * as Style from '../../assets/styles/index';
  */
 type NewDeliveryPropsType = {
     newDelivery: Partial<DeliveriesInterfaces.Deliveries>;
-    setNewDelivery: any;
-    setSelectedProduct: any;
+    setNewDelivery: () => void;
+    setSelectedProduct: () => void;
 };
 
 /**
@@ -28,15 +29,15 @@ type NewDeliveryPropsType = {
 export const DeliveryProductPicker: (
     props: NewDeliveryPropsType,
 ) => JSX.Element = (props: NewDeliveryPropsType): JSX.Element => {
-    const [products, setProducts] = useState<StockInterfaces.Product[]>([]);
     // eslint-disable-next-line prefer-const
     let productsHash: any = {};
+    const appContext = useAppContext();
 
     useEffect(async () => {
-        setProducts(await ProductModel.getProducts());
+        appContext.setProducts(await ProductModel.getProducts());
     }, []);
 
-    const pickerProductsList = products.map(
+    const pickerProductsList = appContext.products.map(
         (product: StockInterfaces.Product, index: number) => {
             productsHash[product.id] = product;
 

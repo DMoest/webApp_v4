@@ -9,23 +9,8 @@ import { Home } from './Home.screen';
 import { DeliveryNavigator } from './Delivery.navigator';
 import { OrderNavigator } from './Order.navigator';
 import { ProductsNavigator } from './Products.navigator';
-import * as DeliveriesInterfaces from '../interfaces/Deliveries';
-import * as OrderInterfaces from '../interfaces/Order';
-import * as ProductInterfaces from '../interfaces/Product';
 import * as Style from '../assets/styles/index';
 import { FontAwesome5 } from '@expo/vector-icons';
-
-/**
- * Bottom tab props type.
- */
-type BottomTabsProps = {
-    products: ProductInterfaces.Product;
-    setProducts: () => void;
-    orders: OrderInterfaces.Order;
-    setOrders: () => void;
-    deliveries: DeliveriesInterfaces.Deliveries;
-    setDeliveries: () => void;
-};
 
 /**
  * Bottom tabs navigator & route icons.
@@ -41,12 +26,9 @@ const routeIcons = {
 /**
  * Bottom Navigation Bar.
  *
- * @param props
  * @constructor
  */
-export const BottomTabsNavigator: (props: BottomTabsProps) => JSX.Element = (
-    props: BottomTabsProps,
-) => {
+export const BottomTabsNavigator: () => JSX.Element = () => {
     return (
         <BottomTabs.Navigator
             screenOptions={({ route }) => ({

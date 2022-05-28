@@ -8,6 +8,7 @@ import { useAppContext } from '../../providers/App.provider';
 import { useNavigation } from '@react-navigation/native';
 import { OrderListItem } from './OrderListItem';
 import * as OrderModel from '../../models/Orders';
+// import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
 
 /**
@@ -16,39 +17,42 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const OrderList = ({ route }) => {
+export const OrderList: React.FC = ({ route }) => {
     const appContext = useAppContext();
     const navigation = useNavigation();
-    const reload = route.params?.reload ?? false;
+    let reload = route.params?.reload ?? false;
+
+    /**
+     * Function to fetch orders from API.
+     */
+    async function loadOrders() {
+        appContext.setOrders(await OrderModel.getOrders());
+    }
+
+    /**
+     * Function to fetch products from API.
+     */
+    // async function loadProducts() {
+    //     appContext.setProducts(await ProductModel.getProducts());
+    // }
 
     /**
      * If reload is true fetch orders from API.
      */
     if (reload) {
-        reloadOrders();
-    }
-
-    /**
-     * Function to fetch orders from API.
-     */
-    async function reloadOrders() {
-        appContext.setOrders(await OrderModel.getOrders());
+        void loadOrders().then(() => {
+            reload = false;
+        });
     }
 
     /**
      * React Hook to reload orders.
      */
     useEffect(() => {
-        reloadOrders();
-    }, []);
-
-    /**
-     * React Hook.
-     */
-    useEffect(async () => {
-        console.log('App Context: ', appContext);
-        console.log('Route: ', route);
-        appContext.setOrders(await OrderModel.getOrders());
+        void loadOrders().then(() => {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            reload = false;
+        });
     }, []);
 
     /**
@@ -76,7 +80,7 @@ export const OrderList = ({ route }) => {
         <FlatList
             style={Style.Container.flatList}
             data={newOrders}
-            keyExtractor={(item) => item.id.toString()}
+            // keyExtractor={(item) => item.id.toString()}
             renderItem={renderItem}
         />
     );

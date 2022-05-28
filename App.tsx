@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AppLoading from 'expo-app-loading';
 // eslint-disable-next-line import/namespace
 import { LogBox } from 'react-native';
+import { AppProvider } from './providers/App.provider';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { BottomTabsNavigator } from './screens/BottomTabs.navigator';
@@ -24,7 +25,6 @@ import {
     Merriweather_700Bold,
     Merriweather_700Bold_Italic,
 } from '@expo-google-fonts/merriweather';
-import { AppProvider } from './providers/App.provider';
 
 LogBox.ignoreLogs([
     'Remote debugger',
@@ -42,8 +42,6 @@ LogBox.ignoreLogs([
  * @constructor
  */
 export const App: React.FC = () => {
-    const [deliveries, setDeliveries] = useState([]);
-
     const [fontsLoaded] = useFonts({
         OleoScriptSwashCaps_400Regular,
         OleoScriptSwashCaps_700Bold,
@@ -66,10 +64,7 @@ export const App: React.FC = () => {
         <SafeAreaView style={Style.Base.mainContainer}>
             <AppProvider>
                 <NavigationContainer>
-                    <BottomTabsNavigator
-                        deliveries={deliveries}
-                        setDeliveries={setDeliveries}
-                    />
+                    <BottomTabsNavigator />
                 </NavigationContainer>
             </AppProvider>
         </SafeAreaView>

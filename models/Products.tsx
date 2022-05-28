@@ -51,9 +51,6 @@ export async function getProductById(product_id: string): Promise<Product> {
  * @param product
  */
 export async function updateProduct(product: Partial<Product>) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    console.log(`Updating product ${product.id} - ${product.name}`);
-
     try {
         return await fetch(
             `${config.base_url}/products?api_key=${config.api_key}`,
@@ -67,40 +64,6 @@ export async function updateProduct(product: Partial<Product>) {
                     id: product.id,
                     name: product.name,
                     stock: product.stock,
-                    api_key: `${config.api_key}`,
-                }),
-            },
-        );
-    } catch (error) {
-        RequestErrorHandler(error);
-    }
-}
-
-/**
- * Setter Model Method to update a product in the API from a delivery.
- *
- * @param product
- * @param delivery
- */
-export async function updateProductStockFromDelivery(
-    product: Partial<Product>,
-    delivery: Partial<Deliveries>,
-) {
-    try {
-        const newStock = product.stock + delivery.amount;
-
-        return await fetch(
-            `${config.base_url}/products?api_key=${config.api_key}`,
-            {
-                method: 'PUT',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: delivery.product_id,
-                    name: delivery.product_name,
-                    stock: newStock,
                     api_key: `${config.api_key}`,
                 }),
             },

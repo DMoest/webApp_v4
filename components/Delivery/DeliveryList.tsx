@@ -9,7 +9,7 @@ import { useAppContext } from '../../providers/App.provider';
 import { DeliveryListItem } from './DeliveryListItem';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as DeliveryModel from '../../models/Deliveries';
-import * as ProductModel from '../../models/Products';
+// import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
 
 /**
@@ -20,38 +20,39 @@ import * as Style from '../../assets/styles';
 export const DeliveryList: React.FC = ({ route }) => {
     const appContext = useAppContext();
     const navigation = useNavigation();
-    const reload = route.params?.reload ?? false;
+    let reload = route.params?.reload ?? false;
+
+    /**
+     * Function to fetch deliveries from API.
+     */
+    async function loadDeliveries() {
+        appContext.setDeliveries(await DeliveryModel.getDeliveries());
+    }
+
+    // /**
+    //  * Function to fetch products from API.
+    //  */
+    // async function loadProducts() {
+    //     appContext.setProducts(await ProductModel.getProducts());
+    // }
 
     /**
      * If reload is true fetch orders from API.
      */
     if (reload) {
-        reloadDeliveries();
+        void loadDeliveries().then(() => {
+            reload = false;
+        });
     }
 
     /**
-     * Function to fetch orders from API.
-     */
-    async function reloadDeliveries() {
-        appContext.setDeliveries(await DeliveryModel.getDeliveries());
-    }
-
-    /**
-     * React Hook to reload orders.
+     * React Hook to load deliveries and products.
      */
     useEffect(() => {
-        reloadDeliveries();
-    }, []);
-
-    /**
-     * Use Effect Hook to set state of products and deliveries.
-     */
-    useEffect(async () => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        appContext.setDeliveries(await DeliveryModel.getDeliveries());
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        appContext.setProducts(await ProductModel.getProducts());
+        void loadDeliveries().then(() => {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            reload = false;
+        });
     }, []);
 
     /**
@@ -96,13 +97,10 @@ export const DeliveryList: React.FC = ({ route }) => {
     return (
         <View>
             <TouchableOpacity
+                key={'newdeliverybtn'}
                 style={Style.Button.buttonSTD}
                 onPress={() => {
-                    navigation.navigate('Inleverasformulär', {
-                        products: appContext.products,
-                        deliveries: appContext.deliveries,
-                        setDeliveries: appContext.setDeliveries,
-                    });
+                    navigation.navigate('Inleverasformulär');
                 }}>
                 <Text style={Style.Typography.buttonText}>
                     Skapa Ny Inleverans

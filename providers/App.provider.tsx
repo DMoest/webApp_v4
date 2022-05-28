@@ -2,20 +2,26 @@
  * Module imports.
  */
 import React, { createContext } from 'react';
-import * as ProductsInterfaces from '../interfaces/Products';
-import * as OrdersInterfaces from '../interfaces/Orders';
 import * as DeliveriesInterfaces from '../interfaces/Deliveries';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import * as OrdersInterfaces from '../interfaces/Orders';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import * as ProductsInterfaces from '../interfaces/Products';
 
 /**
  * Application context types.
  */
 type AppContextType = {
     products: ProductsInterfaces.Products[];
-    setProducts: () => void;
+    setProducts: (products1: ProductsInterfaces.Product[]) => void;
     orders: OrdersInterfaces.Orders[];
-    setOrders: () => void;
+    setOrders: (orders1: OrdersInterfaces.Order[]) => void;
     deliveries: DeliveriesInterfaces.Deliveries[];
-    setDeliveries: () => void;
+    setDeliveries: (deliveries1: DeliveriesInterfaces.Deliveries[]) => void;
 };
 
 /**
@@ -48,12 +54,12 @@ export const AppProvider: React.FC = ({ children }) => {
     return (
         <AppContext.Provider
             value={{
-                products: products,
-                setProducts: setProducts,
-                orders: orders,
-                setOrders: setOrders,
-                deliveries: deliveries,
-                setDeliveries: setDeliveries,
+                products,
+                setProducts,
+                orders,
+                setOrders,
+                deliveries,
+                setDeliveries,
             }}>
             {children}
         </AppContext.Provider>
@@ -61,6 +67,6 @@ export const AppProvider: React.FC = ({ children }) => {
 };
 
 /**
- * Module exports.
+ * Context access function exported.
  */
 export const useAppContext = () => React.useContext(AppContext);

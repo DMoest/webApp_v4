@@ -2,7 +2,6 @@
  * Module imports.
  */
 import React, { useState, useEffect, useCallback } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import {
     Alert,
     Button,
@@ -14,45 +13,45 @@ import {
     TouchableOpacity,
     // eslint-disable-next-line import/namespace
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useAppContext } from '../providers/App.provider';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { DeliveryProductPicker } from '../components/Delivery/DeliveryProductPicker';
-import * as StockInterfaces from '../interfaces/Product';
 import * as DeliveriesInterfaces from '../interfaces/Deliveries';
-import * as DeliveryModel from '../models/Deliveries';
+import * as StockInterfaces from '../interfaces/Product';
 import * as ProductModel from '../models/Products';
+import * as DeliveryModel from '../models/Deliveries';
+import { StatusBar } from 'expo-status-bar';
 import config from '../config/config.json';
 import * as Style from '../assets/styles/index';
 
 /**
  * Create new delivery form component.
  *
- * @param props
  * @constructor
  */
-export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
-    /**
-     * Constants and functions to set and hold state of new delivery and current product to update.
-     */
+export const DeliveryCreationForm: React.FC = (): JSX.Element => {
+    const navigation = useNavigation();
+    const appContext = useAppContext();
     let initialDeliveryValues = {
-        product_id: props.route.params.products[0].id.toString(),
+        product_id: appContext.products[0].id.toString(),
         delivery_date: new Date().toLocaleDateString('se-SV'),
         amount: 0,
         comment: '',
         api_key: config.api_key,
     };
-    const navigation = props.navigation;
     const [newDelivery, setNewDelivery] = useState<
         Partial<DeliveriesInterfaces.Deliveries>
     >(initialDeliveryValues);
     const [selectedProduct, setSelectedProduct] =
-        useState<StockInterfaces.Product>(props.route.params.products[0]);
+        useState<StockInterfaces.Product>(appContext.products[0]);
 
     /**
      * Hook to set initial values from
      */
     useEffect(() => {
         initialDeliveryValues = {
-            product_id: props.route.params.products[0].id.toString(),
+            product_id: appContext.products[0].id.toString(),
             delivery_date: new Date().toLocaleDateString('se-SV'),
             amount: 0,
             comment: '',
@@ -122,10 +121,10 @@ export const DeliveryCreationForm: React.FC = (props): JSX.Element => {
 
             Alert.alert(
                 'Ny Inleverans har skapats.\n \n' +
-                    `Product_id: ${newDelivery.product_id}\n` +
+                    `Produkt id: ${newDelivery.product_id}\n` +
                     `Antal: ${newDelivery.amount}\n` +
-                    `Delivery date: ${newDelivery.delivery_date}` +
-                    `Antal: ${newDelivery.comment}\n`,
+                    `Leveransdatum: ${newDelivery.delivery_date}\n` +
+                    `Kommentar: ${newDelivery.comment}`,
             );
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call
