@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 // eslint-disable-next-line import/namespace
 import { Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { useAppContext } from '../../providers/App.provider';
+import { useAppContext } from '../../context/App.provider';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as StockInterfaces from '../../interfaces/Product';
 import * as ProductModel from '../../models/Products';

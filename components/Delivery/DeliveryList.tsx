@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 // eslint-disable-next-line import/namespace
 import { View, FlatList, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useAppContext } from '../../providers/App.provider';
+import { useAppContext } from '../../context/App.provider';
 import { DeliveryListItem } from './DeliveryListItem';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as DeliveryModel from '../../models/Deliveries';

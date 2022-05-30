@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 // eslint-disable-next-line import/namespace
 import { TouchableOpacity, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useAppContext } from '../../providers/App.provider';
+import { useAppContext } from '../../context/App.provider';
 import { ProductListItem } from './ProductListItem';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';

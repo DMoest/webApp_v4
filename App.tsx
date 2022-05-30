@@ -2,7 +2,8 @@ import React from 'react';
 import AppLoading from 'expo-app-loading';
 // eslint-disable-next-line import/namespace
 import { LogBox } from 'react-native';
-import { AppProvider } from './providers/App.provider';
+import { AppProvider } from './context/App.provider';
+import { AuthProvider } from './context/Auth.provider';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { BottomTabsNavigator } from './screens/BottomTabs.navigator';
@@ -61,13 +62,15 @@ export const App: React.FC = () => {
     }
 
     return (
-        <SafeAreaView style={Style.Base.mainContainer}>
+        <AuthProvider>
             <AppProvider>
-                <NavigationContainer>
-                    <BottomTabsNavigator />
-                </NavigationContainer>
+                <SafeAreaView style={Style.Base.mainContainer}>
+                    <NavigationContainer>
+                        <BottomTabsNavigator />
+                    </NavigationContainer>
+                </SafeAreaView>
             </AppProvider>
-        </SafeAreaView>
+        </AuthProvider>
     );
 };
 
