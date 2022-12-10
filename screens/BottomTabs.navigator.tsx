@@ -11,7 +11,6 @@ import {useAuthContext} from '../context/Auth.provider';
 import {Home} from './Home.screen';
 import {DeliveryNavigator} from './Deliveries/Delivery.navigator';
 import {InvoiceList} from '../components/Invoice/InvoiceList';
-// import { Login } from './Auth/AuthLogin.screen';
 import {AuthNavigator} from './Auth/Auth.navigator';
 import {OrderNavigator} from './Orders/Order.navigator';
 import {ProductsNavigator} from './Products/Products.navigator';
@@ -51,6 +50,7 @@ const routeIcons = {
  */
 export const BottomTabsNavigator: () => JSX.Element = () => {
     const authContext = useAuthContext();
+    // const {isLoading, setIsLoading} = useAppContext();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
