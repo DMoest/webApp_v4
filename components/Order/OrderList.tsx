@@ -1,15 +1,16 @@
 /**
  * Module imports.
  */
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 // eslint-disable-next-line import/namespace
-import { FlatList, TouchableOpacity } from 'react-native';
-import { useAppContext } from '../../context/App.provider';
-import { useNavigation } from '@react-navigation/native';
-import { OrderListItem } from './OrderListItem';
+import {FlatList, TouchableOpacity} from 'react-native';
+import {useAppContext} from '../../context/App.provider';
+import {useNavigation} from '@react-navigation/native';
+import {OrderListItem} from './OrderListItem';
 import * as OrderModel from '../../models/Orders';
-// import * as ProductModel from '../../models/Products';
+// import * as ProductModel from '../../models/Product';
 import * as Style from '../../assets/styles';
+
 
 /**
  * OrdersList object to fetch order list from API and generate a FlatList View from response JSON object.
@@ -17,7 +18,7 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const OrderList: React.FC = ({ route }) => {
+export const OrderList: React.FC = ({route}) => {
     const appContext = useAppContext();
     const navigation = useNavigation();
     let reload = route.params?.reload ?? false;
@@ -45,6 +46,7 @@ export const OrderList: React.FC = ({ route }) => {
         });
     }
 
+
     /**
      * React Hook to reload orders.
      */
@@ -65,14 +67,14 @@ export const OrderList: React.FC = ({ route }) => {
      *
      * @param item
      */
-    const renderItem = ({ item }) => (
+    const renderItem = ({item}) => (
         <TouchableOpacity
             key={item.id.toString()}
             style={Style.Button.buttonContainer}
             onPress={() => {
-                navigation.navigate('Plocklista', { item });
+                navigation.navigate('Plocklista', {item});
             }}>
-            <OrderListItem item={item} />
+            <OrderListItem item={item}/>
         </TouchableOpacity>
     );
 
