@@ -1,14 +1,15 @@
 /**
  * Module imports.
  */
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 // eslint-disable-next-line import/namespace
-import { TouchableOpacity, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useAppContext } from '../../context/App.provider';
-import { ProductListItem } from './ProductListItem';
+import {FlatList, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {useAppContext} from '../../context/App.provider';
+import {ProductListItem} from './ProductListItem';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
+import AppLoading from "expo-app-loading";
 
 /**
  * ProductList object to fetch item list from API and generate a FlatList View from response JSON object.
@@ -19,8 +20,15 @@ export const ProductList = () => {
     const appContext = useAppContext();
     const navigation = useNavigation();
 
-    useEffect(async () => {
-        appContext.setProducts(await ProductModel.getProducts());
+    /**
+     * Hook to load products.
+     */
+    useEffect(() => {
+        const loadProductsList = async () => {
+            appContext.setProducts(await ProductModel.getProducts());
+        };
+
+        loadProductsList();
     }, []);
 
     /**
@@ -28,16 +36,20 @@ export const ProductList = () => {
      *
      * @param item
      */
-    const renderItem = ({ item }) => (
+    const renderItem = ({item}) => (
         <TouchableOpacity
             key={item.id}
             style={Style.Button.buttonContainer}
             onPress={() => {
-                navigation.navigate('Produktspecifikation', { item });
+                navigation.navigate('Produktspecifikation', {item});
             }}>
-            <ProductListItem item={item} />
+            <ProductListItem item={item}/>
         </TouchableOpacity>
     );
+
+    if (appContext.isLoading) {
+        return <AppLoading/>;
+    }
 
     return (
         <FlatList

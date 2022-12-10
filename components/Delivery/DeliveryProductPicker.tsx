@@ -21,7 +21,7 @@ type NewDeliveryPropsType = {
 };
 
 /**
- * Picker Component for Products to add to a new delivery.
+ * Picker Component for Product to add to a new delivery.
  *
  * @constructor
  * @param props

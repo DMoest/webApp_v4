@@ -3,12 +3,13 @@
  */
 import React from 'react';
 // eslint-disable-next-line import/namespace
-import { Text, View, SafeAreaView } from 'react-native';
-import { CoverImage } from '../components/Utils/CoverImage';
+import {SafeAreaView, Text, View} from 'react-native';
+import {CoverImage} from '../components/Utils/CoverImage';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import coverIMG from '../assets/img/NutsAndBolts-4.jpg';
 import * as Style from '../assets/styles';
+import {useAppContext} from "../context/App.provider";
 
 /**
  * Home screen/view.
@@ -16,14 +17,16 @@ import * as Style from '../assets/styles';
  * @constructor
  */
 export const Home: React.FC = () => {
+    const appContext = useAppContext();
+
     return (
         <SafeAreaView style={Style.Base.mainContainer}>
-            {CoverImage({ headerText: 'Infinity', image: coverIMG })}
+            {CoverImage({headerText: 'Infinity', image: coverIMG})}
 
             <View
                 style={[
                     Style.Container.containers,
-                    { paddingHorizontal: Style.Typography.whiteSpace.X075 },
+                    {paddingHorizontal: Style.Typography.whiteSpace.X075},
                 ]}>
                 <Text style={Style.Typography.paragraph}>
                     Välkommen till vår fiktiva mobila lagerapp. Idag lagrar vi

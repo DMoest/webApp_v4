@@ -7,6 +7,7 @@ import React from 'react';
 import { Product } from '../interfaces/Product';
 import { Deliveries } from '../interfaces/Deliveries';
 import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
+import { useAppContext } from '../context/App.provider';
 import config from '../config/config.json';
 
 /**
@@ -68,6 +69,9 @@ export async function updateProduct(product: Partial<Product>) {
                 }),
             },
         );
+
+        await appProvider.setIsLoading(false);
+
     } catch (error) {
         RequestErrorHandler(error);
     }

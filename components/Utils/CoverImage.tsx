@@ -4,7 +4,7 @@ import { ImageBackground, Text, View } from 'react-native';
 import * as Style from '../../assets/styles';
 
 type ArgumentTypes = {
-    image: any | never;
+    image: string;
     headerText: string;
 };
 

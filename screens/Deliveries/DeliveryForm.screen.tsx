@@ -14,16 +14,16 @@ import {
     // eslint-disable-next-line import/namespace
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useAppContext } from '../context/App.provider';
+import { useAppContext } from '../../context/App.provider';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { DeliveryProductPicker } from '../components/Delivery/DeliveryProductPicker';
-import * as DeliveriesInterfaces from '../interfaces/Deliveries';
-import * as StockInterfaces from '../interfaces/Product';
-import * as ProductModel from '../models/Products';
-import * as DeliveryModel from '../models/Deliveries';
+import { DeliveryProductPicker } from '../../components/Delivery/DeliveryProductPicker';
+import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
+import * as StockInterfaces from '../../interfaces/Product';
+import * as ProductModel from '../../models/Products';
+import * as DeliveryModel from '../../models/Deliveries';
 import { StatusBar } from 'expo-status-bar';
-import config from '../config/config.json';
-import * as Style from '../assets/styles/index';
+import config from '../../config/config.json';
+import * as Style from '../../assets/styles';
 
 /**
  * Create new delivery form component.

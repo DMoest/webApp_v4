@@ -3,6 +3,9 @@ import config from '../config/config.json';
 import Deliveries from '../interfaces/Deliveries';
 import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
 
+/**
+ * Get all deliveries.
+ */
 export async function getDeliveries(): Promise<Deliveries[]> {
     try {
         const response = await fetch(
@@ -16,6 +19,11 @@ export async function getDeliveries(): Promise<Deliveries[]> {
     }
 }
 
+/**
+ * Create new delivery.
+ *
+ * @param delivery
+ */
 export async function createDelivery(
     delivery: Partial<Deliveries>,
 ): Promise<Deliveries> {

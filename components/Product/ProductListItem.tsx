@@ -7,7 +7,7 @@ import { View, Text } from 'react-native';
 import * as Style from '../../assets/styles';
 
 /**
- * Products list item props type object. Used to type input props to component ProductListItem.
+ * Product list item props type object. Used to type input props to component ProductListItem.
  */
 type StockListItemPropsType = {
     item: {

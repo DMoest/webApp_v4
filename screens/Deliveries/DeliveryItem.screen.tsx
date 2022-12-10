@@ -6,7 +6,7 @@ import React, { PropsWithChildren } from 'react';
 import { Text, View } from 'react-native';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import * as Style from '../assets/styles';
+import * as Style from '../../assets/styles';
 
 /**
  * DeliveryListItem screen/view.

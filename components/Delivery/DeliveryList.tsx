@@ -9,7 +9,7 @@ import { useAppContext } from '../../context/App.provider';
 import { DeliveryListItem } from './DeliveryListItem';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as DeliveryModel from '../../models/Deliveries';
-// import * as ProductModel from '../../models/Products';
+// import * as ProductModel from '../../models/Product';
 import * as Style from '../../assets/styles';
 
 /**

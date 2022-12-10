@@ -7,9 +7,9 @@ import { Text, View, ScrollView, Pressable } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { StatusBar } from 'expo-status-bar';
-import * as OrderInterfaces from '../interfaces/Order';
-import * as OrderModel from '../models/Orders';
-import * as Style from '../assets/styles';
+import * as OrderInterfaces from '../../interfaces/Order';
+import * as OrderModel from '../../models/Orders';
+import * as Style from '../../assets/styles';
 
 /**
  * Module Props Type.
