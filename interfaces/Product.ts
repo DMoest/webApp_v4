@@ -1,5 +1,5 @@
 /**
- * Products interface.
+ * Product interface.
  */
 export interface Product {
     id: number;
