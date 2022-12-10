@@ -134,3 +134,6 @@ node_modules/**/*
 npm-debug.*
 
 .idea/
+
+# Mac specifics
+.DS_Store
