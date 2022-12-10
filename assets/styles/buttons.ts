@@ -4,6 +4,7 @@
 import * as Abstract from './abstracts';
 import * as Color from './colors';
 import * as Container from './containers';
+import {Typography} from "./index";
 
 /**
  * Style properties for a button.
@@ -70,4 +71,9 @@ export const buttonSTD = {
     borderRadius: Container.borderRadius.button,
     backgroundColor: Color.schemeOne.primary,
     color: Color.text.dark,
+};
+
+export const textLink = {
+    color: Color.colors.linkColor,
+
 };
