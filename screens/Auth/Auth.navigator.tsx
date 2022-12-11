@@ -10,6 +10,8 @@ import {useAuthContext} from '../../context/Auth.provider';
 import {Login} from './Login.screen';
 import {Register} from './Register.screen';
 import {ProductList} from '../../components/Product/ProductList';
+import * as Style from "../../assets/styles";
+import {SafeAreaView} from "react-native";
 // import { InvoiceList } from './Invoices/Invoices.screen';
 
 /**
@@ -29,33 +31,35 @@ export const AuthNavigator: () => JSX.Element = () => {
     const authContext = useAuthContext();
 
     return (
-        <Stack.Navigator initianRouteName='Logga in formulär'>
-            {authContext.isLoggedIn ? (
-                <Stack.Screen
-                    name='Faktura'
-                    component={ProductList}
-                    options={{
-                        headerShown: false,
-                    }}
-                />
-            ) : (
-                <>
+        <SafeAreaView style={Style.Base.mainContainer}>
+            <Stack.Navigator initianRouteName='Logga in formulär'>
+                {authContext.isLoggedIn ? (
                     <Stack.Screen
-                        name='Logga in formulär'
-                        component={Login}
+                        name='Faktura'
+                        component={ProductList}
                         options={{
                             headerShown: false,
                         }}
                     />
-                    <Stack.Screen
-                        name='Registrera användare'
-                        component={Register}
-                        options={{
-                            headerShown: false,
-                        }}
-                    />
-                </>
-            )}
-        </Stack.Navigator>
+                ) : (
+                    <>
+                        <Stack.Screen
+                            name='Logga in formulär'
+                            component={Login}
+                            options={{
+                                headerShown: false,
+                            }}
+                        />
+                        <Stack.Screen
+                            name='Registrera användare'
+                            component={Register}
+                            options={{
+                                headerShown: false,
+                            }}
+                        />
+                    </>
+                )}
+            </Stack.Navigator>
+        </SafeAreaView>
     );
 };

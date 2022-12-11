@@ -3,15 +3,15 @@
  */
 import React from 'react';
 // eslint-disable-next-line import/namespace
-import { View } from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 // eslint-disable-next-line import/no-unresolved
-import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
-import { createStackNavigator } from '@react-navigation/stack';
-import { DeliveryList } from '../../components/Delivery/DeliveryList';
-import { DeliveryItem } from './DeliveryItem.screen';
-import { DeliveryCreationForm } from './DeliveryForm.screen';
-import { CoverImage } from '../../components/Utils/CoverImage';
-import { StatusBar } from 'expo-status-bar';
+import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import {createStackNavigator} from '@react-navigation/stack';
+import {DeliveryList} from '../../components/Delivery/DeliveryList';
+import {DeliveryItem} from './DeliveryItem.screen';
+import {DeliveryCreationForm} from './DeliveryForm.screen';
+import {CoverImage} from '../../components/Utils/CoverImage';
+import {StatusBar} from 'expo-status-bar';
 import * as Style from '../../assets/styles';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -29,8 +29,8 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
  */
 export const DeliveryNavigator: () => JSX.Element = () => {
     return (
-        <View style={Style.Base.mainContainer}>
-            {CoverImage({ headerText: 'Inleveranser', image: coverIMG })}
+        <SafeAreaView style={Style.Base.mainContainer}>
+            {CoverImage({headerText: 'Inleveranser', image: coverIMG})}
 
             <View style={Style.Base.content}>
                 <Stack.Navigator>
@@ -51,7 +51,7 @@ export const DeliveryNavigator: () => JSX.Element = () => {
                 </Stack.Navigator>
             </View>
 
-            <StatusBar style='auto' />
-        </View>
+            <StatusBar style='auto'/>
+        </SafeAreaView>
     );
 };

@@ -3,14 +3,14 @@
  */
 import React from 'react';
 // eslint-disable-next-line import/namespace
-import { Text, View } from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
 // eslint-disable-next-line import/no-unresolved
-import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
-import { createStackNavigator } from '@react-navigation/stack';
-import { OrderList } from '../../components/Order/OrderList';
-import { OrderItem } from './OrderItem.screen';
-import { CoverImage } from '../../components/Utils/CoverImage';
-import { StatusBar } from 'expo-status-bar';
+import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import {createStackNavigator} from '@react-navigation/stack';
+import {OrderList} from '../../components/Order/OrderList';
+import {OrderItem} from './OrderItem.screen';
+import {CoverImage} from '../../components/Utils/CoverImage';
+import {StatusBar} from 'expo-status-bar';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import coverIMG from '../../assets/img/NutsAndBolts-3.jpg';
@@ -28,8 +28,8 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
  */
 export const OrderNavigator: () => JSX.Element = () => {
     return (
-        <View style={Style.Base.mainContainer}>
-            {CoverImage({ headerText: 'Order', image: coverIMG })}
+        <SafeAreaView style={Style.Base.mainContainer}>
+            {CoverImage({headerText: 'Order', image: coverIMG})}
 
             <View style={Style.Container.content}>
                 <Text style={Style.Typography.paragraph}>
@@ -51,7 +51,7 @@ export const OrderNavigator: () => JSX.Element = () => {
                 </Stack.Navigator>
             </View>
 
-            <StatusBar style='auto' />
-        </View>
+            <StatusBar style='auto'/>
+        </SafeAreaView>
     );
 };

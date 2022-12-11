@@ -3,14 +3,14 @@
  */
 import React from 'react';
 // eslint-disable-next-line import/namespace
-import { Text, View } from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
 // eslint-disable-next-line import/no-unresolved
-import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
-import { createStackNavigator } from '@react-navigation/stack';
-import { ProductList } from '../../components/Product/ProductList';
-import { StockItem } from './ProductItem.screen';
-import { StatusBar } from 'expo-status-bar';
-import { CoverImage } from '../../components/Utils/CoverImage';
+import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import {createStackNavigator} from '@react-navigation/stack';
+import {ProductList} from '../../components/Product/ProductList';
+import {StockItem} from './ProductItem.screen';
+import {StatusBar} from 'expo-status-bar';
+import {CoverImage} from '../../components/Utils/CoverImage';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import coverIMG from '../../assets/img/NutsAndBolts-5.jpg';
@@ -28,8 +28,8 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
  */
 export const ProductsNavigator: () => JSX.Element = () => {
     return (
-        <View style={Style.Base.mainContainer}>
-            {CoverImage({ headerText: 'Lager', image: coverIMG })}
+        <SafeAreaView style={Style.Base.mainContainer}>
+            {CoverImage({headerText: 'Lager', image: coverIMG})}
 
             <View>
                 <Text
@@ -56,7 +56,7 @@ export const ProductsNavigator: () => JSX.Element = () => {
                 </Stack.Navigator>
             </View>
 
-            <StatusBar style='auto' />
-        </View>
+            <StatusBar style='auto'/>
+        </SafeAreaView>
     );
 };
