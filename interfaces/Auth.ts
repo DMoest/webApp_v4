@@ -4,6 +4,9 @@
 export interface Auth {
     isLoggedIn: boolean;
     setLoggedIn(value: boolean): void;
+
+    email: string;
+    password: string;
 }
 
 /**
