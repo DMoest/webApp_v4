@@ -2,18 +2,19 @@
  * Module imports.
  */
 import React from "react";
-import {SafeAreaView, Text, View} from "react-native";
 import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {createStackNavigator} from '@react-navigation/stack';
+import {useNavigation} from "@react-navigation/native";
+import {useAuthContext} from "../../context/Auth.provider";
 import {InvoiceList} from "../../components/Invoice/InvoiceList";
-import * as Style from "../../assets/styles";
-import {CoverImage} from "../../components/Utils/CoverImage";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import coverIMG from "../../assets/img/NutsAndBolts-7.jpg";
-import {StatusBar} from "expo-status-bar";
 import {InvoiceItem} from "./InvoiceItem.screen";
 import {InvoiceCreateItem} from "./InvoiceCreateItem.screen";
+import {StatusBar} from "expo-status-bar";
+import {CoverImage} from "../../components/Utils/CoverImage";
+import {SafeAreaView, Text, TouchableOpacity, View} from "react-native";
+import * as Style from "../../assets/styles";
+// @ts-ignore
+import coverIMG from "../../assets/img/NutsAndBolts-7.jpg";
 
 
 // Create stack navigator for invoices.
@@ -26,6 +27,9 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
  * @constructor
  */
 export const InvoiceNavigator: () => JSX.Element = () => {
+    const authContext = useAuthContext();
+    const navigation = useNavigation();
+
     return (
         <SafeAreaView style={Style.Base.mainContainer}>
             {CoverImage({headerText: 'Fakturor', image: coverIMG})}
@@ -55,7 +59,23 @@ export const InvoiceNavigator: () => JSX.Element = () => {
                         component={InvoiceCreateItem}
                     />
                 </Stack.Navigator>
+
+                <TouchableOpacity
+                    style={Style.Button.button}
+                    onPress={async () => {
+                        // Logout user.
+                        await authContext.logout();
+
+                        // @ts-ignore
+                        await navigation.navigate('Logga in');
+                    }}>
+
+                    <View>
+                        <Text style={Style.Typography.buttonText}>Logga ut</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
+
             <StatusBar style='auto'/>
         </SafeAreaView>
     );
