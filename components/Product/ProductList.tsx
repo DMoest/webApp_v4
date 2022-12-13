@@ -2,7 +2,6 @@
  * Module imports.
  */
 import React, {useEffect} from 'react';
-// eslint-disable-next-line import/namespace
 import {FlatList, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useAppContext} from '../../context/App.provider';
