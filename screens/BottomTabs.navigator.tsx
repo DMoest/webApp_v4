@@ -1,20 +1,22 @@
 /**
  * Module imports.
  */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 // eslint-disable-next-line import/namespace
-import {ActivityIndicator, Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // eslint-disable-next-line import/no-unresolved
 import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import * as SecureStore from 'expo-secure-store';
+import * as AuthModel from '../models/Auth';
 import {useAuthContext} from '../context/Auth.provider';
+import {useAppContext} from "../context/App.provider";
 import {Home} from './Home.screen';
 import {DeliveryNavigator} from './Deliveries/Delivery.navigator';
-import {InvoiceList} from '../components/Invoice/InvoiceList';
 import {AuthNavigator} from './Auth/Auth.navigator';
 import {OrderNavigator} from './Orders/Order.navigator';
 import {ProductsNavigator} from './Products/Products.navigator';
-import * as AuthModel from '../models/Auth';
+import {InvoiceNavigator} from './Invoices/Invoices.navigator';
+import {LoadingIndicator} from "../components/Utils/LoadingIndicator";
 import {FontAwesome5} from '@expo/vector-icons';
 import * as Style from '../assets/styles/index';
 
@@ -50,8 +52,7 @@ const routeIcons = {
  */
 export const BottomTabsNavigator: () => JSX.Element = () => {
     const authContext = useAuthContext();
-    // const {isLoading, setIsLoading} = useAppContext();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const appContext = useAppContext();
 
     useEffect(() => {
         // Function to check if user is logged in.
@@ -64,35 +65,26 @@ export const BottomTabsNavigator: () => JSX.Element = () => {
         checkIfLoggedIn();
 
         // Check the SecureStore for the user's token.
+        SecureStore.getItemAsync('user')
+            .then(userString => {
+                if (userString) {
+                    console.log('userString', userString);
+                    authContext.setUser(userString);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
 
         // Temporary timeout to simulate loading.
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
+        // setTimeout(() => {
+        //     setIsLoading(false);
+        // }, 1000);
     }, []);
 
-    if (isLoading) {
+    if (appContext.isLoading) {
         return (
-            <View
-                style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
-
-                <ActivityIndicator
-                    size='large'
-                    color={Style.Color.schemeOne.primary}
-                />
-
-                <Text
-                    style={{
-                        paddingVertical: 25,
-                        paddingHorizontal: Style.Typography.whiteSpace.X1,
-                    }}>
-                    Loading...
-                </Text>
-            </View>
+            <LoadingIndicator loadingType={undefined}/>
         );
     }
 
@@ -154,7 +146,7 @@ export const BottomTabsNavigator: () => JSX.Element = () => {
                 {authContext.isLoggedIn ? (
                     <BottomTabs.Screen
                         name='Faktura'
-                        component={InvoiceList}
+                        component={InvoiceNavigator}
                     />
                 ) : (
                     <BottomTabs.Screen
