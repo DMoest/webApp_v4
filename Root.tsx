@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import AppLoading from 'expo-app-loading';
 // eslint-disable-next-line import/namespace
 import {LogBox} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -22,6 +21,8 @@ import {
 } from '@expo-google-fonts/merriweather';
 import {useAuthContext} from "./context/Auth.provider";
 import {useAppContext} from "./context/App.provider";
+import * as AuthModel from "./models/Auth";
+import {LoadingIndicator} from "./components/Utils/LoadingIndicator";
 
 /**
  * LogBox ignore logs.
@@ -44,6 +45,7 @@ LogBox.ignoreLogs([
  * @constructor
  */
 export const App: React.FC = () => {
+    const authContext = useAuthContext();
     const appContext = useAppContext();
     const [fontsLoaded] = useFonts({
         OleoScriptSwashCaps_400Regular,
@@ -58,14 +60,38 @@ export const App: React.FC = () => {
         Merriweather_700Bold,
         Merriweather_700Bold_Italic,
     });
-    const {user} = useAuthContext();
 
     useEffect(() => {
-        console.log("User: ", user);
+        console.log("User: ", authContext.user);
+
+        // Async function to prepare app.
+        async function prepare() {
+            try {
+                appContext.setIsLoading(true);
+
+                // Pre-load fonts, make any API calls you need to do here...
+                authContext.setIsLoggedIn(await AuthModel.loggedIn());
+
+                // Artificially delay for two seconds to simulate a slow loading
+                // experience. Please remove this if you copy and paste the code!
+                // await new Promise(resolve => setTimeout(resolve, 2000));
+                appContext.setIsLoading(false);
+            } catch (error) {
+                console.warn(error);
+            } finally {
+                // Tell the application to render
+                appContext.setIsLoading(false);
+            }
+        }
+
+        // Call the function
+        prepare();
     }, []);
 
-    if (!fontsLoaded || appContext.isLoading) {
-        return <AppLoading/>;
+    if (appContext.isLoading || !fontsLoaded) {
+        return (
+            <LoadingIndicator loadingType={undefined}/>
+        );
     }
 
     return (
