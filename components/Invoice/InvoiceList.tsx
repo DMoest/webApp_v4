@@ -5,7 +5,7 @@ import React, {useEffect} from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {useAppContext} from '../../context/App.provider';
 import {useNavigation} from "@react-navigation/native";
-import {ProductListItem} from "../Product/ProductListItem";
+import {InvoiceListItem} from "./InvoiceListItem";
 import * as InvoiceModel from '../../models/Invoices';
 import * as Style from "../../assets/styles";
 import AppLoading from "expo-app-loading";
@@ -34,7 +34,7 @@ export const InvoiceList: React.FC = () => {
             onPress={() => {
                 navigation.navigate('Fakturaspecifikation', {item});
             }}>
-            <ProductListItem item={item}/>
+            <InvoiceListItem item={item}/>
         </TouchableOpacity>
     );
 
