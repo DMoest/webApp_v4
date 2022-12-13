@@ -45,10 +45,7 @@ export const LoginForm: React.FC = () => {
             <TouchableOpacity
                 style={Style.Button.button}
                 onPress={async () => {
-                    console.log('Click! -> Logga in...');
-                    console.log('Input Email -> ', email);
-                    console.log('Input Password -> ', password);
-
+                    // Login user.
                     await authContext.login(email, password);
 
                     // @ts-ignore
@@ -63,9 +60,6 @@ export const LoginForm: React.FC = () => {
             <Text>Om ni inte har en användare kan ni
                 <TouchableOpacity
                     onPress={() => {
-                        console.log('Click! -> Navigera till registrering... ');
-
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
                         navigation.navigate('Registrera användare');
                     }}>
