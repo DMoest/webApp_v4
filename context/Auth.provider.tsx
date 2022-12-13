@@ -11,13 +11,15 @@ import * as SecureStore from 'expo-secure-store';
  * Authentication context types.
  */
 type AuthContextType = {
-    user: AuthInterfaces.User;
+    user: AuthInterfaces.User | undefined;
     setUser: (user: AuthInterfaces.User) => void;
     isLoggedIn: boolean;
     setIsLoggedIn: (authIndicator: boolean) => void;
     login: (username: string, password: string) => void;
     logout: () => void;
+    register: (username: string, password: string) => void;
 };
+
 
 /**
  * Authentication context.
@@ -32,12 +34,15 @@ const AuthContext = createContext<AuthContextType>({
     },
     login: (username: string, password: string) => {
         // Login user with AuthModel.login()
-        // setUser(username);
     },
     logout: () => {
         // Logout user with AuthModel.logout()
     },
+    register: (username: string, password: string) => {
+        // Register user with AuthModel.register()
+    }
 });
+
 
 /**
  * Authentication context provider.
@@ -77,6 +82,16 @@ export const AuthProvider: React.FC = ({children}) => {
                     await setUser(null);
                     await setIsLoggedIn(false);
                 },
+                register: async (email, password) => {
+                    // Activate loading indicator.
+                    await setIsLoading(true);
+
+                    // Register user.
+                    await AuthModel.register(email, password);
+
+                    // Deactivate loading indicator.
+                    await setIsLoading(false);
+                }
             }}>
             {children}
         </AuthContext.Provider>
