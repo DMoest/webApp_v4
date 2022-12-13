@@ -2,22 +2,21 @@
  * Module imports.
  */
 import React from 'react';
-// import { View, Text } from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-// eslint-disable-next-line import/no-unresolved
 import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {useAuthContext} from '../../context/Auth.provider';
 import {Login} from './Login.screen';
 import {Register} from './Register.screen';
-import {ProductList} from '../../components/Product/ProductList';
-import * as Style from "../../assets/styles";
+import {InvoiceNavigator} from "../Invoices/Invoices.navigator";
 import {SafeAreaView} from "react-native";
-// import { InvoiceList } from './Invoices/Invoices.screen';
+import * as Style from "../../assets/styles";
+
 
 /**
  * Auth stack navigator.
  */
 const Stack: NativeStackNavigatorProps = createStackNavigator();
+
 
 /**
  * AuthNavigator object.
@@ -36,7 +35,7 @@ export const AuthNavigator: () => JSX.Element = () => {
                 {authContext.isLoggedIn ? (
                     <Stack.Screen
                         name='Faktura'
-                        component={ProductList}
+                        component={InvoiceNavigator}
                         options={{
                             headerShown: false,
                         }}
