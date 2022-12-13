@@ -8,7 +8,7 @@ import {useNavigation} from "@react-navigation/native";
 import {useAuthContext} from "../../context/Auth.provider";
 import {InvoiceList} from "../../components/Invoice/InvoiceList";
 import {InvoiceItem} from "./InvoiceItem.screen";
-import {InvoiceCreateItem} from "./InvoiceCreateItem.screen";
+import {InvoiceForm} from "./InvoiceForm.screen";
 import {StatusBar} from "expo-status-bar";
 import {CoverImage} from "../../components/Utils/CoverImage";
 import {SafeAreaView, Text, TouchableOpacity, View} from "react-native";
@@ -56,7 +56,7 @@ export const InvoiceNavigator: () => JSX.Element = () => {
                     />
                     <Stack.Screen
                         name='Skapa faktura'
-                        component={InvoiceCreateItem}
+                        component={InvoiceForm}
                     />
                 </Stack.Navigator>
 

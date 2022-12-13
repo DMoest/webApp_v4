@@ -21,8 +21,12 @@ import {
 } from '@expo-google-fonts/merriweather';
 import {useAuthContext} from "./context/Auth.provider";
 import {useAppContext} from "./context/App.provider";
-import * as AuthModel from "./models/Auth";
 import {LoadingIndicator} from "./components/Utils/LoadingIndicator";
+import * as AuthModel from "./models/Auth";
+import * as DeliveryModel from "./models/Deliveries";
+import * as OrderModel from "./models/Orders";
+import * as ProductModel from "./models/Products";
+
 
 /**
  * LogBox ignore logs.
@@ -68,13 +72,11 @@ export const App: React.FC = () => {
         async function prepare() {
             try {
                 appContext.setIsLoading(true);
-
-                // Pre-load fonts, make any API calls you need to do here...
                 authContext.setIsLoggedIn(await AuthModel.loggedIn());
-
-                // Artificially delay for two seconds to simulate a slow loading
-                // experience. Please remove this if you copy and paste the code!
-                // await new Promise(resolve => setTimeout(resolve, 2000));
+                // PreFetch products list to avoid error in deliveries form.
+                appContext.setProducts(await ProductModel.getProducts());
+                appContext.setOrders(await OrderModel.getOrders());
+                appContext.setDeliveries(await DeliveryModel.getDeliveries());
                 appContext.setIsLoading(false);
             } catch (error) {
                 console.warn(error);
@@ -85,7 +87,7 @@ export const App: React.FC = () => {
         }
 
         // Call the function
-        prepare();
+        void prepare();
     }, []);
 
     if (appContext.isLoading || !fontsLoaded) {

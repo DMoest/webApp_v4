@@ -1,15 +1,14 @@
 /**
  * Module imports.
  */
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 // eslint-disable-next-line import/namespace
-import { View, FlatList, TouchableOpacity, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useAppContext } from '../../context/App.provider';
-import { DeliveryListItem } from './DeliveryListItem';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {useAppContext} from '../../context/App.provider';
+import {DeliveryListItem} from './DeliveryListItem';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as DeliveryModel from '../../models/Deliveries';
-// import * as ProductModel from '../../models/Product';
 import * as Style from '../../assets/styles';
 
 /**
@@ -17,7 +16,7 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const DeliveryList: React.FC = ({ route }) => {
+export const DeliveryList: React.FC = ({route}) => {
     const appContext = useAppContext();
     const navigation = useNavigation();
     let reload = route.params?.reload ?? false;
@@ -28,13 +27,6 @@ export const DeliveryList: React.FC = ({ route }) => {
     async function loadDeliveries() {
         appContext.setDeliveries(await DeliveryModel.getDeliveries());
     }
-
-    // /**
-    //  * Function to fetch products from API.
-    //  */
-    // async function loadProducts() {
-    //     appContext.setProducts(await ProductModel.getProducts());
-    // }
 
     /**
      * If reload is true fetch orders from API.
@@ -60,14 +52,14 @@ export const DeliveryList: React.FC = ({ route }) => {
      *
      * @param item
      */
-    const renderItem = ({ item }) => (
+    const renderItem = ({item}) => (
         <TouchableOpacity
             key={item.id}
             onPress={() => {
-                navigation.navigate('Inleveransspecifikation', { item });
+                navigation.navigate('Inleveransspecifikation', {item});
             }}
             style={Style.Button.buttonContainer}>
-            <DeliveryListItem item={item} />
+            <DeliveryListItem item={item}/>
         </TouchableOpacity>
     );
 
