@@ -61,7 +61,6 @@ export const AuthProvider: React.FC = ({children}) => {
             value={{
                 user,
                 setUser: async (user: AuthInterfaces.User) => {
-                    await SecureStore.setItemAsync('user', JSON.stringify(user));
                 },
                 isLoggedIn,
                 setIsLoggedIn,

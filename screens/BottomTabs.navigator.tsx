@@ -69,7 +69,7 @@ export const BottomTabsNavigator: () => JSX.Element = () => {
             .then(userString => {
                 if (userString) {
                     console.log('userString', userString);
-                    authContext.setUser(userString);
+                    // authContext.setUser('Daniel');
                 }
             })
             .catch(error => {
