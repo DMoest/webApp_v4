@@ -60,7 +60,8 @@ export const AuthProvider: React.FC = ({children}) => {
         <AuthContext.Provider
             value={{
                 user,
-                setUser: (user: AuthInterfaces.User) => {
+                setUser: async (user: AuthInterfaces.User) => {
+                    await SecureStore.setItemAsync('user', JSON.stringify(user));
                 },
                 isLoggedIn,
                 setIsLoggedIn,
@@ -70,8 +71,7 @@ export const AuthProvider: React.FC = ({children}) => {
 
                     // Login user.
                     await AuthModel.login(email, password);
-                    await setIsLoggedIn(email);
-                    // setUser('Daniel');
+                    await setIsLoggedIn(true);
 
                     // Deactivate loading indicator.
                     await setIsLoading(false);
