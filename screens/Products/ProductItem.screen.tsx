@@ -2,11 +2,11 @@
  * Module imports.
  */
 import React from 'react';
-// eslint-disable-next-line import/namespace
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
+import {StatusBar} from 'expo-status-bar';
 import * as StockInterfaces from '../../interfaces/Product';
-import { StatusBar } from 'expo-status-bar';
 import * as Style from '../../assets/styles';
+
 
 type StockItemPropsType = {
     route: {
@@ -15,6 +15,7 @@ type StockItemPropsType = {
         };
     };
 };
+
 
 /**
  * ProductListItem screen/view.
@@ -78,7 +79,7 @@ export const StockItem: (props: StockItemPropsType) => JSX.Element = (
                 </Text>
             </View>
 
-            <StatusBar style='auto' />
+            <StatusBar style='auto'/>
         </View>
     );
 };
