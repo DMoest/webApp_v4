@@ -3,6 +3,9 @@
  */
 import React, {createContext, useState} from 'react';
 import * as AuthInterfaces from '../interfaces/Auth';
+import * as AuthModel from '../models/Auth';
+import * as SecureStore from 'expo-secure-store';
+
 
 /**
  * Authentication context types.
@@ -23,7 +26,6 @@ const AuthContext = createContext<AuthContextType>({
     user: undefined,
     setUser(user: AuthInterfaces.User | null): void {
     },
-
     isLoggedIn: false,
     setIsLoggedIn: () => {
         // What to do?
@@ -44,8 +46,10 @@ const AuthContext = createContext<AuthContextType>({
  * @constructor
  */
 export const AuthProvider: React.FC = ({children}) => {
-    const [isLoggedIn, setIsLoggedIn] = useState('Daniel');
-    const [user, setUser] = useState('Daniel');
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(null);
 
     return (
         <AuthContext.Provider
@@ -55,15 +59,23 @@ export const AuthProvider: React.FC = ({children}) => {
                 },
                 isLoggedIn,
                 setIsLoggedIn,
-                login: (email, password) => {
-                    // Communicate with backend and store token in SecureStore
-                    setIsLoggedIn('Daniel@example.com');
-                    setUser('Daniel');
-                    // SecureStore.setItemAsync('user', 'Daniel@example.com');
+                login: async (email, password) => {
+                    // Activate loading indicator.
+                    await setIsLoading(true);
+
+                    // Login user.
+                    await AuthModel.login(email, password);
+                    await setIsLoggedIn(email);
+                    // setUser('Daniel');
+
+                    // Deactivate loading indicator.
+                    await setIsLoading(false);
+
                 },
-                logout: () => {
-                    setIsLoggedIn(null);
-                    setUser(null);
+                logout: async () => {
+                    await SecureStore.deleteItemAsync('token');
+                    await setUser(null);
+                    await setIsLoggedIn(false);
                 },
             }}>
             {children}
