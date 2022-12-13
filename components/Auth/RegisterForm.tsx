@@ -1,18 +1,12 @@
 /**
  * Module imports.
  */
-import React from 'react';
-import {
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-    // eslint-disable-next-line import/namespace
-} from 'react-native';
+import React, {useState} from 'react';
+import {Text, TextInput, TouchableOpacity, View,} from 'react-native';
 // import { useAppContext } from '../../context/App.provider';
-import { useAuthContext } from '../../context/Auth.provider';
 import * as Style from '../../assets/styles/index';
 import {useNavigation} from "@react-navigation/native";
+import {useAuthContext} from "../../context/Auth.provider";
 
 /**
  * Create new Login form component.
@@ -21,11 +15,10 @@ import {useNavigation} from "@react-navigation/native";
  */
 export const RegisterForm: React.FC = () => {
     const navigation = useNavigation();
-    // const authContext = useAuthContext();
-
-    let email: string;
-    let password: string;
-    let passwordConfirm: string;
+    const authContext = useAuthContext();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
 
     return (
         <View style={Style.Container.content}>
@@ -33,37 +26,56 @@ export const RegisterForm: React.FC = () => {
                 Registrera en ny användare här...
             </Text>
 
-            <Text>Email / Username: </Text>
+            <Text>Email: </Text>
             <TextInput
                 style={Style.Form.textInputField}
                 value={email}
-                onChangeText={() => {
-                    email;
-                }}
+                onChangeText={setEmail}
+                autoCapitalize='none'
+                keyboardType='email-address'
             />
 
-            <Text>Password: </Text>
+            <Text>Lösenord: </Text>
             <TextInput
                 style={Style.Form.textInputField}
                 value={password}
-                onChangeText={() => {
-                    password;
-                }}
+                onChangeText={setPassword}
+                autoCapitalize='none'
+                secureTextEntry={true}
             />
 
-            <Text>Confirm password: </Text>
+            <Text>Bekräfta Lösenordet: </Text>
             <TextInput
                 style={Style.Form.textInputField}
                 value={passwordConfirm}
-                onChangeText={() => {
-                    passwordConfirm;
-                }}
+                onChangeText={setPasswordConfirm}
+                autoCapitalize='none'
+                secureTextEntry={true}
             />
 
             <TouchableOpacity
                 style={Style.Button.button}
-                onPress={() => {
-                    console.log('Click! -> Registrera ny användare...');
+                onPress={async () => {
+                    console.log('Click! -> Registrera ny användare med...');
+                    console.log('Input Email -> ', email);
+                    console.log('Input Password -> ', password);
+                    console.log('Input ConfirmedPassword -> ', passwordConfirm);
+
+                    // Register user.
+                    if (password === passwordConfirm) {
+                        // Register user in API.
+                        await authContext.register(email, password);
+                        console.log('User registered!');
+
+                        // Login user in API.
+                        await authContext.login(email, password);
+                        console.log('User logged in!');
+
+                        // Navigate to Invoice screen.
+                        await navigation.navigate('Faktura');
+                    } else {
+                        console.log('Passwords do not match!');
+                    }
                 }}>
                 <Text style={Style.Typography.buttonText}>
                     Registrera ny användare
