@@ -1,17 +1,15 @@
 /**
  * Module imports.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
-// eslint-disable-next-line import/no-unresolved
-import { Product } from '../interfaces/Product';
-import { Deliveries } from '../interfaces/Deliveries';
-import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
-import { useAppContext } from '../context/App.provider';
+import {Product} from '../interfaces/Product';
+import {RequestErrorHandler} from '../components/Utils/ErrorHandler';
+import {useAppContext} from '../context/App.provider';
 import config from '../config/config.json';
 
+
 /**
- * Getter Model Method for getting all avaliable products from the API.
+ * Getter Model Method for getting all available products from the API.
  */
 export async function getProducts(): Promise<Product[]> {
     try {
@@ -26,6 +24,7 @@ export async function getProducts(): Promise<Product[]> {
         RequestErrorHandler(error);
     }
 }
+
 
 /**
  * Getter model method to request a specific product by id from API.
@@ -46,13 +45,18 @@ export async function getProductById(product_id: string): Promise<Product> {
     }
 }
 
+
 /**
  * Setter Model Method to update a products in API.
  *
  * @param product
  */
 export async function updateProduct(product: Partial<Product>) {
+    const appContext = useAppContext();
+
     try {
+        await appContext.setIsLoading(true);
+
         return await fetch(
             `${config.base_url}/products?api_key=${config.api_key}`,
             {
@@ -69,10 +73,9 @@ export async function updateProduct(product: Partial<Product>) {
                 }),
             },
         );
-
-        await appProvider.setIsLoading(false);
-
     } catch (error) {
         RequestErrorHandler(error);
+    } finally {
+        await appContext.setIsLoading(false);
     }
 }
