@@ -1,11 +1,15 @@
 /**
  * Module imports.
  */
-import React from 'react';
-// eslint-disable-next-line import/namespace
-import { View, Text } from 'react-native';
-import { useAppContext } from '../../context/App.provider';
-import { useAuthContext } from '../../context/Auth.provider';
+import React, {useEffect} from 'react';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {useAppContext} from '../../context/App.provider';
+import {useNavigation} from "@react-navigation/native";
+import {ProductListItem} from "../Product/ProductListItem";
+import * as InvoiceModel from '../../models/Invoices';
+import * as Style from "../../assets/styles";
+import AppLoading from "expo-app-loading";
+
 
 /**
  * Invoice list component.
@@ -13,13 +17,45 @@ import { useAuthContext } from '../../context/Auth.provider';
  */
 export const InvoiceList: React.FC = () => {
     const appContext = useAppContext();
-    const authContext = useAuthContext();
+    const navigation = useNavigation();
 
-    return (
-        <View>
-            <Text>Invoice List</Text>
+    useEffect(() => {
+        const loadInvoices = async () => {
+            appContext.setInvoices(await InvoiceModel.getInvoices());
+        }
 
-            <Text>Här ska det finnas en lista av fakturor. </Text>
-        </View>
+        loadInvoices();
+    }, []);
+
+    const renderItem = ({item}) => (
+        <TouchableOpacity
+            key={item.id}
+            style={Style.Button.buttonContainer}
+            onPress={() => {
+                navigation.navigate('Fakturaspecifikation', {item});
+            }}>
+            <ProductListItem item={item}/>
+        </TouchableOpacity>
     );
+
+    if (appContext.isLoading) {
+        return <AppLoading/>;
+    }
+
+    if (appContext.invoices) {
+        return (
+            <FlatList
+                style={Style.Container.flatList}
+                data={appContext.invoices}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={renderItem}
+            />
+        );
+    } else {
+        return (
+            <View>
+                <Text>Inga fakturor hittades.</Text>
+            </View>
+        );
+    }
 };

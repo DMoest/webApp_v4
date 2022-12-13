@@ -23,14 +23,14 @@ export const LoginForm: React.FC = () => {
 
     return (
         <View style={Style.Container.content}>
-            <Text>Email / Username: </Text>
+            <Text>Email: </Text>
             <TextInput
                 style={Style.Form.textInputField}
                 value={email}
                 onChangeText={setEmail}
                 textContentType='emailAddress'
                 keyboardType='email-address'
-                autoCapitalize={'none'}
+                autoCapitalize='none'
             />
 
             <Text>Password: </Text>
@@ -38,7 +38,7 @@ export const LoginForm: React.FC = () => {
                 style={Style.Form.textInputField}
                 value={password}
                 onChangeText={setPassword}
-                autoCapitalize={'none'}
+                autoCapitalize='none'
                 secureTextEntry={true}
             />
 
@@ -46,7 +46,7 @@ export const LoginForm: React.FC = () => {
                 style={Style.Button.button}
                 onPress={async () => {
                     console.log('Click! -> Logga in...');
-                    console.log('Input User -> ', email);
+                    console.log('Input Email -> ', email);
                     console.log('Input Password -> ', password);
 
                     await authContext.login(email, password);
