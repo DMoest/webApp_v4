@@ -119,8 +119,10 @@ module.exports = {
         '@typescript-eslint/no-this-alias': [
             'warn',
             {
-                allowDestructuring: false, // Disallow `const { props, state } = this`; true by default
-                allowedNames: ['self'], // Allow `const self = this`; `[]` by default
+                // Disallow `const { props, state } = this`; true by default
+                allowDestructuring: false,
+                // Allow `const self = this`; `[]` by default
+                allowedNames: ['self'],
             },
         ],
     },
