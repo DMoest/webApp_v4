@@ -7,13 +7,14 @@ import * as OrdersInterfaces from '../interfaces/Order';
 import * as ProductsInterfaces from '../interfaces/Product';
 import * as InvoicesInterfaces from '../interfaces/Invoice';
 
-
 /**
  * Application context types.
  */
 type AppContextType = {
     isLoading: boolean;
     setIsLoading: (isLoading1: boolean) => void;
+    isRefreshing: boolean;
+    setIsRefreshing: (isRefreshing1: boolean) => void;
     products: ProductsInterfaces.Product[];
     setProducts: (products1: ProductsInterfaces.Product[]) => void;
     orders: OrdersInterfaces.Order[];
@@ -24,14 +25,14 @@ type AppContextType = {
     setInvoices: (invoices1: InvoicesInterfaces.Invoice[]) => void;
 };
 
-
 /**
  * App context.
  */
 const AppContext = createContext<AppContextType>({
     isLoading: false,
-    setIsLoading(isLoading: boolean): void {
-    },
+    setIsLoading(isLoading: boolean): void {},
+    isRefreshing: false,
+    setIsRefreshing: (isRefreshing: boolean): void => {},
     products: [],
     setProducts: () => [],
     orders: [],
@@ -42,38 +43,46 @@ const AppContext = createContext<AppContextType>({
     setInvoices: () => [],
 });
 
-
 /**
  * App context provider.
  *
  * @param children
  * @constructor
  */
-export const AppProvider: React.FC = ({children}) => {
+export const AppProvider: React.FC = ({ children }) => {
     const [isLoading, setIsLoading] = React.useState(false);
-    const [products, setProducts] = React.useState<ProductsInterfaces.Product[]>([]);
-    const [orders, setOrders] = React.useState<OrdersInterfaces.Orders[]>([]);
-    const [deliveries, setDeliveries] = React.useState<DeliveriesInterfaces.Deliveries[]>([]);
-    const [invoices, setInvoices] = React.useState<InvoicesInterfaces.Invoice[]>([]);
+    const [isRefreshing, setIsRefreshing] = React.useState(false);
+    const [products, setProducts] = React.useState<
+        ProductsInterfaces.Product[]
+    >([]);
+    const [orders, setOrders] = React.useState<OrdersInterfaces.Order[]>([]);
+    const [deliveries, setDeliveries] = React.useState<
+        DeliveriesInterfaces.Deliveries[]
+    >([]);
+    const [invoices, setInvoices] = React.useState<
+        InvoicesInterfaces.Invoice[]
+    >([]);
 
     return (
-        <AppContext.Provider value={{
-            isLoading,
-            setIsLoading,
-            products,
-            setProducts,
-            orders,
-            setOrders,
-            deliveries,
-            setDeliveries,
-            invoices,
-            setInvoices,
-        }}>
+        <AppContext.Provider
+            value={{
+                isLoading,
+                setIsLoading,
+                isRefreshing,
+                setIsRefreshing,
+                products,
+                setProducts,
+                orders,
+                setOrders,
+                deliveries,
+                setDeliveries,
+                invoices,
+                setInvoices,
+            }}>
             {children}
         </AppContext.Provider>
     );
 };
-
 
 /**
  * Context access function exported.
