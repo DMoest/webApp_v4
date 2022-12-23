@@ -18,10 +18,13 @@ export interface Order {
  * Order Item interface.
  */
 export interface OrderItem {
-    product_id: number;
-    name: string;
-    amount: number;
-    stock: number;
-    article_number: string;
-    location: string;
+    "product_id": number,
+    "amount": number,
+    "article_number": string,
+    "name": string,
+    "description": string,
+    "specifiers": string,
+    "stock": number,
+    "location": string,
+    "price": number
 }

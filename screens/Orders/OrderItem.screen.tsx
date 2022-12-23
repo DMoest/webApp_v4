@@ -1,12 +1,7 @@
-/**
- * Module Imports.
- */
-import React, { useEffect, useState } from 'react';
-// eslint-disable-next-line import/namespace
-import { Text, View, ScrollView, Pressable } from 'react-native';
-// eslint-disable-next-line import/no-unresolved
-import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
-import { StatusBar } from 'expo-status-bar';
+import React, {useEffect, useState} from 'react';
+import {Pressable, ScrollView, Text, View} from 'react-native';
+import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import {StatusBar} from 'expo-status-bar';
 import * as OrderInterfaces from '../../interfaces/Order';
 import * as OrderModel from '../../models/Orders';
 import * as Style from '../../assets/styles';
@@ -70,6 +65,7 @@ const checkPackingStatus = (
     }
 
     if (isPackable) {
+        // BUTTON to pack order if order is packable.
         outputElement = (
             <Pressable
                 style={Style.Button.buttonContainer}
@@ -88,15 +84,17 @@ const checkPackingStatus = (
             </Pressable>
         );
     } else if (!isPackable) {
+        // RED PROMPT about order not being packable.
         outputElement = (
             <View style={Style.Button.buttonContainer}>
                 <Text
                     style={
                         (Style.Container.containers,
-                        { backgroundColor: Style.Color.indicator.warning })
+                        Style.Typography.warningFlashMessageText)
                     }>
                     Ordern går inte att slutföra pga att lagersaldo saknas för
-                    en eller flera produkter.
+                    en/flera produkter i ordern eller att ordern helt saknar
+                    produkter.
                 </Text>
             </View>
         );
@@ -186,22 +184,32 @@ export const OrderItem: (props: OrderItemPropsType) => JSX.Element = (
                     </View>
 
                     <View style={(Style.Container.flexBox.column, { flex: 2 })}>
+                        {/* Product amount + name */}
                         <Text style={Style.Typography.dataLeft}>
                             {orderItem.amount} st {orderItem.name}
                         </Text>
+
+                        {/* Product ID */}
                         <Text style={Style.Typography.dataLeft}>
                             {orderItem.product_id}
                         </Text>
+
+                        {/* Article number */}
                         <Text style={Style.Typography.dataLeft}>
                             {orderItem.article_number}
                         </Text>
                     </View>
 
                     <View style={(Style.Container.flexBox.column, { flex: 2 })}>
+                        {/* Empty space */}
                         <Text style={Style.Typography.dataRight}> </Text>
+
+                        {/* Product in stock */}
                         <Text style={Style.Typography.dataRight}>
                             {orderItem.stock} st i lager
                         </Text>
+
+                        {/* Warehouse location */}
                         <Text style={Style.Typography.dataRight}>
                             Plats: {orderItem.location}
                         </Text>
