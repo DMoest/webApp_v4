@@ -1,31 +1,25 @@
-/**
- * Module imports.
- */
 import React, {useEffect} from 'react';
-// eslint-disable-next-line import/namespace
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // eslint-disable-next-line import/no-unresolved
 import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import * as SecureStore from 'expo-secure-store';
 import * as AuthModel from '../models/Auth';
 import {useAuthContext} from '../context/Auth.provider';
-import {useAppContext} from "../context/App.provider";
+import {useAppContext} from '../context/App.provider';
 import {Home} from './Home.screen';
 import {DeliveryNavigator} from './Deliveries/Delivery.navigator';
 import {AuthNavigator} from './Auth/Auth.navigator';
 import {OrderNavigator} from './Orders/Order.navigator';
 import {ProductsNavigator} from './Products/Products.navigator';
 import {InvoiceNavigator} from './Invoices/Invoices.navigator';
-import {LoadingIndicator} from "../components/Utils/LoadingIndicator";
+import {LoadingIndicator} from '../components/Utils/LoadingIndicator';
 import {FontAwesome5} from '@expo/vector-icons';
 import * as Style from '../assets/styles/index';
-
 
 /**
  * Bottom tabs navigator.
  */
 const BottomTabs: NativeStackNavigatorProps = createBottomTabNavigator();
-
 
 /**
  * Bottom tabs navigator icons.
@@ -39,7 +33,6 @@ const routeIcons = {
     // Login: 'key',
     Faktura: 'file-invoice-dollar',
 };
-
 
 /**
  * Bottom Navigation Bar.
@@ -59,40 +52,35 @@ export const BottomTabsNavigator: () => JSX.Element = () => {
         const checkIfLoggedIn = async () => {
             // Check if user is logged in.
             authContext.setIsLoggedIn(await AuthModel.loggedIn());
-        }
+        };
 
         // Call to check if user is logged in.
-        checkIfLoggedIn();
+        void checkIfLoggedIn();
 
         // Check the SecureStore for the user's token.
         SecureStore.getItemAsync('user')
-            .then(userString => {
+            .then((userString) => {
                 if (userString) {
                     console.log('userString', userString);
                     // authContext.setUser('Daniel');
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
-
-        // Temporary timeout to simulate loading.
-        // setTimeout(() => {
-        //     setIsLoading(false);
-        // }, 1000);
     }, []);
 
     if (appContext.isLoading) {
-        return (
-            <LoadingIndicator loadingType={undefined}/>
-        );
+        return <LoadingIndicator loadingType={undefined} />;
     }
 
-    return (
+    return appContext.isLoading ? (
+        <LoadingIndicator loadingType={undefined} />
+    ) : (
         <>
             <BottomTabs.Navigator
-                screenOptions={({route}) => ({
-                    tabBarIcon: ({color, size}) => {
+                screenOptions={({ route }) => ({
+                    tabBarIcon: ({ color, size }) => {
                         let iconName;
 
                         if (route.name === 'Hem') {
