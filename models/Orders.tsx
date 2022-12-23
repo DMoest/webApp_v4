@@ -1,15 +1,14 @@
 import config from '../config/config.json';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
+import {RequestErrorHandler} from '../components/Utils/ErrorHandler';
 import * as OrderInterfaces from '../interfaces/Order';
 import * as ProductModel from './Products';
-import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
 
 /**
  * Function to fetch all orders from API.
  * Converts response to JSON data before return.
  */
-export async function getOrders(): Promise<OrderInterfaces.Order[]> {
+export async function getOrders() {
     try {
         const response = await fetch(
             `${config.base_url}/orders?api_key=${config.api_key}`,
@@ -30,13 +29,10 @@ export async function getOrders(): Promise<OrderInterfaces.Order[]> {
  * @param order
  */
 export async function pickOrder(order: OrderInterfaces.Order) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    let leftOverStock: number;
     for (const orderItem of order.order_items) {
-        /**
-         * Try to update a product stock.
-         */
         try {
-            const leftOverStock = orderItem.stock - orderItem.amount;
+            leftOverStock = orderItem.stock - orderItem.amount;
             const productUpdates = {
                 api_key: `${config.api_key}`,
                 id: orderItem.product_id,
@@ -45,10 +41,6 @@ export async function pickOrder(order: OrderInterfaces.Order) {
             };
 
             await ProductModel.updateProduct(productUpdates);
-
-            /**
-             * Catch any error on product update request
-             */
         } catch (error) {
             RequestErrorHandler(error);
         }
@@ -72,7 +64,7 @@ export async function pickOrder(order: OrderInterfaces.Order) {
             },
         );
 
-        return response;
+        return response.json();
     } catch (error) {
         RequestErrorHandler(error);
     }
