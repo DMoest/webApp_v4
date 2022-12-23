@@ -1,6 +1,3 @@
-/**
- * Module imports.
- */
 import React, {useEffect} from 'react';
 // eslint-disable-next-line import/namespace
 import {Text, View} from 'react-native';
@@ -17,7 +14,7 @@ import * as Style from '../../assets/styles/index';
 type NewDeliveryPropsType = {
     newDelivery: Partial<DeliveriesInterfaces.Deliveries>;
     setNewDelivery: () => void;
-    setSelectedProduct: () => void;
+    setSelectedProduct: (productsHash: any) => void;
 };
 
 /**
@@ -29,9 +26,8 @@ type NewDeliveryPropsType = {
 export const DeliveryProductPicker: (
     props: NewDeliveryPropsType,
 ) => JSX.Element = (props: NewDeliveryPropsType): JSX.Element => {
-    // eslint-disable-next-line prefer-const
-    let productsHash: any = {};
     const appContext = useAppContext();
+    const productsHash: any = {};
 
     useEffect(() => {
         async function loadProducts() {
@@ -39,15 +35,13 @@ export const DeliveryProductPicker: (
         }
 
         void loadProducts();
-    }, []);
+    }, []); //
 
     const pickerProductsList = appContext.products.map(
         (product: StockInterfaces.Product, index: number) => {
             productsHash[product.id] = product;
 
             return (
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
                 <Picker.Item
                     key={index}
                     label={product.name}
@@ -64,6 +58,8 @@ export const DeliveryProductPicker: (
             <Picker
                 selectedValue={props.newDelivery?.product_id}
                 onValueChange={(productIdValue: string) => {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
                     props.setNewDelivery({
                         ...props.newDelivery,
                         product_id: productIdValue,

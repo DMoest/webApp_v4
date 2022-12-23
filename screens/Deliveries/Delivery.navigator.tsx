@@ -1,6 +1,3 @@
-/**
- * Module imports.
- */
 import React from 'react';
 // eslint-disable-next-line import/namespace
 import {SafeAreaView, View} from 'react-native';
@@ -30,7 +27,7 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
 export const DeliveryNavigator: () => JSX.Element = () => {
     return (
         <SafeAreaView style={Style.Base.mainContainer}>
-            {CoverImage({headerText: 'Inleveranser', image: coverIMG})}
+            {CoverImage({ headerText: 'Inleveranser', image: coverIMG })}
 
             <View style={Style.Base.content}>
                 <Stack.Navigator>
@@ -38,12 +35,10 @@ export const DeliveryNavigator: () => JSX.Element = () => {
                         name='Inleveranslista'
                         component={DeliveryList}
                     />
-
                     <Stack.Screen
                         name='Inleveransspecifikation'
                         component={DeliveryItem}
                     />
-
                     <Stack.Screen
                         name='Inleverasformulär'
                         component={DeliveryCreationForm}
@@ -51,7 +46,7 @@ export const DeliveryNavigator: () => JSX.Element = () => {
                 </Stack.Navigator>
             </View>
 
-            <StatusBar style='auto'/>
+            <StatusBar style='auto' />
         </SafeAreaView>
     );
 };
