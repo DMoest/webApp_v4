@@ -165,8 +165,11 @@ export const warningFlashMessageText = {
     textAlign: 'center',
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
-    fontFamily: fontFamily.text,
+    fontFamily: fontFamily.btn,
     color: Color.text.dark,
+    backgroundColor: Color.indicator.warning,
+    padding: 5,
+    color: Color.text.light,
 };
 
 /**

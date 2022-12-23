@@ -2,7 +2,7 @@
  * Module imports.
  */
 // eslint-disable-next-line import/namespace
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 import * as Color from './colors';
 
 /**
@@ -84,6 +84,8 @@ export const borderRadius = {
  */
 export const flatList = {
     backgroundColor: Color.background.light,
+    height: '88%',
+    top: 0,
 };
 
 export const warningFlashMessageContainer = {
