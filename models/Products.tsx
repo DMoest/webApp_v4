@@ -1,17 +1,12 @@
-/**
- * Module imports.
- */
 import React from 'react';
-import {Product} from '../interfaces/Product';
 import {RequestErrorHandler} from '../components/Utils/ErrorHandler';
-import {useAppContext} from '../context/App.provider';
+import * as ProductInterfaces from '../interfaces/Product';
 import config from '../config/config.json';
-
 
 /**
  * Getter Model Method for getting all available products from the API.
  */
-export async function getProducts(): Promise<Product[]> {
+export async function getProducts() {
     try {
         const response = await fetch(
             `${config.base_url}/products?api_key=${config.api_key}`,
@@ -25,13 +20,12 @@ export async function getProducts(): Promise<Product[]> {
     }
 }
 
-
 /**
  * Getter model method to request a specific product by id from API.
  *
  * @param product_id
  */
-export async function getProductById(product_id: string): Promise<Product> {
+export async function getProductById(product_id: string) {
     try {
         const response = await fetch(
             `${config.base_url}/products/${product_id}?api_key=${config.api_key}`,
@@ -45,18 +39,15 @@ export async function getProductById(product_id: string): Promise<Product> {
     }
 }
 
-
 /**
  * Setter Model Method to update a products in API.
  *
  * @param product
  */
-export async function updateProduct(product: Partial<Product>) {
-    const appContext = useAppContext();
-
+export async function updateProduct(
+    product: Promise<ProductInterfaces.Product[]>,
+) {
     try {
-        await appContext.setIsLoading(true);
-
         return await fetch(
             `${config.base_url}/products?api_key=${config.api_key}`,
             {
@@ -75,7 +66,5 @@ export async function updateProduct(product: Partial<Product>) {
         );
     } catch (error) {
         RequestErrorHandler(error);
-    } finally {
-        await appContext.setIsLoading(false);
     }
 }
