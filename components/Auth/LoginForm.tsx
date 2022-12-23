@@ -1,8 +1,5 @@
-/**
- * Module imports.
- */
 import React, {useState} from 'react';
-import {Text, TextInput, TouchableOpacity, View,} from 'react-native';
+import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 // import { useAppContext } from '../../context/App.provider';
 import {useAuthContext} from '../../context/Auth.provider';
@@ -16,8 +13,6 @@ import * as Style from '../../assets/styles/index';
 export const LoginForm: React.FC = () => {
     const authContext = useAuthContext();
     const navigation = useNavigation();
-
-    // const [auth, setAuth] = useState<Partian<Auth>>({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -48,22 +43,21 @@ export const LoginForm: React.FC = () => {
                     // Login user.
                     await authContext.login(email, password);
 
-                    // @ts-ignore
+                    // Navigate to 'Faktura' screen.
                     await navigation.navigate('Faktura');
                 }}>
-
                 <View>
                     <Text style={Style.Typography.buttonText}>Logga in</Text>
                 </View>
             </TouchableOpacity>
 
-            <Text>Om ni inte har en användare kan ni
+            <Text>
+                Om ni inte har en användare kan ni
                 <TouchableOpacity
-                    onPress={() => {
-                        // @ts-ignore
-                        navigation.navigate('Registrera användare');
+                    onPress={async () => {
+                        await navigation.navigate('Registrera användare');
                     }}>
-                    <Text style={{color: 'blue'}}>
+                    <Text style={{ color: 'blue' }}>
                         registrera en ny användare här.
                     </Text>
                 </TouchableOpacity>
