@@ -1,27 +1,23 @@
-/**
- * Module imports.
- */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Alert,
     Button,
+    Platform,
     ScrollView,
     Text,
     TextInput,
-    Platform,
-    View,
     TouchableOpacity,
-    // eslint-disable-next-line import/namespace
+    View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useAppContext } from '../../context/App.provider';
+import {useAppContext} from '../../context/App.provider';
+import {useNavigation} from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { DeliveryProductPicker } from '../../components/Delivery/DeliveryProductPicker';
+import {DeliveryProductPicker} from '../../components/Delivery/DeliveryProductPicker';
+import {StatusBar} from 'expo-status-bar';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as StockInterfaces from '../../interfaces/Product';
 import * as ProductModel from '../../models/Products';
 import * as DeliveryModel from '../../models/Deliveries';
-import { StatusBar } from 'expo-status-bar';
 import config from '../../config/config.json';
 import * as Style from '../../assets/styles';
 
@@ -33,6 +29,7 @@ import * as Style from '../../assets/styles';
 export const DeliveryCreationForm: React.FC = (): JSX.Element => {
     const navigation = useNavigation();
     const appContext = useAppContext();
+
     let initialDeliveryValues = {
         product_id: appContext.products[0].id.toString(),
         delivery_date: new Date().toLocaleDateString('se-SV'),
@@ -100,16 +97,7 @@ export const DeliveryCreationForm: React.FC = (): JSX.Element => {
         );
     }
 
-    /**
-     * Submit handler function.
-     * Creates new delivery from state object newDelivery with Delivery Model.
-     * Gets the specific product to update by product_id  in the newDelivery object.
-     * Update the product stock from delivery details and product fetch by product_id.
-     * Set new state for all deliveries in main list from fetch all deliveries call.
-     * Alert user a new delivery has been created.
-     * Navigate back to deliveries list.
-     */
-    const handleSubmit = useCallback(async () => {
+    async function handleSubmit() {
         try {
             const updatedProduct = {
                 ...selectedProduct,
@@ -119,22 +107,17 @@ export const DeliveryCreationForm: React.FC = (): JSX.Element => {
             await DeliveryModel.createDelivery(newDelivery);
             await ProductModel.updateProduct(updatedProduct);
 
-            Alert.alert(
+            await Alert.alert(
                 'Ny Inleverans har skapats.\n \n' +
                     `Produkt id: ${newDelivery.product_id}\n` +
                     `Antal: ${newDelivery.amount}\n` +
                     `Leveransdatum: ${newDelivery.delivery_date}\n` +
                     `Kommentar: ${newDelivery.comment}`,
             );
-
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            navigation.navigate('Inleveranslista', {
-                reload: true,
-            });
         } catch (error) {
             console.log('Handle Submit Error: ', error);
         }
-    }, [selectedProduct, navigation, newDelivery]);
+    }
 
     return (
         <ScrollView style={Style.Container.content}>
@@ -176,7 +159,15 @@ export const DeliveryCreationForm: React.FC = (): JSX.Element => {
 
             <TouchableOpacity
                 style={Style.Button.button}
-                onPress={handleSubmit}>
+                onPress={async () => {
+                    // Create New Delivery, Update Product Stock & Alert User.
+                    await handleSubmit();
+
+                    // Navigate back to deliveries list with param.reload = true.
+                    await navigation.navigate('Inleveranslista', {
+                        reload: true,
+                    });
+                }}>
                 <Text style={Style.Typography.buttonText}>
                     Skapa Ny Inleverans
                 </Text>
