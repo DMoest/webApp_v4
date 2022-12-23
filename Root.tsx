@@ -10,7 +10,11 @@ import {
     OleoScriptSwashCaps_700Bold,
     useFonts,
 } from '@expo-google-fonts/oleo-script-swash-caps';
-import {JosefinSans_400Regular, JosefinSans_500Medium, JosefinSans_600SemiBold,} from '@expo-google-fonts/josefin-sans';
+import {
+    JosefinSans_400Regular,
+    JosefinSans_500Medium,
+    JosefinSans_600SemiBold,
+} from '@expo-google-fonts/josefin-sans';
 import {
     Merriweather_300Light,
     Merriweather_300Light_Italic,
@@ -19,14 +23,13 @@ import {
     Merriweather_700Bold,
     Merriweather_700Bold_Italic,
 } from '@expo-google-fonts/merriweather';
-import {useAuthContext} from "./context/Auth.provider";
-import {useAppContext} from "./context/App.provider";
-import {LoadingIndicator} from "./components/Utils/LoadingIndicator";
-import * as AuthModel from "./models/Auth";
-import * as DeliveryModel from "./models/Deliveries";
-import * as OrderModel from "./models/Orders";
-import * as ProductModel from "./models/Products";
-
+import {useAuthContext} from './context/Auth.provider';
+import {useAppContext} from './context/App.provider';
+import {LoadingIndicator} from './components/Utils/LoadingIndicator';
+import * as AuthModel from './models/Auth';
+import * as DeliveryModel from './models/Deliveries';
+import * as OrderModel from './models/Orders';
+import * as ProductModel from './models/Products';
 
 /**
  * LogBox ignore logs.
@@ -36,7 +39,6 @@ LogBox.ignoreLogs([
     'Remote debugger',
     'Non-serializable values were found in the navigation state',
 ]);
-
 
 /**
  * Main App module.
@@ -66,9 +68,9 @@ export const App: React.FC = () => {
     });
 
     useEffect(() => {
-        console.log("User: ", authContext.user);
+        console.log('User: ', authContext.user);
 
-        // Async function to prepare app.
+        // Async function to prefetch app 'unauthorized' data.
         async function prepare() {
             try {
                 appContext.setIsLoading(true);
@@ -80,8 +82,9 @@ export const App: React.FC = () => {
                 appContext.setIsLoading(false);
             } catch (error) {
                 console.warn(error);
+                appContext.setIsLoading(false);
             } finally {
-                // Tell the application to render
+                // Tell the application to render anyway...
                 appContext.setIsLoading(false);
             }
         }
@@ -91,15 +94,13 @@ export const App: React.FC = () => {
     }, []);
 
     if (appContext.isLoading || !fontsLoaded) {
-        return (
-            <LoadingIndicator loadingType={undefined}/>
-        );
+        return <LoadingIndicator loadingType={undefined} />;
     }
 
     return (
         <SafeAreaView style={Style.Base.mainContainer}>
             <NavigationContainer>
-                <BottomTabsNavigator/>
+                <BottomTabsNavigator />
             </NavigationContainer>
         </SafeAreaView>
     );
