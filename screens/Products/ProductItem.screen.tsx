@@ -1,32 +1,16 @@
-/**
- * Module imports.
- */
 import React from 'react';
+import {useRoute} from '@react-navigation/native';
 import {Text, View} from 'react-native';
 import {StatusBar} from 'expo-status-bar';
-import * as StockInterfaces from '../../interfaces/Product';
 import * as Style from '../../assets/styles';
-
-
-type StockItemPropsType = {
-    route: {
-        params: {
-            item: StockInterfaces.Product;
-        };
-    };
-};
-
 
 /**
  * ProductListItem screen/view.
  *
  * @constructor
- * @param props
  */
-export const StockItem: (props: StockItemPropsType) => JSX.Element = (
-    props: StockItemPropsType,
-) => {
-    const product = props.route.params.item;
+export const StockItem: () => JSX.Element = () => {
+    const product = useRoute().params.item;
 
     return (
         <View style={[Style.Base.content]}>
@@ -79,7 +63,7 @@ export const StockItem: (props: StockItemPropsType) => JSX.Element = (
                 </Text>
             </View>
 
-            <StatusBar style='auto'/>
+            <StatusBar style='auto' />
         </View>
     );
 };
