@@ -25,6 +25,8 @@ export const InvoiceItem: (props: InvoiceItemPropsType) => JSX.Element = (
 ) => {
     const invoice = props.route.params.item;
 
+    console.log("props.route.params.item: ", invoice);
+
     return (
         <View style={[Style.Base.content]}>
             <Text style={Style.Typography.subHeader}>{invoice.id}</Text>

@@ -10,18 +10,16 @@ import * as Style from "../../assets/styles";
  * Product list item props type object. Used to type input props to component ProductListItem.
  */
 type InvoiceListItemPropsType = {
-    item: {
-        id: number;
-        order_id: number;
-        name: string,
-        address: string,
-        zip: string,
-        city: string,
-        country: string,
-        total_price: number,
-        creation_date: string,
-        due_date: string
-    };
+    id: number;
+    order_id: number;
+    name: string,
+    address: string,
+    zip: string,
+    city: string,
+    country: string,
+    total_price: number,
+    creation_date: string,
+    due_date: string
 };
 
 
@@ -32,6 +30,9 @@ type InvoiceListItemPropsType = {
  * @param props
  */
 export const InvoiceListItem = (props: InvoiceListItemPropsType) => {
+
+    console.log("props.item ", props.item)
+
     return (
         <View
             key={props.item.id.toString()}
