@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback, useRef} from 'react';
 // eslint-disable-next-line import/namespace
 import {LogBox} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -66,32 +66,6 @@ export const App: React.FC = () => {
         Merriweather_700Bold,
         Merriweather_700Bold_Italic,
     });
-
-    useEffect(() => {
-        console.log('User: ', authContext.user);
-
-        // Async function to prefetch app 'unauthorized' data.
-        async function prepare() {
-            try {
-                appContext.setIsLoading(true);
-                authContext.setIsLoggedIn(await AuthModel.loggedIn());
-                // PreFetch products list to avoid error in deliveries form.
-                appContext.setProducts(await ProductModel.getProducts());
-                appContext.setOrders(await OrderModel.getOrders());
-                appContext.setDeliveries(await DeliveryModel.getDeliveries());
-                appContext.setIsLoading(false);
-            } catch (error) {
-                console.warn(error);
-                appContext.setIsLoading(false);
-            } finally {
-                // Tell the application to render anyway...
-                appContext.setIsLoading(false);
-            }
-        }
-
-        // Call the function
-        void prepare();
-    }, []);
 
     if (appContext.isLoading || !fontsLoaded) {
         return <LoadingIndicator loadingType={undefined} />;
