@@ -16,13 +16,26 @@ export interface Invoice {
 
 /**
  * New Invoice Interface.
+ * Used when creating a new invoice from InvoiceForm.screen.
  */
 export interface NewInvoice {
-    newInvoice: Invoice[];
+    newInvoice: Partial<Invoice[]>;
     setNewInvoice: () => void;
     setSelectedOrder: () => void;
     order_id: number;
     total_price: number;
     creation_date: Date;
     due_date: Date;
+}
+
+/**
+ * Invoice Item Props Interface.
+ * Used to pass props to InvoiceItem screen/view.
+ */
+export interface InvoiceItemProps {
+    route: {
+        params: {
+            item: Invoice;
+        };
+    };
 }
