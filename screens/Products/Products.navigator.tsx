@@ -9,7 +9,6 @@ import {ProductList} from '../../components/Product/ProductList';
 import {StockItem} from './ProductItem.screen';
 import {StatusBar} from 'expo-status-bar';
 import {CoverImage} from '../../components/Utils/CoverImage';
-// @ts-ignore
 import coverIMG from '../../assets/img/NutsAndBolts-5.jpg';
 import * as Style from '../../assets/styles';
 
