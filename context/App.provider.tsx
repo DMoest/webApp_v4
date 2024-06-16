@@ -1,11 +1,12 @@
 /**
  * Module imports.
  */
-import React, {createContext} from 'react';
+import React, { createContext } from 'react';
 import * as DeliveriesInterfaces from '../interfaces/Deliveries';
 import * as OrdersInterfaces from '../interfaces/Order';
 import * as ProductsInterfaces from '../interfaces/Product';
 import * as InvoicesInterfaces from '../interfaces/Invoice';
+import { Product } from "../interfaces/Product";
 
 /**
  * Application context types.
@@ -16,11 +17,13 @@ type AppContextType = {
     isRefreshing: boolean;
     setIsRefreshing: (isRefreshing1: boolean) => void;
     products: ProductsInterfaces.Product[];
-    setProducts: (products1: ProductsInterfaces.Product[]) => void;
+    setProducts: (products1: Product[] | void) => void;
     orders: OrdersInterfaces.Order[];
     setOrders: (orders1: OrdersInterfaces.Order[]) => void;
+    packedOrders: OrdersInterfaces.Order[];
+    setPackedOrders: (packedOrders1: OrdersInterfaces.Order[]) => void;
     deliveries: DeliveriesInterfaces.Deliveries[];
-    setDeliveries: (deliveries1: DeliveriesInterfaces.Deliveries[]) => void;
+    setDeliveries: (deliveries1: DeliveriesInterfaces.Deliveries[] | void) => void;
     invoices: InvoicesInterfaces.Invoice[];
     setInvoices: (invoices1: InvoicesInterfaces.Invoice[]) => void;
 };
@@ -37,6 +40,8 @@ const AppContext = createContext<AppContextType>({
     setProducts: () => [],
     orders: [],
     setOrders: () => [],
+    packedOrders: [],
+    setPackedOrders: () => [],
     deliveries: [],
     setDeliveries: () => [],
     invoices: [],
@@ -56,6 +61,9 @@ export const AppProvider: React.FC = ({ children }) => {
         ProductsInterfaces.Product[]
     >([]);
     const [orders, setOrders] = React.useState<OrdersInterfaces.Order[]>([]);
+    const [packedOrders, setPackedOrders] = React.useState<
+        OrdersInterfaces.Order[]
+    >([]);
     const [deliveries, setDeliveries] = React.useState<
         DeliveriesInterfaces.Deliveries[]
     >([]);
@@ -74,6 +82,8 @@ export const AppProvider: React.FC = ({ children }) => {
                 setProducts,
                 orders,
                 setOrders,
+                packedOrders,
+                setPackedOrders,
                 deliveries,
                 setDeliveries,
                 invoices,
