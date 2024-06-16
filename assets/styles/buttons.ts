@@ -4,7 +4,6 @@
 import * as Abstract from './abstracts';
 import * as Color from './colors';
 import * as Container from './containers';
-import {Typography} from "./index";
 
 /**
  * Style properties for a button.
