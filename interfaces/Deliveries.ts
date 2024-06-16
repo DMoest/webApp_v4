@@ -10,3 +10,11 @@ export interface Deliveries {
     comment: string;
     api_key: string;
 }
+
+export interface DeliveryItemProps {
+    route: {
+        params: {
+            item: Deliveries;
+        };
+    };
+}
