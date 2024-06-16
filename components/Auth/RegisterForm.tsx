@@ -20,6 +20,29 @@ export const RegisterForm: React.FC = () => {
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
 
+    function registerUser() {
+        console.log('Click! -> Registrera ny användare med...');
+        console.log('Input Email -> ', email);
+        console.log('Input Password -> ', password);
+        console.log('Input ConfirmedPassword -> ', passwordConfirm);
+
+        // Register user.
+        if (password === passwordConfirm) {
+            // Register user in API.
+            authContext.register(email, password);
+            console.log('User registered!');
+
+            // Login user in API.
+            authContext.login(email, password);
+            console.log('User logged in!');
+
+            // Navigate to Invoice screen.
+            navigation.navigate('Faktura');
+        } else {
+            console.log('Passwords do not match!');
+        }
+    }
+
     return (
         <View style={Style.Container.content}>
             <Text style={Style.Typography.subHeader}>
@@ -55,28 +78,7 @@ export const RegisterForm: React.FC = () => {
 
             <TouchableOpacity
                 style={Style.Button.button}
-                onPress={async () => {
-                    console.log('Click! -> Registrera ny användare med...');
-                    console.log('Input Email -> ', email);
-                    console.log('Input Password -> ', password);
-                    console.log('Input ConfirmedPassword -> ', passwordConfirm);
-
-                    // Register user.
-                    if (password === passwordConfirm) {
-                        // Register user in API.
-                        await authContext.register(email, password);
-                        console.log('User registered!');
-
-                        // Login user in API.
-                        await authContext.login(email, password);
-                        console.log('User logged in!');
-
-                        // Navigate to Invoice screen.
-                        await navigation.navigate('Faktura');
-                    } else {
-                        console.log('Passwords do not match!');
-                    }
-                }}>
+                onPress={registerUser}>
                 <Text style={Style.Typography.buttonText}>
                     Registrera ny användare
                 </Text>
