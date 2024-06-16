@@ -5,6 +5,7 @@ module.exports = {
         es2021: true,
         node: true,
         jest: true,
+        'react-native/react-native': true,
     },
     extends: [
         'eslint:recommended',
@@ -19,6 +20,7 @@ module.exports = {
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'plugin:react-hooks/recommended',
+        'plugin:react-native/recommended',
     ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
@@ -34,7 +36,7 @@ module.exports = {
             version: 'detect',
         },
     },
-    plugins: ['react', '@typescript-eslint', 'import', 'jsx-a11y'],
+    plugins: ['react', '@typescript-eslint', 'import', 'jsx-a11y', 'react-native'],
     rules: {
         'no-array-constructor': 'off',
         '@typescript-eslint/no-array-constructor': ['error'],
@@ -50,7 +52,6 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': ['error'],
         'require-await': 'off',
         '@typescript-eslint/require-await': 'error',
-        // '@typescript-eslint/rule-name': 'error',
         '@typescript-eslint/no-misused-new': 'error',
         '@typescript-eslint/no-for-in-array': 'error',
         '@typescript-eslint/no-extra-non-null-assertion': 'error',
@@ -58,7 +59,6 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'warn',
         '@typescript-eslint/no-unnecessary-type-constraint': 'error',
         '@typescript-eslint/no-unsafe-argument': 'error',
-        // '@typescript-eslint/no-unsafe-assignment': 'error',
         '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/no-unsafe-call': 'error',
         '@typescript-eslint/no-unsafe-member-access': 'off',
@@ -125,5 +125,12 @@ module.exports = {
                 allowedNames: ['self'],
             },
         ],
+
+        // Adjust the import/namespace rule:
+        'import/namespace': 0,
+
+        // Add React Native specific rules if you wish:
+        'react-native/no-unused-styles': 2,
+        'react-native/split-platform-components': 2,
     },
 };
