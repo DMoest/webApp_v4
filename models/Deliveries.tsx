@@ -1,12 +1,12 @@
 import React from 'react';
 import config from '../config/config.json';
-import Deliveries from '../interfaces/Deliveries';
+import DeliveriesInterfaces from '../interfaces/Deliveries';
 import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
 
 /**
  * Get all deliveries.
  */
-export async function getDeliveries(): Promise<Deliveries[]> {
+export async function getDeliveries(): Promise<DeliveriesInterfaces.Deliveries[] | void> {
     try {
         const response = await fetch(
             `${config.base_url}/deliveries?api_key=${config.api_key}`,
@@ -25,8 +25,8 @@ export async function getDeliveries(): Promise<Deliveries[]> {
  * @param delivery
  */
 export async function createDelivery(
-    delivery: Partial<Deliveries>,
-): Promise<Deliveries> {
+    delivery: Partial<DeliveriesInterfaces.Deliveries>,
+): Promise<DeliveriesInterfaces.Deliveries> {
     try {
         return await fetch(
             `${config.base_url}/deliveries?api_key=${config.api_key}`,
