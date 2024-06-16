@@ -6,7 +6,7 @@ import config from '../config/config.json';
 /**
  * Getter Model Method for getting all available products from the API.
  */
-export async function getProducts() {
+export async function getProducts(): Promise<ProductInterfaces.Product[] | void>  {
     try {
         const response = await fetch(
             `${config.base_url}/products?api_key=${config.api_key}`,
