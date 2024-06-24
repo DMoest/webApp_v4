@@ -2,7 +2,6 @@
  * Module imports.
  */
 import React from 'react';
-// eslint-disable-next-line import/namespace
 import { View, Text } from 'react-native';
 import * as Style from '../../assets/styles';
 
@@ -27,7 +26,7 @@ export const ProductListItem = (props: StockListItemPropsType) => {
     return (
         <View
             key={props.item.id.toString()}
-            style={Style.Button.listButton}>
+            style={Style.Container.grid.row}>
             <Text style={Style.Typography.dataLeft}>{props.item.name}</Text>
             <Text style={Style.Typography.dataCenter}>
                 {props.item.article_number}
