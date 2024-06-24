@@ -2,19 +2,15 @@
  * Module imports.
  */
 import React from 'react';
-// eslint-disable-next-line import/namespace
-import {SafeAreaView, Text, View} from 'react-native';
-// eslint-disable-next-line import/no-unresolved
-import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
-import {createStackNavigator} from '@react-navigation/stack';
-import {OrderList} from '../../components/Order/OrderList';
-import {OrderItem} from './OrderItem.screen';
-import {CoverImage} from '../../components/Utils/CoverImage';
-import {StatusBar} from 'expo-status-bar';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import coverIMG from '../../assets/img/NutsAndBolts-3.jpg';
+import { SafeAreaView, Text, View } from 'react-native';
+import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
+import { createStackNavigator } from '@react-navigation/stack';
+import { OrderList } from '../../components/Order/OrderList';
+import { OrderItem } from './OrderItem.screen';
+import { CoverImage } from '../../components/Utils/CoverImage';
+import { StatusBar } from 'expo-status-bar';
 import * as Style from '../../assets/styles';
+import coverIMG from '../../assets/img/NutsAndBolts-3.jpg';
 
 /**
  * Stack navigator for orders.
@@ -26,32 +22,31 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
  *
  * @constructor
  */
-export const OrderNavigator: () => JSX.Element = () => {
+export const OrderNavigator: () => React.JSX.Element = () => {
     return (
         <SafeAreaView style={Style.Base.mainContainer}>
-            {CoverImage({headerText: 'Order', image: coverIMG})}
+            {CoverImage({ headerText: 'Order', image: coverIMG })}
 
-            <View style={Style.Container.content}>
+            <View style={Style.Container.screenIntroductory}>
                 <Text style={Style.Typography.paragraph}>
-                    Den här listan innehåller utgående ordrar till kund. Varje
-                    order ska innehålla ett id, en order status kod och en
-                    beställare.
+                    Orderfliken innehåller en lista över ordrar. Ordrarna har
+                    olika status internt innan dem skickas till kund.
                 </Text>
-
-                <Stack.Navigator>
-                    <Stack.Screen
-                        name='Orderlista'
-                        component={OrderList}
-                    />
-
-                    <Stack.Screen
-                        name='Plocklista'
-                        component={OrderItem}
-                    />
-                </Stack.Navigator>
             </View>
 
-            <StatusBar style='auto'/>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name='Orderlista'
+                    component={OrderList}
+                />
+
+                <Stack.Screen
+                    name='Plocklista'
+                    component={OrderItem}
+                />
+            </Stack.Navigator>
+
+            <StatusBar style='auto' />
         </SafeAreaView>
     );
 };
