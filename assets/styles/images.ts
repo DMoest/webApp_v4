@@ -1,7 +1,6 @@
 /**
  * Module imports.
  */
-// eslint-disable-next-line import/namespace
 import { Dimensions } from 'react-native';
 import * as Typography from './typography';
 
@@ -38,5 +37,5 @@ export const imageContainer = {
     alignItems: 'center',
     width: Dimensions.get('screen').width,
     height: (Dimensions.get('screen').width / 16) * 6,
-    marginBottom: Typography.whiteSpace.X1,
+    marginBottom: Typography.whiteSpace[100],
 };
