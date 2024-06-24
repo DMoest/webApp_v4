@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
-import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 
 /**
  * Order interface.
@@ -43,4 +42,10 @@ export interface OrderItemProps {
         };
     };
     navigation: NativeStackNavigatorProps;
+}
+
+export interface OrderStockIndicatorElement {
+    icon: string;
+    color: string;
+    text: string;
 }
