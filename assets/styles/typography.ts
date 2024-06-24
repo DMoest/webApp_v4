@@ -2,17 +2,17 @@
  * Module imports.
  */
 import * as Color from './colors';
-import * as Container from './containers';
 
 /**
  * White Space.
  */
 export const whiteSpace = {
-    X025: 4.55,
-    X050: 9.1,
-    X075: 13.65,
-    X1: 18.2,
-    X2: 36.4,
+    10: 1.82,
+    25: 4.55,
+    50: 9.1,
+    75: 13.65,
+    100: 18.2,
+    200: 36.4,
 };
 
 /**
@@ -24,6 +24,7 @@ export const fontSize = {
     h3: 30.79,
     h4: 23.1,
     h5: 17.33,
+    h6: 13,
     text: 13,
     smallText: 7.5,
     miniText: 5.63,
@@ -60,8 +61,8 @@ export const fontFamily = {
 export const header = {
     width: '100%',
     height: undefined,
-    paddingVertical: whiteSpace.X2,
-    paddingHorizontal: whiteSpace.X1,
+    paddingVertical: whiteSpace[200],
+    paddingHorizontal: whiteSpace[100],
 
     textAlign: 'center',
     fontSize: fontSize.h1,
@@ -76,8 +77,8 @@ export const header = {
  */
 export const subHeader = {
     alignSelf: 'center',
-    paddingVertical: whiteSpace.X050,
-    marginBottom: whiteSpace.X1,
+    paddingVertical: whiteSpace[50],
+    marginBottom: whiteSpace[100],
     fontSize: fontSize.h4,
     fontFamily: fontFamily.subHeader,
     color: Color.text.dark,
@@ -89,11 +90,20 @@ export const subHeader = {
  */
 export const paragraph = {
     width: '100%',
-    height: undefined,
-    paddingHorizontal: whiteSpace.X050,
-    paddingVertical: whiteSpace.X050,
+    height: 'auto',
+    paddingHorizontal: whiteSpace[75],
+    paddingVertical: whiteSpace[50],
     flexWrap: 'wrap',
     textAlign: 'left',
+    fontSize: fontSize.text,
+    fontWeight: fontWeight.text,
+    fontFamily: fontFamily.text,
+};
+
+export const baseDataField = {
+    flexWrap: 'wrap',
+    paddingHorizontal: whiteSpace[25],
+    paddingBottom: whiteSpace[25],
     fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.text,
@@ -103,118 +113,123 @@ export const paragraph = {
  * Data to the left attributes.
  */
 export const dataLeft = {
-    paddingHorizontal: whiteSpace.X025,
-    paddingBottom: whiteSpace.X025,
-    flexWrap: 'wrap',
+    ...baseDataField,
     textAlign: 'left',
-    fontSize: fontSize.text,
-    fontWeight: fontWeight.text,
-    fontFamily: fontFamily.text,
 };
 
 /**
  * Data placed centered attributes.
  */
 export const dataCenter = {
-    paddingHorizontal: whiteSpace.X025,
-    paddingBottom: whiteSpace.X025,
-    flexWrap: 'wrap',
+    ...baseDataField,
     textAlign: 'center',
-    fontSize: fontSize.text,
-    fontWeight: fontWeight.text,
-    fontFamily: fontFamily.text,
 };
 
 /**
  * Data to the right attributes.
  */
 export const dataRight = {
-    paddingHorizontal: whiteSpace.X025,
-    paddingBottom: whiteSpace.X025,
+    ...baseDataField,
     textAlign: 'right',
-    fontSize: fontSize.text,
-    fontWeight: fontWeight.text,
-    fontFamily: fontFamily.text,
 };
 
 /**
  * End margin text attributes.
  */
 export const endMarginText = {
-    marginBottom: whiteSpace.X1,
+    marginBottom: whiteSpace[100],
 };
 
 /**
- * Typography for
+ * Typography for buttons.
  */
 export const buttonText = {
     width: '100%',
-    height: undefined,
-    paddingVertical: Container.whiteSpace.X050,
-    paddingHorizontal: Container.whiteSpace.X050,
+    height: 'auto',
+    paddingVertical: whiteSpace[50],
+    paddingHorizontal: whiteSpace[50],
+
     alignSelf: 'center',
+
+    // Font attributes
+    textAlign: 'center',
     fontFamily: fontFamily.btn,
     fontSize: fontSize.h5,
-    textAlign: 'center',
+    fontWeight: fontWeight.btn,
+
+    color: Color.text.dark,
 };
 
 /**
- * Typography for flashmessage text.
+ * Base flash message.
  */
-export const warningFlashMessageText = {
+const baseFlashMessage = {
     textAlign: 'center',
-    fontSize: fontSize.text,
     fontWeight: fontWeight.text,
     fontFamily: fontFamily.btn,
-    color: Color.text.dark,
-    backgroundColor: Color.indicator.warning,
-    padding: 5,
     color: Color.text.light,
+};
+export const infoFlashMsg = {
+    ...baseFlashMessage,
+    fontSize: fontSize.h5,
+    color: Color.indicator.info[50],
+};
+export const successFlashMsg = {
+    ...baseFlashMessage,
+    fontSize: fontSize.h5,
+};
+export const cautionFlashMsg = {
+    ...baseFlashMessage,
+    fontSize: fontSize.text,
+};
+export const warningFlashMsg = {
+    ...baseFlashMessage,
+    fontSize: fontSize.text,
 };
 
 /**
  * Typography attributes.
  */
-export const typography = {
-    // Fonts
-    headerFont: 'OleoScriptSwashCaps_400Regular',
-    subHeaderFont: 'JosefinSans_600SemiBold',
-    textFont: 'Merriweather_400Regular',
-    quotesFont: 'Merriweather_400Regular_Italic',
-    btnFont: 'JosefinSans_600SemiBold',
-    btnFont2: 'Merriweather_700Bold',
-
-    // Typography
-    btnBigFontSize: 16,
-    btnSmallFontSize: 14,
-
-    // Modular scale
-    h1Size: 54.71,
-    h2Size: 41.05,
-    h3Size: 30.79,
-    h4Size: 23.1,
-    h5Size: 17.33,
-    textSize: 13,
-    textSmallSize: 7.5,
-    textMiniSize: 5.63,
-
-    // Whitespace
-    whiteSpace25: 4.55,
-    whiteSpace50: 9.1,
-    whiteSpace75: 13.65,
-    whiteSpace: 18.2,
-    whiteSpace200: 36.4,
-
-    // Weight
-    h1Weight: '400',
-    h2Weight: '400',
-    h3Weight: '400',
-    h4Weight: '400',
-    h5Weight: '400',
-    textWeight: '400',
-    btnWeight: '600',
-
-    headerWeight: '400',
-    subHeaderWeight: '400',
-    paragraphWeight: '400',
-};
+// export const typography = {
+//     // Fonts
+//     headerFont: 'OleoScriptSwashCaps_400Regular',
+//     subHeaderFont: 'JosefinSans_600SemiBold',
+//     textFont: 'Merriweather_400Regular',
+//     quotesFont: 'Merriweather_400Regular_Italic',
+//     btnFont: 'JosefinSans_600SemiBold',
+//     btnFont2: 'Merriweather_700Bold',
+//
+//     // Typography
+//     btnBigFontSize: 16,
+//     btnSmallFontSize: 14,
+//
+//     // Modular scale
+//     h1Size: 54.71,
+//     h2Size: 41.05,
+//     h3Size: 30.79,
+//     h4Size: 23.1,
+//     h5Size: 17.33,
+//     textSize: 13,
+//     textSmallSize: 7.5,
+//     textMiniSize: 5.63,
+//
+//     // Whitespace
+//     whiteSpace25: 4.55,
+//     whiteSpace50: 9.1,
+//     whiteSpace75: 13.65,
+//     whiteSpace: 18.2,
+//     whiteSpace200: 36.4,
+//
+//     // Weight
+//     h1Weight: '400',
+//     h2Weight: '400',
+//     h3Weight: '400',
+//     h4Weight: '400',
+//     h5Weight: '400',
+//     textWeight: '400',
+//     btnWeight: '600',
+//
+//     headerWeight: '400',
+//     subHeaderWeight: '400',
+//     paragraphWeight: '400',
+// };
