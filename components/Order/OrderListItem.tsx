@@ -2,7 +2,6 @@
  * Module imports.
  */
 import React from 'react';
-// eslint-disable-next-line import/namespace
 import { Text, View } from 'react-native';
 import * as Style from '../../assets/styles';
 
@@ -23,11 +22,11 @@ type OrderListItemPropsType = {
  * @constructor
  * @param props
  */
-export const OrderListItem = (props: OrderListItemPropsType) => {
+export const OrderListItem = (props): React.JSX.Element => {
     return (
         <View
-            key={props.item.id.toString()}
-            style={Style.Button.listButton}>
+            key={props.item.id}
+            style={Style.Container.grid.row}>
             <Text style={Style.Typography.dataLeft}>{props.item.id}</Text>
             <Text style={Style.Typography.dataCenter}>{props.item.name}</Text>
             <Text style={Style.Typography.dataRight}>
