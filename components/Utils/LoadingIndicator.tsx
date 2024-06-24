@@ -12,25 +12,17 @@ type ArgumentTypes = { loadingType: string | undefined };
  */
 export function LoadingIndicator({
     loadingType = undefined,
-}: ArgumentTypes): JSX.Element {
-    if (loadingType) {
+}: ArgumentTypes): React.JSX.Element {
+    if (loadingType !== undefined) {
         return (
-            <View
-                style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
+            <View style={Style.Utils.loadingIndicatorContainer}>
                 <ActivityIndicator
                     size='large'
-                    color={Style.Color.schemeOne.primary}
+                    color={Style.Color.schemeOne.primary[300]}
+                    style={Style.Utils.loadingIndicator}
                 />
 
-                <Text
-                    style={{
-                        paddingVertical: 25,
-                        paddingHorizontal: Style.Typography.whiteSpace.X1,
-                    }}>
+                <Text style={Style.Utils.loadingIndicatorText}>
                     Laddar {loadingType}...
                 </Text>
             </View>
@@ -45,13 +37,13 @@ export function LoadingIndicator({
                 }}>
                 <ActivityIndicator
                     size='large'
-                    color={Style.Color.schemeOne.primary}
+                    color={Style.Color.schemeOne.primary[300]}
                 />
 
                 <Text
                     style={{
                         paddingVertical: 25,
-                        paddingHorizontal: Style.Typography.whiteSpace.X1,
+                        paddingHorizontal: Style.Typography.whiteSpace[100],
                     }}>
                     Laddar...
                 </Text>
