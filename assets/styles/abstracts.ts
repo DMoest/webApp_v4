@@ -13,7 +13,7 @@ export const abstracts = {
         width: 0.5,
         height: 1.5,
     },
-    buttonOpacity: 0.3,
+    buttonOpacity: 0.4,
     buttonRadius: 1.5,
     buttonElevation: 2,
 };
@@ -22,7 +22,7 @@ export const abstracts = {
  * Shadows Attributes.
  */
 export const shadow = {
-    buttonOffset: {
+    btnOffset: {
         width: 0.5,
         height: 1.5,
     },
@@ -36,7 +36,7 @@ export const shadow = {
  */
 export const activityIndicator = {
     size: 'large',
-    marginVertical: Typography.whiteSpace.X1,
-    marginHorizontal: Typography.whiteSpace.X1,
-    color: Color.colors.primaryColor,
-}
+    marginVertical: Typography.whiteSpace[100],
+    marginHorizontal: Typography.whiteSpace[100],
+    color: Color.schemeOne.primary[300],
+};
