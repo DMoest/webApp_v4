@@ -4,75 +4,48 @@
 import * as Abstract from './abstracts';
 import * as Color from './colors';
 import * as Container from './containers';
+import * as Typography from './typography';
+import * as Variable from './variables';
 
 /**
- * Style properties for a button.
+ * Base button properties.
  */
-export const button = {
-    // width: '100%',
-    // height: undefined,
+export const baseButton = {
     overflow: 'hidden',
-    paddingHorizontal: Container.whiteSpace.X075,
-    paddingVertical: Container.whiteSpace.X050,
-    marginVertical: Container.whiteSpace.X025,
-    borderRadius: Container.borderRadius.button,
-    backgroundColor: Color.schemeOne.primary,
-    color: Color.text.dark,
-};
-
-/**
- * Style properties for list buttons.
- */
-export const listButton = {
     width: '100%',
-    height: undefined,
-    overflow: 'hidden',
+    height: 'auto',
+    paddingHorizontal: Typography.whiteSpace[50],
+    paddingVertical: Typography.whiteSpace[25],
+    marginVertical: Typography.whiteSpace[25],
+    marginHorizontal: Typography.whiteSpace[10],
     alignSelf: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingHorizontal: Container.whiteSpace.X075,
-    paddingVertical: Container.whiteSpace.X050,
-    marginVertical: Container.whiteSpace.X025,
-    borderRadius: Container.borderRadius.button,
-    backgroundColor: Color.schemeOne.primary,
-    color: Color.text.dark,
-};
+    borderRadius: Variable.borderRadius.button,
 
-/**
- * Style properties for button container.
- */
-export const buttonContainer = {
-    width: '95%',
-    height: undefined,
-    alignSelf: 'center',
+    // Colors
+    color: Color.text.dark,
     backgroundColor: Color.background.light,
 
     // Shadows/Abstracts
-    shadowColor: Color.shadows.s1,
-    shadowOffset: Abstract.shadow.buttonOffset,
+    shadowColor: Color.shadows[400],
+    shadowOffset: Abstract.shadow.btnOffset,
     shadowOpacity: Abstract.shadow.buttonOpacity,
     shadowRadius: Abstract.shadow.buttonRadius,
-    elevation: Abstract.shadow.buttonElevation,
+    elevation: Abstract.abstracts.buttonElevation,
 };
 
-/**
- * Style properties for standard buttons.
- */
-export const buttonSTD = {
-    width: '95%',
-    height: undefined,
-    overflow: 'hidden',
-    paddingHorizontal: Container.whiteSpace.X075,
-    paddingVertical: Container.whiteSpace.X050,
-    marginVertical: Container.whiteSpace.X025,
-    marginHorizontal: Container.whiteSpace.X050,
-    borderRadius: Container.borderRadius.button,
-    backgroundColor: Color.schemeOne.primary,
-    color: Color.text.dark,
+// List button style
+export const listButton = {
+    ...baseButton,
+    backgroundColor: Color.schemeOne.primary[300],
 };
 
-export const textLink = {
-    color: Color.colors.linkColor,
+// Button container style
+export const buttonContainer = {
+    ...baseButton,
+    backgroundColor: Color.schemeOne.primary[300],
+};
 
+export const warningButton = {
+    ...baseButton,
+    backgroundColor: Color.indicator.warning[300],
 };
