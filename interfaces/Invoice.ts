@@ -39,3 +39,8 @@ export interface InvoiceItemProps {
         };
     };
 }
+
+export interface UpdateInvoiceProps {
+    invoice_id: number;
+    invoice_attributes: Partial<Invoice>;
+}
