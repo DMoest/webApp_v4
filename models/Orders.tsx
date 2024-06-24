@@ -1,7 +1,7 @@
 import config from '../config/config.json';
 import React from 'react';
 import * as OrderInterfaces from '../interfaces/Order';
-import {Order} from '../interfaces/Order';
+import { Order } from '../interfaces/Order';
 import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
 import * as ProductModel from './Products';
 
@@ -121,12 +121,12 @@ export async function pickOrder(order: OrderInterfaces.Order) {
 }
 
 export async function updateOrderStatus(
-    input_order_id: number | undefined,
+    order_id: number | undefined,
     status_id: number,
     status: string,
 ) {
     try {
-        const response = await fetch(
+        const response: Response = await fetch(
             `${config.base_url}/orders?api_key=${config.api_key}`,
             {
                 method: 'PUT',
@@ -135,15 +135,13 @@ export async function updateOrderStatus(
                     'content-type': 'application/json',
                 },
                 body: {
-                    id: input_order_id,
+                    id: order_id,
                     status_id: status_id,
                     status: status,
                     api_key: `${config.api_key}`,
                 },
             },
         );
-
-        console.log(`OrderModel.updateOrderStatus ~> ${response}`);
 
         return response.json();
     } catch (error) {
