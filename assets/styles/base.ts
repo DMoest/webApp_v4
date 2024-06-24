@@ -2,17 +2,27 @@
  * Module imports.
  */
 import * as Color from './colors';
-import * as Typography from './typography';
-// eslint-disable-next-line import/namespace
+// import * as Typography from './typography';
 // import { Dimensions } from 'react-native';
 
 /**
  * Main Container attributes.
  */
 export const mainContainer = {
-    flex: 1,
     width: '100%',
-    height: '100%',
+    height: 'auto',
+    padding: 0,
+    margin: 0,
+
+    // FlexBox
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    justifyContent: 'flex-start',
+    gap: 0,
+
+    // Colors
     backgroundColor: Color.background.light,
 };
 
@@ -21,7 +31,6 @@ export const mainContainer = {
  */
 export const content = {
     flex: 1,
-    paddingHorizontal: Typography.whiteSpace.X075,
     backgroundColor: Color.background.light,
 };
 
