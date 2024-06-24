@@ -2,7 +2,7 @@
  * Deliveries interface.
  */
 export interface Deliveries {
-    id?: number;
+    id: number;
     product_id: string;
     product_name?: string;
     amount: number;
