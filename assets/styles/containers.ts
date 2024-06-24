@@ -2,27 +2,40 @@
  * Module imports.
  */
 // eslint-disable-next-line import/namespace
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 import * as Color from './colors';
-
-/**
- * White Space.
- */
-export const whiteSpace = {
-    X010: 1.82,
-    X025: 4.55,
-    X050: 9.1,
-    X075: 13.65,
-    X1: 18.2,
-    X2: 36.4,
-};
+import * as Typography from './typography';
 
 /**
  * Content container
  */
 export const content = {
+    width: '100%',
+    height: 'auto',
     flex: 1,
-    paddingHorizontal: whiteSpace.X075,
+    overflowX: 'hidden',
+    overflowY: 'scroll',
+    paddingTop: Typography.whiteSpace[25],
+    paddingHorizontal: Typography.whiteSpace[50],
+    paddingBottom: Typography.whiteSpace[100],
+    margin: 0,
+
+    // Colors
+    color: Color.text.dark,
+    backgroundColor: Color.background.light,
+};
+
+export const screenIntroductory = {
+    width: '100%',
+    height: 'auto',
+    paddingHorizontal: Typography.whiteSpace[25],
+    backgroundColor: Color.background.light,
+};
+
+export const scrollView = {
+    flex: 1,
+    padding: Typography.whiteSpace[75],
+    paddingVertical: Typography.whiteSpace[10],
     backgroundColor: Color.background.light,
 };
 
@@ -41,6 +54,8 @@ export const flexBox = {
     rowNoPadding: {
         width: '100%',
         height: undefined,
+        paddingVertical: 0,
+        paddingHorizontal: 0,
         alignSelf: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -50,7 +65,7 @@ export const flexBox = {
         width: '100%',
         height: undefined,
         alignSelf: 'center',
-        paddingVertical: whiteSpace.X025,
+        paddingVertical: Typography.whiteSpace[25],
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
@@ -63,11 +78,80 @@ export const flexBox = {
     },
 };
 
+export const grid = {
+    width: '100%',
+    height: 'auto',
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+    marginHorizontal: Typography.whiteSpace[10],
+    marginVertical: Typography.whiteSpace[25],
+
+    // FlexBox options
+    alignSelf: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Typography.whiteSpace[25],
+    justifyContent: 'space-between',
+
+    row: {
+        width: '100%',
+        paddingVertical: Typography.whiteSpace[10],
+        paddingHorizontal: Typography.whiteSpace[10],
+        margin: 0,
+
+        // FlexBox options
+        alignSelf: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: Typography.whiteSpace[25],
+        justifyContent: 'space-between',
+    },
+    rowNoPadding: {
+        width: '100%',
+        padding: 0,
+        margin: 0,
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignSelf: 'center',
+        justifyContent: 'space-between',
+    },
+    column: {
+        width: '100%',
+        height: 'auto',
+
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        gap: 0,
+    },
+    col: {
+        width: '100%',
+        alignSelf: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+
+        1: { flex: 1 },
+        2: { flex: 2 },
+        3: { flex: 3 },
+        4: { flex: 4 },
+        5: { flex: 5 },
+        6: { flex: 6 },
+        7: { flex: 7 },
+        8: { flex: 8 },
+        9: { flex: 9 },
+        10: { flex: 10 },
+        11: { flex: 11 },
+        12: { flex: 12 },
+    },
+};
+
 /**
  * Bottom separator line.
  */
 export const bottomSeparator = {
-    paddingVertical: whiteSpace.X025,
+    paddingVertical: Typography.whiteSpace[50],
     borderBottomWidth: 0.5,
     borderBottomColor: 'black',
 };
@@ -76,28 +160,71 @@ export const bottomSeparator = {
  * Border radius options.
  */
 export const borderRadius = {
+    msgContainer: 3,
     button: 5,
+    input: 5,
+    container: 5,
+    card: 5,
+    modal: 5,
 };
 
 /**
  * Flatlist background color.
  */
 export const flatList = {
+    width: '100%',
+    height: '100%',
+    margin: 0,
+    paddingHorizontal: Typography.whiteSpace[100],
     backgroundColor: Color.background.light,
-    height: '88%',
-    top: 0,
 };
 
-export const warningFlashMessageContainer = {
-    width: '95%',
-    // height: undefined,
-    paddingHorizontal: whiteSpace.X1,
-    paddingVertical: whiteSpace.X050,
-
-    backgroundColor: Color.indicator.caution,
-
+/**
+ * Flash message base container styles.
+ */
+const baseMsgContainer = {
+    width: '100%',
+    height: 'auto',
+    flex: 1,
+    paddingHorizontal: Typography.whiteSpace[10],
+    paddingVertical: Typography.whiteSpace[50],
+    marginVertical: Typography.whiteSpace[25],
+    marginHorizontal: Typography.whiteSpace[50],
     alignSelf: 'center',
-    borderRadius: 5,
+    borderRadius: borderRadius.msgContainer,
+    backgroundColor: Color.background.light,
+};
+
+/**
+ * Info flash message container styles.
+ */
+export const infoMsgContainer = {
+    ...baseMsgContainer,
+    backgroundColor: Color.indicator.info[400],
+};
+
+/**
+ * Success flash message container styles.
+ */
+export const successMsgContainer = {
+    ...baseMsgContainer,
+    backgroundColor: Color.indicator.positive[300],
+};
+
+/**
+ * Warning flash message container styles.
+ */
+export const warningMsgContainer = {
+    ...baseMsgContainer,
+    backgroundColor: Color.indicator.warning[300],
+};
+
+/**
+ * Caution flash message container styles.
+ */
+export const cautionMsgContainer = {
+    ...baseMsgContainer,
+    backgroundColor: Color.indicator.caution[300],
 };
 
 /**
