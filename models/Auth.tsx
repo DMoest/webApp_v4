@@ -13,11 +13,11 @@ interface LoginResponse {
 /**
  * Function to check if logged in.
  */
-export async function loggedIn() {
-    // const authContext = useAuthContext();
-    // return authContext.isLoggedIn;
+export async function loggedIn(): Promise<boolean> {
+    const token: string | null = await SecureStore.getItemAsync('token');
+    console.log("AuthModel -> loggedIn() -> token: ", token);
 
-    return false;
+    return token !== null;
 }
 
 
