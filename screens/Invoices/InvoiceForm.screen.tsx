@@ -98,60 +98,57 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
             setSelectedOrder(currentlyPackedOrders[0]);
         }
 
+        return currentlyPackedOrders;
+    }, [appContext.orders]);
+
+    const handleSubmit = async (
+        input_invoice: Partial<InvoiceInterfaces.NewInvoice>,
+    ): Promise<void> => {
         try {
-            // Get all orders.
-            appContext.setOrders(await OrderModel.getOrders());
-            // appContext.setInvoices(await InvoiceModel.getInvoices());
-
-            const thesePackedOrders = appContext.orders.filter(
-                (order: OrderInterfaces.Order) => order.status === 'Packad',
-            );
-
-            // Get all packed orders.
-            await setPackedOrders(thesePackedOrders);
-
             console.log(
-                `Route: ${route.name} ~> getPackedOrders() ~> thesePackedOrders: ${thesePackedOrders}`,
+                `Route: ${route.name} ~> createInvoice(${input_invoice.order_id})`,
             );
 
-            if (packedOrders.length > 0) {
-                console.log(
-                    `IF: InviceForm.packedOrders...length: ${packedOrders.length}`,
-                );
-                // Set initial values of the new Invoice.
-                initInvoiceValues = {
-                    order_id: packedOrders[0].id,
-                    creation_date: new Date().toLocaleDateString('se-SV'),
-                    due_date: getDueDate().toLocaleDateString('se-SV'),
-                    total_price: calculateTotalPrice(),
-                };
+            // Create the new invoice.
+            await InvoiceModel.createInvoice(input_invoice).then(
+                (newInvoice: InvoiceInterfaces.Invoice): void => {
+                    console.log(
+                        'RESPONSE NEW INVOICE: ',
+                        newInvoice,
+                        ' from: ',
+                        input_invoice,
+                    );
 
-                // Set the selected order in the picker.
-                await setSelectedOrder(packedOrders[0]);
+                    navigation.navigate('Fakturor', {reload: true});
+                },
+            );
 
-                // Set the initial values of the new invoice.
-                await setNewInvoice(initInvoiceValues);
-            }
+            // Update order status to invoiced.
+            await OrderModel.updateOrderStatus(
+                input_invoice.order_id,
+                600,
+                'Fakturerad',
+            );
+
+            // Update the state of the appContext.invoices.
+            appContext.setInvoices(await InvoiceModel.getInvoices());
+
+            // Update the state of the appContext.orders & appContext.packedOrders.
+            appContext.setOrders(await OrderModel.getOrders());
         } catch (error) {
             console.error(error);
         } finally {
-            appContext.setIsRefreshing(false);
-        }
-    }
-
-    function calculateTotalPrice(): number {
-        console.log(`Route: ${route.name} ~> calculateTotalPrice()`);
-        let totalPrice = 0;
-
-        if (selectedOrder) {
-            selectedOrder.order_items.forEach(
-                (orderItem: OrderInterfaces.OrderItem) => {
-                    totalPrice += orderItem.price * orderItem.amount;
-                },
+            // Prompt the user that the invoice was created.
+            Alert.alert(
+                'Ny faktura har skapats.\n \n' +
+                `Fakturanr: ${newInvoice?.id}\n` +
+                `Ordernr: ${newInvoice?.order_id}\n` +
+                `Totalt pris: ${newInvoice?.total_price}\n` +
+                `Fakturadatum: ${newInvoice?.creation_date}\n` +
+                `Förfaller: ${newInvoice?.due_date}`,
             );
         }
-
-        console.log(`selectedOrder.order_items.totalPrice: ${totalPrice}`);
+    };
 
         return totalPrice;
     }
