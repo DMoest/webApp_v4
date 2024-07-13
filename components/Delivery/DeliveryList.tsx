@@ -96,58 +96,34 @@ export const DeliveryList: React.FC = ({route}): React.JSX.Element => {
     }, [appContext.deliveries, appContext.isRefreshing]);
 
     return appContext.isRefreshing ? (
-        <View>
-            <TouchableOpacity
+        <View style={Style.Container.content}>
+            <Pressable
                 key={'newdeliverybtn'}
-                style={Style.Button.buttonSTD}
+                style={Style.Button.buttonContainer}
                 onPress={() => {
                     navigation.navigate('Inleverasformulär');
                 }}>
                 <Text style={Style.Typography.buttonText}>
-                    Skapa Ny Inleverans
+                    Skapa Inleverans
                 </Text>
-            </TouchableOpacity>
+            </Pressable>
 
-            <LoadingIndicator loadingType={'Leveranser'} />
-        </View>
-    ) : appContext.deliveries.length > 0 ? (
-        <View>
-            <TouchableOpacity
-                key={'newdeliverybtn'}
-                style={Style.Button.buttonSTD}
-                onPress={() => {
-                    navigation.navigate('Inleverasformulär');
-                }}>
-                <Text style={Style.Typography.buttonText}>
-                    Skapa Ny Inleverans
-                </Text>
-            </TouchableOpacity>
-            <FlatList
-                style={Style.Container.flatList}
-                data={appContext.deliveries}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={renderItem}
-                refreshing={appContext.isRefreshing}
-                onRefresh={loadDeliveries}
-            />
+            <LoadingIndicator loadingType={'Leveranser'}/>
         </View>
     ) : (
-        <>
-            <TouchableOpacity
+        <View style={Style.Container.content}>
+            <Pressable
                 key={'newdeliverybtn'}
-                style={Style.Button.buttonSTD}
+                style={Style.Button.buttonContainer}
                 onPress={() => {
                     navigation.navigate('Inleverasformulär');
                 }}>
                 <Text style={Style.Typography.buttonText}>
-                    Skapa Ny Inleverans
+                    Skapa Inleverans
                 </Text>
-            </TouchableOpacity>
-            <View style={Style.Container.warningFlashMessageContainer}>
-                <Text style={Style.Typography.warningFlashMessageText}>
-                    Det finns inte några inleveranser...
-                </Text>
-            </View>
-        </>
+            </Pressable>
+
+            {renderDeliveriesList}
+        </View>
     );
 };
