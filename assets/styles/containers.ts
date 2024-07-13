@@ -186,7 +186,7 @@ const baseMsgContainer = {
     width: '100%',
     height: 'auto',
     flex: 1,
-    paddingHorizontal: Typography.whiteSpace[10],
+    paddingHorizontal: Typography.whiteSpace[50],
     paddingVertical: Typography.whiteSpace[50],
     marginVertical: Typography.whiteSpace[25],
     marginHorizontal: Typography.whiteSpace[50],
