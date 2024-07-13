@@ -13,6 +13,7 @@ export interface Order {
     status: string;
     status_id: number;
     api_key: string;
+    image_url: string | null;
     order_items: OrderItem[] | [];
 }
 
