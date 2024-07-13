@@ -26,7 +26,7 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
  *
  * @constructor
  */
-export const AuthNavigator: () => JSX.Element = () => {
+export const AuthNavigator: React.FC = (): React.JSX.Element => {
     const authContext = useAuthContext();
 
     return (
