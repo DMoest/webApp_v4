@@ -53,15 +53,22 @@ export const DeliveryList: React.FC = ({route}): React.JSX.Element => {
      *
      * @param item
      */
-    const renderItem = ({ item }) => (
-        <TouchableOpacity
+    const renderItem = ({item}) => (
+        <Pressable
             key={item.id}
             onPress={() => {
-                navigation.navigate('Inleveransspecifikation', { item });
+                navigation.navigate('Inleveransspecifikation', {item});
             }}
-            style={Style.Button.buttonContainer}>
-            <DeliveryListItem item={item} />
-        </TouchableOpacity>
+            style={({pressed}) => [
+                Style.Button.listButton,
+                {
+                    backgroundColor: pressed
+                        ? Style.Color.schemeOne.primary[200]
+                        : Style.Button.listButton.backgroundColor,
+                },
+            ]}>
+            <DeliveryListItem item={item}/>
+        </Pressable>
     );
 
     const renderDeliveriesList = (
