@@ -27,31 +27,31 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
     const appContext = useAppContext();
     const navigation = useNavigation();
     const route = useRoute();
-    const [packedOrders, setPackedOrders] = useState<OrderInterfaces.Order[]>(
-        [],
-    );
-    console.log('selectedOrder ~>', packedOrders[0]);
-    const [selectedOrder, setSelectedOrder] = useState<OrderInterfaces.Order>(
-        packedOrders[0],
-    );
-    const [creationDate, setCreationDate] = useState(new Date());
+    const [selectedOrder, setSelectedOrder] =
+        useState<OrderInterfaces.Order | null>(
+            (appContext.orders.filter(
+                (order: OrderInterfaces.Order): boolean => {
+                    return order.status_id === 500;
+                },
+            )[0] as OrderInterfaces.Order) || null,
+        );
+    const [creationDate, setCreationDate] = useState<Date>(new Date());
+    const [dueDate, setDueDate] = useState<Date>(new Date());
     const [showCreationDate, setShowCreationDate] = useState<boolean>(false);
-    const [dueDate, setDueDate] = useState<Date>(getDueDate());
     const [showDueDate, setShowDueDate] = useState<boolean>(false);
-
-    console.log(`~> Route.name: ${route.name}`);
-
-    // Initial Invoice Values...
-    let initInvoiceValues = {
-        order_id: 0,
-        total_price: 0,
-        creation_date: new Date().toLocaleDateString('se-SV'),
-        due_date: getDueDate().toLocaleDateString('se-SV'),
-    };
 
     // Props for creating a new invoice.
     const [newInvoice, setNewInvoice] =
-        useState<Partial<InvoicesInterfaces.NewInvoice>>(initInvoiceValues);
+        useState<InvoiceInterfaces.NewInvoice | null>(null);
+
+    /**
+     * Calculate the due date for the invoice.
+     */
+    const getDueDate = (invoice_creation_date: Date = new Date()): Date => {
+        return new Date(
+            invoice_creation_date.setDate(invoice_creation_date.getDate() + 30),
+        );
+    };
 
     useEffect(() => {
         // Get all packed orders & select 'selectedOrder'.
