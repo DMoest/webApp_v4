@@ -18,6 +18,57 @@ export interface Order {
 }
 
 /**
+ * Order Create interface.
+ *
+ * This interface is used for creating a new order.
+ */
+export interface OrderCreate {
+    // Required fields.
+    name: string;
+    api_key: string;
+
+    // Optional fields.
+    address?: string;
+    zip?: string;
+    city?: string;
+    country?: string;
+    image_url?: string;
+    status_id?: number;
+}
+
+/**
+ * Order Update interface.
+ *
+ * This interface is used for updating an existing order.
+ */
+export interface OrderUpdate {
+    // Required fields.
+    id: number;
+    name: string;
+    api_key: string;
+
+    // Optional fields.
+    address?: string;
+    zip?: string;
+    city?: string;
+    country?: string;
+    image_url?: string;
+    status_id?: number;
+}
+
+/**
+ * Order Delete interface.
+ *
+ * This interface is used for deleting an existing order.
+ */
+export interface OrderDelete {
+    id: number;
+    api_key: string;
+}
+
+// ------------------------------------------------------------------------------------------------------------------
+
+/**
  * Order Item interface.
  */
 export interface OrderItem {
