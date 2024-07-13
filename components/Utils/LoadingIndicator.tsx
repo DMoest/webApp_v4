@@ -1,8 +1,10 @@
 import React from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import {ActivityIndicator, Text, View} from 'react-native';
 import * as Style from '../../assets/styles';
 
+
 type ArgumentTypes = { loadingType: string | undefined };
+
 
 /**
  * Activity indicator component.
@@ -11,8 +13,8 @@ type ArgumentTypes = { loadingType: string | undefined };
  * @constructor
  */
 export function LoadingIndicator({
-    loadingType = undefined,
-}: ArgumentTypes): React.JSX.Element {
+                                     loadingType = undefined,
+                                 }: ArgumentTypes): React.JSX.Element {
     if (loadingType !== undefined) {
         return (
             <View style={Style.Utils.loadingIndicatorContainer}>
@@ -29,24 +31,13 @@ export function LoadingIndicator({
         );
     } else {
         return (
-            <View
-                style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
+            <View style={Style.Utils.loadingIndicatorContainer}>
                 <ActivityIndicator
                     size='large'
                     color={Style.Color.schemeOne.primary[300]}
                 />
 
-                <Text
-                    style={{
-                        paddingVertical: 25,
-                        paddingHorizontal: Style.Typography.whiteSpace[100],
-                    }}>
-                    Laddar...
-                </Text>
+                <Text style={Style.Utils.loadingIndicatorText}>Laddar...</Text>
             </View>
         );
     }
