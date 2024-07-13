@@ -11,11 +11,12 @@ import * as InvoiceModel from '../../models/Invoices';
 import * as InvoiceInterfaces from '../../interfaces/Invoice';
 import * as Style from '../../assets/styles';
 
+
 /**
  * Invoice list component.
  * @constructor
  */
-export const InvoiceList: React.FC = () => {
+export const InvoiceList: React.FC = (): React.JSX.Element => {
     const appContext = useAppContext();
     const navigation = useNavigation();
     const route = useRoute();
@@ -25,12 +26,10 @@ export const InvoiceList: React.FC = () => {
      * Hook to fetch invoices
      */
     useEffect(() => {
+        console.log(
+            `*> Route ${route.name} ~> useEffect HOOK RELOAD ~> ${reload}`,
+        );
         if (reload === true) {
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            console.log(
-                `*> Route ${route.name} ~> useEffect HOOK RELOAD ~> ${reload}`,
-            );
-
             void loadInvoices().then(() => {
                 // Set RELOAD to false.
                 // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,20 +59,20 @@ export const InvoiceList: React.FC = () => {
      *
      * @param item
      */
-    const renderItem = ({ item }: InvoiceInterfaces.Invoice) => (
+    const renderItem = ({item}: InvoiceInterfaces.Invoice) => (
         <TouchableOpacity
             key={item.id}
             style={Style.Button.buttonContainer}
             onPress={() => {
-                navigation.navigate('Fakturaspecifikation', { item });
+                navigation.navigate('Fakturaspecifikation', {item});
             }}>
-            <InvoiceListItem item={item} />
+            <InvoiceListItem item={item}/>
         </TouchableOpacity>
     );
 
     // Render LoadingIndicator.
     return appContext.isRefreshing ? (
-        <LoadingIndicator loadingType={'Produkter'} />
+        <LoadingIndicator loadingType={'Produkter'}/>
     ) : (
         // Render Product FlatList.
         <FlatList
