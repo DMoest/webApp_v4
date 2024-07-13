@@ -109,7 +109,7 @@ export const BottomTabsNavigator: () => React.JSX.Element = () => {
                             />
                         );
                     },
-                    tabBarActiveTintColor: Style.Color.schemeOne.secondary,
+                    tabBarActiveTintColor: Style.Color.schemeOne.secondary[300],
                     tabBarInactiveTintColor: Style.Color.grayScale.gray3,
                     headerShown: false,
                 })}>
