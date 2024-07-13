@@ -13,7 +13,7 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const DeliveryList: React.FC = () => {
+export const DeliveryList: React.FC = ({route}): React.JSX.Element => {
     const appContext = useAppContext();
     const navigation = useNavigation();
     const route = useRoute();
