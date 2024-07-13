@@ -19,3 +19,24 @@ export interface User {
     email: string;
     password: string;
 }
+
+
+// --- Login ---------------------------------------------------------
+export interface AuthRegisterRequestBody {
+    api_key: string;
+    email: string;
+    password: string;
+}
+
+export interface AuthRequestBody {
+    api_key: string;
+    email: string;
+    password: string;
+}
+
+export interface AuthResponse {
+    data: {
+        token: string;
+        message: string;
+    };
+}
