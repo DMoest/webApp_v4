@@ -15,7 +15,10 @@ type ArgumentTypes = {
  * @param headerText
  * @constructor
  */
-export function CoverImage({ image, headerText }: ArgumentTypes): JSX.Element {
+export function CoverImage({
+    image,
+    headerText,
+}: ScreenCoverArguments): React.JSX.Element {
     return (
         <View style={Style.Image.imageContainer}>
             <ImageBackground
