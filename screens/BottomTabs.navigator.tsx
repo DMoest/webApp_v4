@@ -1,19 +1,18 @@
-import React, {useEffect} from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-// eslint-disable-next-line import/no-unresolved
-import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import React, { useEffect } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import * as SecureStore from 'expo-secure-store';
 import * as AuthModel from '../models/Auth';
-import {useAuthContext} from '../context/Auth.provider';
-import {useAppContext} from '../context/App.provider';
-import {Home} from './Home.screen';
-import {DeliveryNavigator} from './Deliveries/Delivery.navigator';
-import {AuthNavigator} from './Auth/Auth.navigator';
-import {OrderNavigator} from './Orders/Order.navigator';
-import {ProductsNavigator} from './Products/Products.navigator';
-import {InvoiceNavigator} from './Invoices/Invoices.navigator';
-import {LoadingIndicator} from '../components/Utils/LoadingIndicator';
-import {FontAwesome5} from '@expo/vector-icons';
+import { useAuthContext } from '../context/Auth.provider';
+import { useAppContext } from '../context/App.provider';
+import { Home } from './Home.screen';
+import { DeliveryNavigator } from './Deliveries/Delivery.navigator';
+import { AuthNavigator } from './Auth/Auth.navigator';
+import { OrderNavigator } from './Orders/Order.navigator';
+import { ProductsNavigator } from './Products/Products.navigator';
+import { InvoiceNavigator } from './Invoices/Invoices.navigator';
+import { LoadingIndicator } from '../components/Utils/LoadingIndicator';
+import { FontAwesome5 } from '@expo/vector-icons';
 import * as Style from '../assets/styles/index';
 
 /**
