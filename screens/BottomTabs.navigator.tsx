@@ -50,8 +50,10 @@ export const BottomTabsNavigator: () => React.JSX.Element = () => {
     useEffect(() => {
         // Function to check if user is logged in.
         const checkIfLoggedIn = async () => {
+            const isLoggedIn: boolean = await AuthModel.loggedIn();
+
             // Check if user is logged in.
-            authContext.setIsLoggedIn(await AuthModel.loggedIn());
+            authContext.setIsLoggedIn(isLoggedIn);
         };
 
         // Call to check if user is logged in.
