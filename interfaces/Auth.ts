@@ -10,11 +10,7 @@
  * @see module:screens/Auth
  *
  */
-export interface Auth {
-    isLoggedIn: boolean;
-    email: string;
-    password: string;
-}
+
 
 /**
  * User interface.
