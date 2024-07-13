@@ -25,13 +25,13 @@ const BottomTabs: NativeStackNavigatorProps = createBottomTabNavigator();
  * Bottom tabs navigator icons.
  */
 const routeIcons = {
-    Home: 'home',
-    Lager: 'layer-group',
-    Order: 'truck',
-    Inleveranser: 'dolly',
-    Login: 'lock',
-    // Login: 'key',
     Faktura: 'file-invoice-dollar',
+    Home: 'home',
+    Inleveranser: 'dolly',
+    Lager: 'layer-group',
+    Login: 'lock',
+    Order: 'truck',
+    // Login: 'key',
 };
 
 /**
