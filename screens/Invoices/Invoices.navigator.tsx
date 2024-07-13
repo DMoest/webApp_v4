@@ -4,18 +4,16 @@
 import React from 'react';
 import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {createStackNavigator} from '@react-navigation/stack';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {useAuthContext} from '../../context/Auth.provider';
-// import {InvoiceList} from "../../components/Invoice/InvoiceList";
+import {useRoute} from '@react-navigation/native';
 import {InvoiceDataTable} from '../../components/Invoice/InvoiceDataTable';
 import {InvoiceItem} from './InvoiceItem.screen';
 import {InvoiceForm} from './InvoiceForm.screen';
 import {StatusBar} from 'expo-status-bar';
 import {CoverImage} from '../../components/Utils/CoverImage';
-import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import * as Style from '../../assets/styles';
-// @ts-ignore
 import coverIMG from '../../assets/img/NutsAndBolts-7.jpg';
+
 
 // Create stack navigator for invoices.
 const Stack: NativeStackNavigatorProps = createStackNavigator();
@@ -25,50 +23,19 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
  *
  * @constructor
  */
-export const InvoiceNavigator: () => JSX.Element = () => {
-    const authContext = useAuthContext();
-    const navigation = useNavigation();
+export const InvoiceNavigator: () => React.JSX.Element = () => {
     const route = useRoute();
-
-    console.log('InvoiceNavigator: route', route);
-    console.log('InvoiceNavigator: route.name', route.name);
-    console.log('InvoiceNavigator: typeof route.name', typeof route.name);
 
     return (
         <SafeAreaView style={Style.Base.mainContainer}>
-            {CoverImage({ headerText: 'Fakturor', image: coverIMG })}
-
-            <View>
-                <Text
-                    style={[
-                        Style.Typography.paragraph,
-                        Style.Typography.endMarginText,
-                    ]}>
-                    Listan innehåller fakturor och endast inloggade användare
-                    kan endast se den.
-                </Text>
-            </View>
+            {CoverImage({headerText: 'Fakturor', image: coverIMG})}
 
             <View style={Style.Base.content}>
-                <TouchableOpacity
-                    style={Style.Button.button}
-                    onPress={async () => {
-                        // Logout user.
-                        await authContext.logout();
-                        // @ts-ignore
-                        await navigation.navigate('Logga in');
-                    }}>
-                    <View>
-                        <Text style={Style.Typography.buttonText}>
-                            Logga ut
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
                 <Stack.Navigator>
                     <Stack.Screen
                         name='Fakturor'
                         component={InvoiceDataTable}
+                        params={{reload: route.params?.reload ?? false}}
                     />
                     <Stack.Screen
                         name='Fakturaspecifikation'
@@ -81,7 +48,7 @@ export const InvoiceNavigator: () => JSX.Element = () => {
                 </Stack.Navigator>
             </View>
 
-            <StatusBar style='auto' />
+            <StatusBar style='auto'/>
         </SafeAreaView>
     );
 };
