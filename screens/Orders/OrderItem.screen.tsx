@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import React, {useMemo} from 'react';
+import {Pressable, ScrollView, Text, View} from 'react-native';
+import {StatusBar} from 'expo-status-bar';
 import * as OrderInterfaces from '../../interfaces/Order';
 import * as OrderModel from '../../models/Orders';
 import * as Style from '../../assets/styles';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import {FontAwesome5} from '@expo/vector-icons';
+import {useNavigation} from '@react-navigation/native';
+
 
 /**
  * Function to check product stock.
@@ -166,36 +167,38 @@ export const OrderItem: (
         useMemo((): React.JSX.Element => {
             if (orderIsPackable) {
                 return (
-                    <>
-                        <Pressable
-                            style={({ pressed }) => [
-                                Style.Button.buttonContainer,
-                                {
-                                    backgroundColor: pressed
-                                        ? Style.Color.schemeOne.primary[200]
-                                        : Style.Color.schemeOne.primary[300],
-                                },
-                            ]}
-                            onPress={async (): Promise<void> => {
-                                await OrderModel.pickOrder(order).then(
-                                    (): void => {
-                                        navigation.navigate('Orderlista', {
-                                            reload: true,
-                                        });
-                                    },
-                                );
-                            }}>
-                            <Text style={Style.Typography.buttonText}>
-                                Packetera Order
-                            </Text>
-                        </Pressable>
-                    </>
+                    <Pressable
+                        style={({pressed}) => [
+                            Style.Button.buttonContainer,
+                            {
+                                backgroundColor: pressed
+                                    ? Style.Color.schemeOne.primary[200]
+                                    : Style.Color.schemeOne.primary[300],
+                            },
+                        ]}
+                        onPress={async (): Promise<void> => {
+                            try {
+                                const result =
+                                    await OrderModel.pickOrder(order);
+                                console.log('picked order result: ', result);
+
+                                navigation.navigate('Orderlista', {
+                                    reload: true,
+                                });
+                            } catch (error) {
+                                console.error('Error picking order: ', error);
+                            }
+                        }}>
+                        <Text style={Style.Typography.buttonText}>
+                            Packetera Order
+                        </Text>
+                    </Pressable>
                 );
             } else if (orderIsPacked) {
                 return (
-                    <>
+                    <View>
                         <Pressable
-                            style={({ pressed }) => [
+                            style={({pressed}) => [
                                 Style.Button.buttonContainer,
                                 {
                                     backgroundColor: pressed
@@ -214,7 +217,7 @@ export const OrderItem: (
                                 Ordern är packeterad
                             </Text>
                         </View>
-                    </>
+                    </View>
                 );
             } else if (orderIsSent) {
                 return (
@@ -244,8 +247,8 @@ export const OrderItem: (
                 return (
                     <View style={Style.Container.warningMsgContainer}>
                         <Text style={Style.Typography.warningFlashMsg}>
-                            Ordern går inte att slutföra pga att lagersaldo
-                            saknas för en eller flera produkter i ordern.
+                            Ordern går inte att packetera pga lagersaldo för
+                            en/flera av beställda produkter saknas.
                         </Text>
                     </View>
                 );
@@ -320,7 +323,7 @@ export const OrderItem: (
 
     const orderListItems: React.JSX.Element[] = order.order_items.map(
         (orderListItem: OrderInterfaces.OrderItem, index: number) => (
-            <>
+            <View key={index}>
                 <View style={Style.Container.grid}>
                     <View style={Style.Container.grid.row}>
                         <View style={Style.Container.grid.col[1]}>
@@ -412,7 +415,7 @@ export const OrderItem: (
                             },
                         ]}></View>
                 )}
-            </>
+            </View>
         ),
     );
 
@@ -422,7 +425,7 @@ export const OrderItem: (
                 {orderDetails}
                 {orderListItems}
             </ScrollView>
-            <StatusBar style='auto' />
+            <StatusBar style='auto'/>
         </View>
     );
 };
