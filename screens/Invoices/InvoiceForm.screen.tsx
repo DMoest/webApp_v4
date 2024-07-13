@@ -70,9 +70,33 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
         }
     }, []);
 
-    async function getPackedOrders() {
-        console.log(`Route: ${route.name} ~> getPackedOrders()`);
-        appContext.setIsRefreshing(true);
+    useEffect(() => {
+        selectedOrder
+            ? setNewInvoice({
+                order_id: selectedOrder.id,
+                total_price: OrderModel.calcOrderTotalPrice(selectedOrder),
+                creation_date: new Date().toLocaleDateString('se-SV'),
+                due_date: getDueDate().toLocaleDateString('se-SV'),
+            })
+            : null;
+    }, [selectedOrder]);
+
+    // Compute the packed orders from the appContext.orders.
+    const packedOrders: OrderInterfaces.Order[] = useMemo(() => {
+        console.log('Memoizing packedOrders...');
+        const currentlyPackedOrders: OrderInterfaces.Order[] =
+            appContext.orders.filter(
+                (order: OrderInterfaces.Order): boolean =>
+                    order.status_id === 200,
+            );
+
+        if (
+            Array.isArray(currentlyPackedOrders) &&
+            currentlyPackedOrders.length > 0
+        ) {
+            // Set initial values of the selected order...
+            setSelectedOrder(currentlyPackedOrders[0]);
+        }
 
         try {
             // Get all orders.
