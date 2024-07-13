@@ -115,10 +115,11 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
                     `Produkt id: ${newDelivery.product_id}\n` +
                     `Antal: ${newDelivery.amount}\n` +
                     `Leveransdatum: ${newDelivery.delivery_date}\n` +
-                    `Kommentar: ${newDelivery.comment}`,
+                    `Kommentar: ${newDelivery.comment}\n` +
+                    `Nytt lagersaldo: ${updatedProduct.stock}`,
             );
         } catch (error) {
-            console.log('Handle Submit Error: ', error);
+            console.error('Handle Submit Error: ', error);
         }
     }
 
