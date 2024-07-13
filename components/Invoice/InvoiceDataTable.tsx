@@ -1,105 +1,248 @@
-import React, {useEffect} from 'react';
-import {useAppContext} from '../../context/App.provider';
+import React, {useEffect, useMemo} from 'react';
+import {
+    Pressable,
+    RefreshControl,
+    ScrollView,
+    Text,
+    View,
+} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {LoadingIndicator} from '../Utils/LoadingIndicator';
 import {DataTable} from 'react-native-paper';
+import {useAppContext} from '../../context/App.provider';
+import {useAuthContext} from '../../context/Auth.provider';
+import {LoadingIndicator} from '../Utils/LoadingIndicator';
 import * as InvoiceModel from '../../models/Invoices';
-import {Text, TouchableOpacity, View} from 'react-native';
+import * as InvoiceInterfaces from '../../interfaces/Invoice';
 import * as Style from '../../assets/styles';
+
 
 /**
  * Invoice data table component.
  *
  * @constructor
  */
-export const InvoiceDataTable: React.FC = () => {
+export const InvoiceDataTable: React.FC = (): React.JSX.Element => {
+    const authContext = useAuthContext();
     const appContext = useAppContext();
     const navigation = useNavigation();
     const route = useRoute();
     let reload = route.params?.reload ?? false;
 
-    /**
-     * Hook to fetch invoices
-     */
-    useEffect(() => {
-        if (reload === true) {
-            console.log(
-                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                `*> Route ${route.name} ~> useEffect HOOK RELOAD ~> ${reload}`,
-            );
-
-            void loadInvoices().then(() => {
-                // Set RELOAD to false.
-                // eslint-disable-next-line react-hooks/exhaustive-deps
-                reload = false;
-
-                // Set isRefreshing to false.
-                appContext.setIsRefreshing(false);
-            });
-        } else {
-            // Set isRefreshing to false to remove Loading View.
-            appContext.setIsRefreshing(false);
-        }
-
-        void loadInvoices();
-    }, [reload]);
-
-    async function loadInvoices() {
-        console.log(`Route: ${route.name} ~> loadInvoices()`);
-        appContext.setIsRefreshing(true);
+    const loadInvoices = async () => {
+        console.log('Loading invoices...');
 
         try {
-            appContext.setInvoices(await InvoiceModel.getInvoices());
+            appContext.setIsRefreshing(true);
+            let invoices = await InvoiceModel.getInvoices();
+
+            appContext.setInvoices(invoices['data']);
+            return appContext.invoices;
         } catch (error) {
-            console.warn(error);
+            console.error(error);
         } finally {
+            reload = false;
             appContext.setIsRefreshing(false);
         }
-    }
+    };
 
-    // Rows of Invoices for Data Table
-    const dataTable = appContext.invoices.map((invoice, index) => {
-        return (
-            <DataTable.Row key={index}>
-                <DataTable.Cell>{invoice.id.toString()}</DataTable.Cell>
-                <DataTable.Cell>{invoice.name.toString()}</DataTable.Cell>
-                <DataTable.Cell>{invoice.order_id.toString()}</DataTable.Cell>
-                <DataTable.Cell>
-                    {invoice.total_price.toString()} kr
-                </DataTable.Cell>
-                <DataTable.Cell>{invoice.creation_date}</DataTable.Cell>
-                <DataTable.Cell>{invoice.due_date}</DataTable.Cell>
-            </DataTable.Row>
+    useEffect((): void => {
+        if (
+            !Array.isArray(appContext.invoices) ||
+            !appContext.invoices.length ||
+            reload === true
+        ) {
+            console.log('Reloading invoices...');
+            void loadInvoices();
+        }
+    }, []);
+
+    const dataTable: React.JSX.Element = useMemo(() => {
+        if (
+            !Array.isArray(appContext.invoices) ||
+            appContext.invoices.length === 0
+        ) {
+            // Return fallback component when there are no invoices
+            return (
+                <View style={Style.Container.content}>
+                    <Text>
+                        Det finns inga inleveranser... skapa några kanske?
+                    </Text>
+                </View>
+            );
+        }
+
+        const dataTableRows: React.JSX.Element[] = appContext.invoices.map(
+            (invoice: InvoiceInterfaces.Invoice, index: number) => {
+                return (
+                    <Pressable
+                        key={index}
+                        onPress={async () => {
+                            // Handle row press here
+                            await navigation.navigate('Faktura', {invoice});
+                        }}
+                        style={({pressed}) => [
+                            Style.Container.content,
+                            {
+                                backgroundColor: pressed
+                                    ? Style.Color.schemeOne.primary[100]
+                                    : Style.Color.background.light,
+                            },
+                        ]}>
+                        <DataTable.Row style={Style.Container.grid.row}>
+                            <DataTable.Cell style={Style.Container.grid.col[1]}>
+                                {invoice.id.toString()}
+                            </DataTable.Cell>
+
+                            <DataTable.Cell style={Style.Container.grid.col[1]}>
+                                {invoice.name.toString()}
+                            </DataTable.Cell>
+
+                            <DataTable.Cell style={Style.Container.grid.col[1]}>
+                                {invoice.order_id.toString()}
+                            </DataTable.Cell>
+
+                            <DataTable.Cell style={Style.Container.grid.col[1]}>
+                                {invoice.total_price.toString()} kr
+                            </DataTable.Cell>
+
+                            <DataTable.Cell style={Style.Container.grid.col[1]}>
+                                {new Date(
+                                    invoice.creation_date.toString(),
+                                ).toLocaleString()}
+                            </DataTable.Cell>
+
+                            {/*<DataTable.Cell style={Style.Container.grid.col[2]}>*/}
+                            {/*    {new Date(*/}
+                            {/*        invoice.due_date.toString(),*/}
+                            {/*    ).toLocaleString()}*/}
+                            {/*</DataTable.Cell>*/}
+                        </DataTable.Row>
+                    </Pressable>
+                );
+            },
         );
-    });
+
+
+        return (
+            <DataTable>
+                <DataTable.Header>
+                    <DataTable.Title style={Style.Container.grid.col[1]}>
+                        Faktura
+                    </DataTable.Title>
+
+                    <DataTable.Title style={Style.Container.grid.col[1]}>
+                        Namn
+                    </DataTable.Title>
+
+                    <DataTable.Title style={Style.Container.grid.col[1]}>
+                        Order
+                    </DataTable.Title>
+
+                    <DataTable.Title style={Style.Container.grid.col[1]}>
+                        Belopp
+                    </DataTable.Title>
+                    
+                    <DataTable.Title style={Style.Container.grid.col[1]}>
+                        Skapad
+                    </DataTable.Title>
+                    {/*<DataTable.Title>Förfallodatum</DataTable.Title>*/}
+                </DataTable.Header>
+
+                {dataTableRows}
+            </DataTable>
+        );
+    }, [appContext.invoices]);
 
     // Data Table
     return appContext.isRefreshing ? (
-        <LoadingIndicator loadingType={'Fakturor'} />
-    ) : (
-        <View style={Style.Base.content}>
-            <DataTable>
-                <DataTable.Header>
-                    <DataTable.Title>Faktura</DataTable.Title>
-                    <DataTable.Title>Namn</DataTable.Title>
-                    <DataTable.Title>Order</DataTable.Title>
-                    <DataTable.Title>Belopp</DataTable.Title>
-                    <DataTable.Title>Skapad</DataTable.Title>
-                    <DataTable.Title>Förfallodatum</DataTable.Title>
-                </DataTable.Header>
-                {dataTable}
-            </DataTable>
-            <TouchableOpacity
-                style={Style.Button.button}
-                onPress={async () => {
-                    await navigation.navigate('Skapa faktura');
-                }}>
-                <View>
+        <View style={Style.Container.content}>
+            <View style={Style.Container.grid}>
+                <Pressable
+                    style={({pressed}) => [
+                        Style.Button.buttonContainer,
+                        {
+                            backgroundColor: pressed
+                                ? Style.Color.schemeOne.primary[200]
+                                : Style.Color.schemeOne.primary[300],
+                        },
+                    ]}
+                    onPress={async () => {
+                        // Logout user.
+                        await authContext.logout();
+                        await navigation.navigate('Logga in');
+                    }}>
+                    <Text style={Style.Typography.buttonText}>Logga ut</Text>
+                </Pressable>
+                <Pressable
+                    style={({pressed}) => [
+                        Style.Button.buttonContainer,
+                        {
+                            backgroundColor: pressed
+                                ? Style.Color.schemeOne.primary[200]
+                                : Style.Color.schemeOne.primary[300],
+                        },
+                    ]}
+                    onPress={async () => {
+                        await navigation.navigate('Skapa faktura');
+                    }}>
                     <Text style={Style.Typography.buttonText}>
                         Skapa ny faktura
                     </Text>
+                </Pressable>
+
+                <View style={Style.Container.content}>
+                    <LoadingIndicator loadingType={'Fakturor'}/>
                 </View>
-            </TouchableOpacity>
+            </View>
+        </View>
+    ) : (
+        <View style={Style.Container.content}>
+            <View style={Style.Container.grid}>
+                <Pressable
+                    style={({pressed}) => [
+                        Style.Button.buttonContainer,
+                        {
+                            backgroundColor: pressed
+                                ? Style.Color.schemeOne.primary[200]
+                                : Style.Color.schemeOne.primary[300],
+                        },
+                    ]}
+                    onPress={async () => {
+                        // Logout user.
+                        await authContext.logout();
+                        await navigation.navigate('Logga in');
+                    }}>
+                    <Text style={Style.Typography.buttonText}>Logga ut</Text>
+                </Pressable>
+
+                <Pressable
+                    style={({pressed}) => [
+                        Style.Button.buttonContainer,
+                        {
+                            backgroundColor: pressed
+                                ? Style.Color.schemeOne.primary[200]
+                                : Style.Color.schemeOne.primary[300],
+                        },
+                    ]}
+                    onPress={async () => {
+                        await navigation.navigate('Skapa faktura');
+                    }}>
+                    <Text style={Style.Typography.buttonText}>
+                        Skapa ny faktura
+                    </Text>
+                </Pressable>
+            </View>
+
+            <ScrollView
+                style={Style.Container.content}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={appContext.isRefreshing}
+                        onRefresh={loadInvoices}
+                    />
+                }>
+                {dataTable}
+            </ScrollView>
         </View>
     );
 };
