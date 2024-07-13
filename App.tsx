@@ -1,8 +1,7 @@
 import React from 'react';
-import {AuthProvider} from './context/Auth.provider';
+import { AppProvider } from './context/App.provider';
+import { AuthProvider } from './context/Auth.provider';
 import Root from './Root';
-import {AppProvider} from "./context/App.provider";
-
 
 /**
  * App object.
@@ -13,7 +12,7 @@ export default function App(): React.JSX.Element {
     return (
         <AuthProvider>
             <AppProvider>
-                <Root/>
+                <Root />
             </AppProvider>
         </AuthProvider>
     );
