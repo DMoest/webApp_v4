@@ -1,15 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Platform, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { useAppContext } from '../../context/App.provider';
-import { Picker } from '@react-native-picker/picker';
-import { LoadingIndicator } from '../../components/Utils/LoadingIndicator';
-import { StatusBar } from 'expo-status-bar';
-import * as InvoicesInterfaces from './../../interfaces/Invoice';
+import React, {useEffect, useMemo, useState} from 'react';
+import {
+    Alert,
+    Button,
+    Platform,
+    Pressable,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {useAppContext} from '../../context/App.provider';
+import {Picker} from '@react-native-picker/picker';
+import {LoadingIndicator} from '../../components/Utils/LoadingIndicator';
+import {StatusBar} from 'expo-status-bar';
+import * as InvoiceInterfaces from '../../interfaces/Invoice';
+import * as InvoiceModel from '../../models/Invoices';
 import * as OrderInterfaces from './../../interfaces/Order';
 import * as OrderModel from '../../models/Orders';
 import * as Style from '../../assets/styles';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker, {
+    DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
+
 
 export const InvoiceForm: React.FC = (): JSX.Element => {
     const appContext = useAppContext();
