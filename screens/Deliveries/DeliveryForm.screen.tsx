@@ -27,7 +27,7 @@ import { Deliveries } from '../../interfaces/Deliveries';
  *
  * @constructor
  */
-export const DeliveryCreationForm: React.FC = (): JSX.Element => {
+export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
     const navigation = useNavigation();
     const appContext = useAppContext();
 
