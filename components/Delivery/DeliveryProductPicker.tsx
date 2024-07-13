@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-// eslint-disable-next-line import/namespace
 import {Text, View} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {useAppContext} from '../../context/App.provider';
@@ -7,6 +6,7 @@ import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as StockInterfaces from '../../interfaces/Product';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles/index';
+
 
 /**
  * Type for DeliveryProductPicker Component input props.
@@ -25,7 +25,7 @@ type NewDeliveryPropsType = {
  */
 export const DeliveryProductPicker: (
     props: NewDeliveryPropsType,
-) => JSX.Element = (props: NewDeliveryPropsType): JSX.Element => {
+) => React.JSX.Element = (props: NewDeliveryPropsType): React.JSX.Element => {
     const appContext = useAppContext();
     const productsHash: any = {};
 
@@ -37,7 +37,7 @@ export const DeliveryProductPicker: (
         void loadProducts();
     }, []); //
 
-    const pickerProductsList = appContext.products.map(
+    const pickerProductsList: React.JSX.Element[] = appContext.products.map(
         (product: StockInterfaces.Product, index: number) => {
             productsHash[product.id] = product;
 
@@ -58,8 +58,6 @@ export const DeliveryProductPicker: (
             <Picker
                 selectedValue={props.newDelivery?.product_id}
                 onValueChange={(productIdValue: string) => {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
                     props.setNewDelivery({
                         ...props.newDelivery,
                         product_id: productIdValue,
