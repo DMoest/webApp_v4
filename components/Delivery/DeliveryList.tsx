@@ -22,33 +22,28 @@ export const DeliveryList: React.FC = ({route}): React.JSX.Element => {
      * React Hook to load deliveries and products.
      */
     useEffect(() => {
-        if (reload === true) {
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            console.log(
-                `*> Route ${route.name} ~> useEffect HOOK RELOAD ~> ${reload}`,
-            );
+        appContext.setIsRefreshing(true);
 
-            void loadDeliveries().then(() => {
-                // Set RELOAD to false.
-                reload = false;
+        void loadDeliveries().then((): void => {
+            // Set RELOAD to false.
+            reload = false;
 
-                // Set isRefreshing to false.
-                appContext.setIsRefreshing(false);
-            });
-        } else {
+            // Set isRefreshing to false.
             appContext.setIsRefreshing(false);
-        }
+        });
     }, [reload]);
 
     async function loadDeliveries() {
-        console.log(`Route: ${route.name} ~> loadDeliveries()`);
         appContext.setIsRefreshing(true);
 
         try {
             appContext.setDeliveries(await DeliveryModel.getDeliveries());
+
+            return appContext.deliveries;
         } catch (error) {
             console.warn(error);
         } finally {
+            reload = false;
             appContext.setIsRefreshing(false);
         }
     }
