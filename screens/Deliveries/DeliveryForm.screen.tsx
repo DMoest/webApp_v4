@@ -65,7 +65,7 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
      * @param props
      * @constructor
      */
-    function DeliveryDatePicker() {
+    function DeliveryDatePicker(): React.JSX.Element {
         const [dropDownDate, setDropDownDate] = useState<Date>(new Date());
         const [show, setShow] = useState<boolean>(false);
 
