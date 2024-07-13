@@ -239,25 +239,26 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
         );
     };
 
-    function invoiceOrderPicker() {
+    const invoiceOrderPicker: React.FC = (): React.JSX.Element => {
         return (
             <View>
-                <Text style={(Style.Form.labelInputField, { width: '50%' })}>
-                    Skapa faktura för order:
-                </Text>
+                <Text style={Style.Typography.buttonText}>Välj Order</Text>
                 <Picker
+                    style={Style.Form.pickers}
                     selectedValue={selectedOrder?.id}
-                    onValueChange={(itemValue: number, itemIndex: number) => {
-                        setSelectedOrder(packedOrders[itemIndex]);
+                    onValueChange={(
+                        itemValue: number,
+                        itemIndex: number,
+                    ): void => {
+                        const selectedOrder: OrderInterfaces.Order =
+                            packedOrders[itemIndex];
+                        setSelectedOrder(selectedOrder);
                         setNewInvoice({
                             ...newInvoice,
                             order_id: itemValue,
-                            total_price: calculateTotalPrice(),
+                            total_price:
+                                OrderModel.calcOrderTotalPrice(selectedOrder),
                         });
-                        console.log(
-                            `invoiceOrderPicker() ~> order_id: ${itemValue}\n`,
-                            `invoiceOrderPicker() ~> order_price: ${calculateTotalPrice()}`,
-                        );
                     }}>
                     {packedOrders.map((order: OrderInterfaces.Order) => {
                         return (
@@ -271,7 +272,7 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
                 </Picker>
             </View>
         );
-    }
+    };
 
     return appContext.isRefreshing ? (
         <LoadingIndicator loadingType={'Ordrar'} />
