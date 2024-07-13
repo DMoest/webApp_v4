@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Alert,
     Button,
@@ -9,17 +9,18 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import {useAppContext} from '../../context/App.provider';
-import {useNavigation} from '@react-navigation/native';
+import { useAppContext } from '../../context/App.provider';
+import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {DeliveryProductPicker} from '../../components/Delivery/DeliveryProductPicker';
-import {StatusBar} from 'expo-status-bar';
+import { DeliveryProductPicker } from '../../components/Delivery/DeliveryProductPicker';
+import { StatusBar } from 'expo-status-bar';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as StockInterfaces from '../../interfaces/Product';
 import * as ProductModel from '../../models/Products';
 import * as DeliveryModel from '../../models/Deliveries';
 import config from '../../config/config.json';
 import * as Style from '../../assets/styles';
+import { Deliveries } from '../../interfaces/Deliveries';
 
 /**
  * Create new delivery form component.
