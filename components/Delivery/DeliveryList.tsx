@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'; // eslint-disable-next-line import/namespace
+import React, {useEffect, useMemo} from 'react'; // eslint-disable-next-line import/namespace
 import {useAppContext} from '../../context/App.provider';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {FlatList, Pressable, Text, View} from 'react-native';
 import {DeliveryListItem} from './DeliveryListItem';
 import {LoadingIndicator} from '../Utils/LoadingIndicator';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
