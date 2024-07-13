@@ -20,7 +20,7 @@ const Stack: NativeStackNavigatorProps = createStackNavigator();
  *
  * @constructor
  */
-export const DeliveryNavigator: () => React.JSX.Element = () => {
+export const DeliveryNavigator: React.FC = (): React.JSX.Element => {
     return (
         <SafeAreaView style={Style.Base.mainContainer}>
             {CoverImage({ headerText: 'Inleveranser', image: coverIMG })}
