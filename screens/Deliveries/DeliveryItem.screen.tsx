@@ -14,12 +14,9 @@ import { Typography } from '../../assets/styles';
  * @param props
  * @constructor
  */
-export const DeliveryItem: React.FC = (
-    props:
-        | NavigationProp<object | never>
-        | RouteProp<any>
-        | PropsWithChildren<string | number | boolean | object | []>,
-) => {
+export const DeliveryItem: (
+    props: DeliveryInterfaces.DeliveryItemProps,
+) => React.JSX.Element = (props: DeliveryInterfaces.DeliveryItemProps) => {
     const item = props.route.params.item;
 
     return (
