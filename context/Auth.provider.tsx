@@ -1,6 +1,3 @@
-/**
- * Module imports.
- */
 import React, {createContext, useState} from 'react';
 import * as AuthInterfaces from '../interfaces/Auth';
 import * as AuthModel from '../models/Auth';
@@ -15,11 +12,10 @@ type AuthContextType = {
     setUser: (user: AuthInterfaces.User) => void;
     isLoggedIn: boolean;
     setIsLoggedIn: (authIndicator: boolean) => void;
-    login: (username: string, password: string) => void;
-    logout: () => void;
-    register: (username: string, password: string) => void;
+    login: (username: string, password: string) => Promise<void>;
+    logout: () => Promise<void>; // Note the Promise<void> since logout is async
+    register: (username: string, password: string) => Promise<void>; // Note the Promise<void> since register is async
 };
-
 
 /**
  * Authentication context.
@@ -30,19 +26,17 @@ const AuthContext = createContext<AuthContextType>({
     },
     isLoggedIn: false,
     setIsLoggedIn: () => {
-        // What to do?
     },
-    login: (username: string, password: string) => {
-        // Login user with AuthModel.login()
+    login: async (email: string, password: string) => {
+        await AuthModel.login(email, password);
     },
-    logout: () => {
-        // Logout user with AuthModel.logout()
+    logout: async () => {
+        await AuthModel.logout();
     },
-    register: (username: string, password: string) => {
-        // Register user with AuthModel.register()
-    }
+    register: async (email: string, password: string) => {
+        await AuthModel.register(email, password);
+    },
 });
-
 
 /**
  * Authentication context provider.
@@ -51,51 +45,75 @@ const AuthContext = createContext<AuthContextType>({
  * @constructor
  */
 export const AuthProvider: React.FC = ({children}) => {
-    const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(null);
+    const [user, setUser] = useState<AuthInterfaces.User | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [error, setError] = useState<Error | null>(null);
+
+    const login = async (email: string, password: string) => {
+        setIsLoading(true);
+
+        try {
+            // Assuming AuthModel.login() sets some kind of global state or does something else
+            // that makes the user "logged in" from the system's perspective.
+            await AuthModel.login(email, password).then((user) => {
+                console.log('AuthProvider -> login -> user\n', user);
+                setUser(user);
+
+                return setIsLoggedIn(true);
+            });
+        } catch (err) {
+            setError(err);
+        } finally {
+            console.log('AuthProvider -> login -> finally');
+            console.log('isLoggedIn: ', isLoggedIn);
+
+            setIsLoading(false);
+        }
+    };
+
+    const logout = async () => {
+        try {
+            await SecureStore.deleteItemAsync('token');
+            setUser(null);
+            setIsLoggedIn(false);
+        } catch (e) {
+            setError(e);
+        }
+    };
+
+    const register = async (email: string, password: string) => {
+        setIsLoading(true);
+
+        try {
+            await AuthModel.register(email, password);
+        } catch (e) {
+            setError(e);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
 
     return (
         <AuthContext.Provider
             value={{
                 user,
-                setUser: async (user: AuthInterfaces.User) => {
-                },
+                setUser,
                 isLoggedIn,
                 setIsLoggedIn,
-                login: async (email, password) => {
-                    // Activate loading indicator.
-                    await setIsLoading(true);
-
-                    // Login user.
-                    await AuthModel.login(email, password);
-                    await setIsLoggedIn(true);
-
-                    // Deactivate loading indicator.
-                    await setIsLoading(false);
-
-                },
-                logout: async () => {
-                    await SecureStore.deleteItemAsync('token');
-                    await setUser(null);
-                    await setIsLoggedIn(false);
-                },
-                register: async (email, password) => {
-                    // Activate loading indicator.
-                    await setIsLoading(true);
-
-                    // Register user.
-                    await AuthModel.register(email, password);
-
-                    // Deactivate loading indicator.
-                    await setIsLoading(false);
-                }
+                login,
+                logout,
+                register,
+                // Optionally expose the error and isLoading to consumers
+                error,
+                isLoading,
             }}>
             {children}
         </AuthContext.Provider>
     );
 };
+
 
 /**
  * Auth context access function export.
