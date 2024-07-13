@@ -16,7 +16,6 @@ import * as Style from '../../assets/styles';
 export const DeliveryList: React.FC = ({route}): React.JSX.Element => {
     const appContext = useAppContext();
     const navigation = useNavigation();
-    const route = useRoute();
     let reload = route.params?.reload ?? true;
 
     /**
