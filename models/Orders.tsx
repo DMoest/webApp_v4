@@ -1,85 +1,32 @@
 import config from '../config/config.json';
-import React from 'react';
-import * as OrderInterfaces from '../interfaces/Order';
-import { Order } from '../interfaces/Order';
-import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
+import {RequestErrorHandler} from '../components/Utils/ErrorHandler';
 import * as ProductModel from './Products';
+import * as OrderInterfaces from '../interfaces/Order';
+import * as ProductInterfaces from '../interfaces/Product';
+
 
 /**
  * Function to fetch all orders from API.
  * Converts response to JSON data before return.
  */
-export async function getOrders(): Promise<OrderInterfaces.Order[]> {
-    let result = [];
-
+export const getOrders = async (): Promise<OrderInterfaces.Order[]> => {
     try {
         // Fetch orders from API.
-        const response = await fetch(
+        const response: Response = await fetch(
             `${config.base_url}/orders?api_key=${config.api_key}`,
         );
 
         // Await JSON response.
-        result = await response.json();
-    } catch (error) {
-        RequestErrorHandler(error);
-    } finally {
-        if (result.data) {
-            return result.data;
-        } else {
-            return result;
-        }
-    }
-}
+        const result = await response.json();
 
-export async function getNewOrders(): Promise<OrderInterfaces.Order[]> {
-    let result = [];
-
-    try {
-        // Fetch orders from API.
-        const response = await fetch(
-            `${config.base_url}/orders?api_key=${config.api_key}`,
-        );
-
-        // Await JSON response.
-        result = await response.json();
-
-        // Filter orders return by status.
-        if (result.data) {
-            return result.data.filter(
-                (orderItem: Order) =>
-                    orderItem.status === 'Ny' && orderItem.status_id === 100,
-            );
-        } else {
-            return result;
-        }
+        return result.data;
     } catch (error) {
         RequestErrorHandler(error);
     }
-}
 
-export async function getPackedOrders(): Promise<OrderInterfaces.Order[]> {
-    let result = [];
+    return [];
+};
 
-    try {
-        // Fetch orders from API.
-        const response = await fetch(
-            `${config.base_url}/orders?api_key=${config.api_key}`,
-        );
-
-        // Await JSON response.
-        result = await response.json();
-
-        // Filter out all orders that are not packed.
-        return result.data.filter(
-            (order: OrderInterfaces.Order) =>
-                order.status === 'Packad' &&
-                order.status_id === 200 &&
-                order.order_items.length != 0,
-        );
-    } catch (error) {
-        RequestErrorHandler(error);
-    }
-}
 
 /**
  * Function to pick an order.
@@ -91,40 +38,47 @@ export async function getPackedOrders(): Promise<OrderInterfaces.Order[]> {
 export async function pickOrder(order: OrderInterfaces.Order) {
     try {
         console.log('OrderModel.pickOrder() -> order.id: ', order.id);
-
         let leftOverStock: number;
 
         for (const orderItem of order.order_items) {
             try {
                 leftOverStock = orderItem.stock - orderItem.amount;
-                const productUpdates = {
+                console.log('Left over stock: ', leftOverStock);
+
+                const productUpdates: ProductInterfaces.Product = {
                     api_key: `${config.api_key}`,
                     id: orderItem.product_id,
                     name: orderItem.name,
                     stock: leftOverStock,
                 };
+                console.log('Product updates: ', productUpdates);
 
                 // Update product stock.
-                await ProductModel.updateProduct(productUpdates);
+                await ProductModel.updateProduct(productUpdates).then(
+                    (response: Response | undefined): void => {
+                        console.log(
+                            'ProductModel.updateProduct -> Response: ',
+                            response,
+                        );
+                    },
+                );
             } catch (error) {
                 console.error(error);
                 RequestErrorHandler(error);
             }
         }
 
+        console.log('Order.id: ', order.id);
+
         // Update order status.
-        await updateOrderStatus(order.id, 200, 'Packad');
+        return updateOrderStatus(order.id, 200);
     } catch (error) {
         console.error(error);
         RequestErrorHandler(error);
     }
 }
 
-export async function updateOrderStatus(
-    order_id: number | undefined,
-    status_id: number,
-    status: string,
-) {
+export async function updateOrderStatus(order_id: number, status_id: number) {
     try {
         const response: Response = await fetch(
             `${config.base_url}/orders?api_key=${config.api_key}`,
@@ -137,7 +91,6 @@ export async function updateOrderStatus(
                 body: {
                     id: order_id,
                     status_id: status_id,
-                    status: status,
                     api_key: `${config.api_key}`,
                 },
             },
@@ -156,36 +109,25 @@ export async function updateOrderStatus(
  *
  * @param order
  */
-export function calcOrderTotalPrice(order: Partial<Order>): number {
-    let total_price = 0;
+export function calcOrderTotalPrice(
+    order: Partial<OrderInterfaces.Order>,
+): number {
+    let total_price: number = 0;
 
-    console.log(
-        `OrderModel ~> calcOrderTotalPrice: order: ${JSON.stringify(order)}`,
-    );
-
-    if (order) {
+    if (order && order.order_items?.length) {
         try {
-            order.order_items?.forEach((orderItem) => {
-                total_price += orderItem.price * orderItem.amount;
-            });
+            order.order_items?.forEach(
+                (orderItem: OrderInterfaces.OrderItem): void => {
+                    orderItem.amount > 0 && orderItem.price > 0
+                        ? (total_price += orderItem.price * orderItem.amount)
+                        : null;
+                },
+            );
         } catch (error) {
             RequestErrorHandler(error);
         }
     }
 
-    console.log('TOTAL PRICE: ', total_price);
-
+    console.log('Calculated total price for order: ', total_price);
     return total_price;
-}
-
-export function checkIfOrderIsPackable(order: OrderInterfaces.Order) {
-    let result = false;
-
-    if (order.order_items.length > 0) {
-        result = order.order_items.every((orderItem) => {
-            return orderItem.stock >= orderItem.amount;
-        });
-    }
-
-    return result;
 }
