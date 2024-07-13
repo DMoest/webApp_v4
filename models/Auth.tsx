@@ -2,6 +2,14 @@ import config from "../config/config.json";
 import * as SecureStore from 'expo-secure-store';
 
 
+interface LoginResponse {
+    data: {
+        token: string;
+        message: string;
+    };
+}
+
+
 /**
  * Function to check if logged in.
  */
