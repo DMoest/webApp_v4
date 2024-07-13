@@ -23,7 +23,7 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 
 
-export const InvoiceForm: React.FC = (): JSX.Element => {
+export const InvoiceForm: React.FC = (): React.JSX.Element => {
     const appContext = useAppContext();
     const navigation = useNavigation();
     const route = useRoute();
