@@ -1,7 +1,7 @@
 /**
  * Error Handler for API requests.
  */
-export function RequestErrorHandler(thisError: object | any | never) {
+export function RequestErrorHandler(thisError: object | any | never): void {
     const errorObject = {
         errors: {
             title: thisError.name,
@@ -10,6 +10,5 @@ export function RequestErrorHandler(thisError: object | any | never) {
         },
     };
 
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    return console.log(`Error Handler\n${errorObject}`);
+    return console.error(`Error Handler\n${errorObject}`);
 }
