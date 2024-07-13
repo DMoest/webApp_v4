@@ -71,13 +71,11 @@ export const DeliveryList: React.FC = ({route}): React.JSX.Element => {
         </Pressable>
     );
 
-    const renderDeliveriesList = (
-        deliveries: Partial<DeliveriesInterfaces.Deliveries>,
-    ) => {
-        if (appContext.deliveries.length < 1) {
+    const renderDeliveriesList: React.JSX.Element = useMemo(() => {
+        if (appContext.deliveries.length === 0) {
             return (
-                <View style={Style.Container.warningFlashMessageContainer}>
-                    <Text style={Style.Typography.warningFlashMessageText}>
+                <View style={Style.Container.warningMsgContainer}>
+                    <Text style={Style.Typography.warningFlashMsg}>
                         Det finns inte några inleveranser...
                     </Text>
                 </View>
@@ -85,16 +83,17 @@ export const DeliveryList: React.FC = ({route}): React.JSX.Element => {
         } else {
             return (
                 <FlatList
-                    style={Style.Container.flatList}
-                    data={deliveries}
-                    keyExtractor={(item) => item.id.toString()}
+                    data={appContext.deliveries}
+                    keyExtractor={(item: DeliveriesInterfaces.Deliveries) =>
+                        item.id.toString()
+                    }
                     renderItem={renderItem}
                     refreshing={appContext.isRefreshing}
                     onRefresh={loadDeliveries}
                 />
             );
         }
-    };
+    }, [appContext.deliveries, appContext.isRefreshing]);
 
     return appContext.isRefreshing ? (
         <View>
