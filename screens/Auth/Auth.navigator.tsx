@@ -2,21 +2,19 @@
  * Module imports.
  */
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
-import {useAuthContext} from '../../context/Auth.provider';
-import {Login} from './Login.screen';
-import {Register} from './Register.screen';
-import {InvoiceNavigator} from "../Invoices/Invoices.navigator";
-import {SafeAreaView} from "react-native";
-import * as Style from "../../assets/styles";
-
+import { createStackNavigator } from '@react-navigation/stack';
+import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
+import { useAuthContext } from '../../context/Auth.provider';
+import { Login } from './Login.screen';
+import { Register } from './Register.screen';
+import { InvoiceNavigator } from '../Invoices/Invoices.navigator';
+import { SafeAreaView } from 'react-native';
+import * as Style from '../../assets/styles';
 
 /**
  * Auth stack navigator.
  */
 const Stack: NativeStackNavigatorProps = createStackNavigator();
-
 
 /**
  * AuthNavigator object.
