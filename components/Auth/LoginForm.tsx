@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-// import { useAppContext } from '../../context/App.provider';
 import {useAuthContext} from '../../context/Auth.provider';
 import * as Style from '../../assets/styles/index';
+
 
 /**
  * Create new Login form component.
@@ -13,8 +13,41 @@ import * as Style from '../../assets/styles/index';
 export const LoginForm: React.FC = () => {
     const authContext = useAuthContext();
     const navigation = useNavigation();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const loginUser = async () => {
+        console.log('loginUser() -> Attempting to log in...');
+
+        // Login user.
+        try {
+            await authContext.login(email, password);
+        } catch (error) {
+            console.error('loginUser() -> Error during login:', error);
+        } finally {
+            console.log('loginUser() -> Login function completed.');
+
+            if (authContext.isLoggedIn) {
+                console.log(
+                    'loginUser() -> User is logged in, navigating to Faktura screen?',
+                );
+
+                navigation.navigate('Faktura');
+            }
+        }
+    };
+
+    useEffect((): void => {
+        console.log(
+            'LoginForm -> useEffect() -> isLoggedIn: ',
+            authContext.isLoggedIn,
+        );
+
+        if (authContext.isLoggedIn) {
+            navigation.navigate('Faktura');
+        }
+    }, [authContext.isLoggedIn, navigation]);
 
     return (
         <View style={Style.Container.content}>
@@ -38,14 +71,8 @@ export const LoginForm: React.FC = () => {
             />
 
             <TouchableOpacity
-                style={Style.Button.button}
-                onPress={async () => {
-                    // Login user.
-                    await authContext.login(email, password);
-
-                    // Navigate to 'Faktura' screen.
-                    await navigation.navigate('Faktura');
-                }}>
+                style={Style.Button.buttonContainer}
+                onPress={loginUser}>
                 <View>
                     <Text style={Style.Typography.buttonText}>Logga in</Text>
                 </View>
@@ -54,10 +81,10 @@ export const LoginForm: React.FC = () => {
             <Text>
                 Om ni inte har en användare kan ni
                 <TouchableOpacity
-                    onPress={async () => {
-                        await navigation.navigate('Registrera användare');
+                    onPress={() => {
+                        navigation.navigate('Registrera användare');
                     }}>
-                    <Text style={{ color: 'blue' }}>
+                    <Text style={{color: 'blue'}}>
                         registrera en ny användare här.
                     </Text>
                 </TouchableOpacity>
