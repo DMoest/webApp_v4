@@ -54,8 +54,20 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
     };
 
     useEffect(() => {
-        // Get all packed orders & select 'selectedOrder'.
-        void getPackedOrders();
+        console.log(`~> Route.name: ${route.name}`);
+        if (
+            !Array.isArray(appContext.orders) ||
+            appContext.orders.length === 0
+        ) {
+            appContext.setIsRefreshing(true);
+            OrderModel.getOrders().then(
+                (orders: OrderInterfaces.Order[]): void => {
+                    appContext.setOrders(orders);
+                    appContext.setIsRefreshing(false);
+                    console.log('DONE: OrderModel.getOrders()');
+                },
+            );
+        }
     }, []);
 
     async function getPackedOrders() {
