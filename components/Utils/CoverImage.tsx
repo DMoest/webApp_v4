@@ -1,12 +1,7 @@
 import React from 'react';
-// eslint-disable-next-line import/namespace
 import { ImageBackground, Text, View } from 'react-native';
+import { ScreenCoverArguments } from '../../interfaces/Utils';
 import * as Style from '../../assets/styles';
-
-type ArgumentTypes = {
-    image: string;
-    headerText: string;
-};
 
 /**
  * Screen cover image component.
