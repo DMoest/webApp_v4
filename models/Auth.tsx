@@ -1,13 +1,6 @@
 import config from "../config/config.json";
 import * as SecureStore from 'expo-secure-store';
-
-
-interface LoginResponse {
-    data: {
-        token: string;
-        message: string;
-    };
-}
+import * as AuthInterfaces from '../interfaces/Auth';
 
 
 /**
@@ -21,17 +14,15 @@ export async function loggedIn(): Promise<boolean> {
 }
 
 
-export async function login(email: string, password: string) {
+export async function login(email: string, password: string): Promise<string> {
     try {
-        const data = {
+        const data: AuthInterfaces.AuthRequestBody = {
             api_key: config.api_key,
-            email: email,
-            password: password,
+            email,
+            password,
         };
 
-        console.log("DATA BODY: ", data); // TODO: TaBort senare!
-
-        const response = await fetch(`${config.base_url}/auth/login`, {
+        const response: Response = await fetch(`${config.base_url}/auth/login`, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -39,33 +30,31 @@ export async function login(email: string, password: string) {
             },
         });
 
-        // Await JSON response.
-        const result = await response.json();
-        console.log("LOGIN Response: ", result); // TODO: TaBort senare!
+        if (!response.ok) {
+            throw new Error(`Server responded with status: ${response.status}`);
+        }
 
-        // Store token in Expo-SecureStore.
+        const result: AuthInterfaces.AuthResponse = await response.json();
         await SecureStore.setItemAsync('token', result.data.token);
-        console.log("SecureStore saved TOKEN: ", await SecureStore.getItemAsync('token')); // TODO: TaBort senare!
 
-        console.log("Message: ", result.data.message); // TODO: TaBort senare!
+
         return result.data.message;
     } catch (error) {
-        console.log("ERROR: ", error);
+        console.log("LogIn -> ERROR: ", error);
+        throw error; // Re-throw the error for the calling function to handle
     }
 }
 
 
-export async function register(email: string, password: string) {
+export async function register(email: string, password: string): Promise<any> {
     try {
-        const data = {
+        const data: AuthInterfaces.AuthRegisterRequestBody = {
             api_key: config.api_key,
             email: email,
             password: password,
         };
 
-        console.log("\nDATA BODY: ", data); // TODO: TaBort senare!
-
-        const response = await fetch(`${config.base_url}/auth/register`, {
+        const response: Response = await fetch(`${config.base_url}/auth/register`, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -73,16 +62,19 @@ export async function register(email: string, password: string) {
             },
         });
 
-        console.log("REGISTER Response: ", response.json()); // TODO: TaBort senare!
+        if (!response.ok) {
+            throw new Error(`Server responded with status: ${response.status}`);
+        }
 
-        return await response.json();
+
+        return response.json();
     } catch (error) {
         console.log("ERROR: ", error);
     }
 }
 
 
-export async function logout() {
+export async function logout(): Promise<void> {
     // Remove token from Expo-SecureStore.
     await SecureStore.deleteItemAsync('token');
 }
