@@ -1,17 +1,23 @@
 /**
  * Module imports.
  */
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { FlatList, TouchableOpacity, Text, Pressable } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { TabBar, TabView, SceneMap } from 'react-native-tab-view';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { useAppContext } from '../../context/App.provider';
-import { OrderListItem } from './OrderListItem';
-import { LoadingIndicator } from '../Utils/LoadingIndicator';
+import React, {useEffect, useMemo, useState} from 'react';
+import {
+    FlatList,
+    Text,
+    Pressable,
+    View,
+} from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {TabBar, TabView, SceneMap} from 'react-native-tab-view';
+import {FontAwesome5} from '@expo/vector-icons';
+import {useAppContext} from '../../context/App.provider';
+import {OrderListItem} from './OrderListItem';
+import {LoadingIndicator} from '../Utils/LoadingIndicator';
 import * as OrderModel from '../../models/Orders';
 import * as OrderInterfaces from '../../interfaces/Order';
 import * as Style from '../../assets/styles';
+
 
 /**
  * OrdersList object to fetch order list from API and generate a FlatList View from response JSON object.
@@ -25,10 +31,10 @@ export const OrderList: React.FC = () => {
     const route = useRoute();
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: 'first', title: 'Nya', icon: 'box-open' },
-        { key: 'second', title: 'Packade', icon: 'box' },
-        { key: 'third', title: 'Skickade', icon: 'paper-plane' },
-        { key: 'fourth', title: 'Returer', icon: 'undo-alt' },
+        {key: 'first', title: 'Nya', icon: 'box-open'},
+        {key: 'second', title: 'Packade', icon: 'box'},
+        {key: 'third', title: 'Skickade', icon: 'paper-plane'},
+        {key: 'fourth', title: 'Returer', icon: 'undo-alt'},
     ]);
 
     let reload = route.params?.reload ?? false;
@@ -163,10 +169,10 @@ export const OrderList: React.FC = () => {
      *
      * @param item
      */
-    const renderItem = ({ item }) => (
+    const renderItem = ({item}) => (
         <Pressable
             key={item.id.toString()}
-            style={({ pressed }) => [
+            style={({pressed}) => [
                 Style.Button.listButton,
                 {
                     backgroundColor: pressed
@@ -175,9 +181,9 @@ export const OrderList: React.FC = () => {
                 },
             ]}
             onPress={(): void => {
-                navigation.navigate('Plocklista', { item });
+                navigation.navigate('Plocklista', {item});
             }}>
-            <OrderListItem item={item} />
+            <OrderListItem item={item}/>
         </Pressable>
     );
 
@@ -198,7 +204,7 @@ export const OrderList: React.FC = () => {
                 backgroundColor: Style.Color.background.light,
                 color: Style.Color.text.dark,
             }}
-            renderIcon={({ route, focused }) => (
+            renderIcon={({route, focused}) => (
                 <FontAwesome5
                     name={route.icon}
                     size={18}
@@ -209,7 +215,7 @@ export const OrderList: React.FC = () => {
                     }
                 />
             )}
-            renderLabel={({ route, focused }) => (
+            renderLabel={({route, focused}) => (
                 <Text
                     style={{
                         color: focused
@@ -226,13 +232,16 @@ export const OrderList: React.FC = () => {
 
     // Render LoadingIndicator if state is Refreshing else FlatList Component.
     return appContext.isRefreshing ? (
-        <LoadingIndicator loadingType={'Ordrar'} />
+        <View style={Style.Container.content}>
+            <LoadingIndicator loadingType={'Ordrar'}/>
+        </View>
     ) : (
         <TabView
-            navigationState={{ index, routes }}
+            navigationState={{index, routes}}
             onIndexChange={setIndex}
             renderTabBar={renderTabBar}
             renderScene={renderScene}
+            initialLayout={{width: 1000}}
             style={Style.Form.TabBarStyles.tabBar}
         />
     );
