@@ -275,49 +275,45 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
     };
 
     return appContext.isRefreshing ? (
-        <LoadingIndicator loadingType={'Ordrar'} />
-    ) : packedOrders.length > 0 ? (
+        <LoadingIndicator loadingType={'Ordrar'}/>
+    ) : packedOrders ? (
         <View style={Style.Container.content}>
-            {/*<View style={Style.Container.flexBox.row}>*/}
-            {/*    <Text*/}
-            {/*        style={(Style.Form.labelInputField, { width: '50%' })}>*/}
-            {/*        Faktureringsdatum:*/}
-            {/*    </Text>*/}
-            {/*{InvoiceDatePicker(newInvoice.creation_date)}*/}
-            {/*</View>*/}
+            <View style={Style.Container.grid.row}>
+                {creationDatePicker()}
+                {dueDatePicker()}
+                <Text style={Style.Container.grid.row}>
+                    Fakturabelopp: {newInvoice?.total_price} kr
+                </Text>
+            </View>
 
-            {/*<View style={Style.Container.flexBox.row}>*/}
-            {/*    <Text*/}
-            {/*        style={(Style.Form.labelInputField, { width: '50%' })}>*/}
-            {/*        Förfallodatum:*/}
-            {/*    </Text>*/}
-            {/*    {InvoiceDatePicker(newInvoice.due_date)}*/}
-            {/*</View>*/}
+            <View style={Style.Container.content}>{invoiceOrderPicker()}</View>
 
-            {creationDatePicker()}
-            {dueDatePicker()}
-            {invoiceOrderPicker()}
+            <Pressable
+                style={({pressed}) => [
+                    Style.Button.buttonContainer,
+                    {
+                        backgroundColor: pressed
+                            ? Style.Color.schemeOne.primary[200]
+                            : Style.Color.schemeOne.primary[300],
+                    },
+                ]}
+                onPress={async () => {
+                    // Create the new invoice.
+                    await handleSubmit(newInvoice);
 
-            <TouchableOpacity
-                style={Style.Button.button}
-                onPress={() => {
-                    console.log('CLICK -> Skapa Faktura...');
-                    console.log(
-                        `SelectedOrder ID: ${selectedOrder.id} \n`,
-                        selectedOrder,
-                    );
-                    console.log(`Fakturadatum: ${creationDate}`);
-                    console.log(`Förfallodatum: ${dueDate}`);
+                    // Navigate back to the invoice list and send params.reload: true.
+                    await navigation.navigate('Fakturor', {reload: true});
                 }}>
                 <Text style={Style.Typography.buttonText}>Skapa Faktura</Text>
-            </TouchableOpacity>
+            </Pressable>
 
-            <StatusBar style='auto' />
+            <StatusBar style='auto'/>
         </View>
     ) : (
         <View style={Style.Container.content}>
-            <Text style={Style.Typography.h1}>
-                Det finns inga ordrar som är packeterade och redo att fakturera.
+            <Text style={Style.Typography.paragraph}>
+                Det finns inga ordrar som är paketerade och redo att
+                faktureras.
             </Text>
         </View>
     );
