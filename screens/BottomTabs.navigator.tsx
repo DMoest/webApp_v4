@@ -43,7 +43,7 @@ const routeIcons = {
  *
  * @constructor
  */
-export const BottomTabsNavigator: () => JSX.Element = () => {
+export const BottomTabsNavigator: () => React.JSX.Element = () => {
     const authContext = useAuthContext();
     const appContext = useAppContext();
 
