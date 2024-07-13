@@ -31,16 +31,8 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
     const navigation = useNavigation();
     const appContext = useAppContext();
 
-    let initialDeliveryValues = {
-        product_id: appContext.products[0].id.toString(),
-        delivery_date: new Date().toLocaleDateString('se-SV'),
-        amount: 0,
-        comment: '',
-        api_key: config.api_key,
-    };
-    const [newDelivery, setNewDelivery] = useState<
-        Partial<DeliveriesInterfaces.Deliveries>
-    >(initialDeliveryValues);
+    const [newDelivery, setNewDelivery] =
+        useState<Partial<DeliveriesInterfaces.Deliveries>>();
     const [selectedProduct, setSelectedProduct] =
         useState<StockInterfaces.Product>(appContext.products[0]);
 
