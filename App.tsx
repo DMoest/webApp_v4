@@ -9,7 +9,7 @@ import {AppProvider} from "./context/App.provider";
  *
  * @constructor
  */
-export default function App() {
+export default function App(): React.JSX.Element {
     return (
         <AuthProvider>
             <AppProvider>
