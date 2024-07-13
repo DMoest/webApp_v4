@@ -150,32 +150,64 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
         }
     };
 
-        return totalPrice;
-    }
+    const creationDatePicker: React.FC = (): React.JSX.Element => {
+        const showDatePicker = () => {
+            setShowCreationDate(true);
+        };
 
-    /**
-     * Calculate the due date for the invoice.
-     */
-    function getDueDate(): Date {
-        console.log(`Route: ${route.name} ~> calculateDueDate()`);
-        const today = new Date();
-        return new Date(today.setDate(today.getDate() + 30));
-    }
+        return (
+            <View style={Style.Container.grid.row}>
+                <Text
+                    style={
+                        (Style.Form.labelInputField,
+                            {width: '33%', alignSelf: 'center'})
+                    }>
+                    Fakturadatum
+                </Text>
+
+                {Platform.OS === 'android' && (
+                    <Button
+                        onPress={showDatePicker}
+                        title='Visa datumväljare'
+                    />
+                )}
+                {(showCreationDate || Platform.OS === 'ios') && (
+                    <DateTimePicker
+                        onChange={(
+                            event: DateTimePickerEvent,
+                            date: Date,
+                        ): void => {
+                            setCreationDate(date);
+                            setNewInvoice({
+                                ...newInvoice,
+                                creation_date: date.toLocaleString(),
+                            });
+                            setShowCreationDate(false);
+                        }}
+                        value={creationDate}
+                    />
+                )}
+            </View>
+        );
+    };
 
     /**
      *
      * @param input_date
      * @constructor
      */
-    function dueDatePicker() {
-        const showDatePicker = () => {
+    const dueDatePicker: React.FC = (): React.JSX.Element => {
+        const showDatePicker = (): void => {
             setShowDueDate(true);
         };
 
         return (
-            // TODO: lägg lite style på datumväljaren! snyggare med flexbox?
-            <View style={{ width: '50%' }}>
-                <Text style={(Style.Form.labelInputField, { width: '50%' })}>
+            <View style={Style.Container.flexBox.row}>
+                <Text
+                    style={
+                        (Style.Form.labelInputField,
+                            {width: '33%', alignSelf: 'center'})
+                    }>
                     Förfallodatum
                 </Text>
 
@@ -187,12 +219,17 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
                 )}
                 {(showDueDate || Platform.OS === 'ios') && (
                     <DateTimePicker
-                        onChange={(event: Event, date: Date) => {
-                            setDueDate(date);
-                            setNewInvoice({
-                                ...newInvoice,
-                                due_date: date,
-                            });
+                        onChange={(
+                            event: DateTimePickerEvent,
+                            date: Date | undefined,
+                        ) => {
+                            if (date) {
+                                setDueDate(date);
+                                setNewInvoice({
+                                    ...newInvoice,
+                                    due_date: date.toLocaleString(),
+                                });
+                            }
                             setShowDueDate(false);
                         }}
                         value={dueDate}
@@ -200,42 +237,7 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
                 )}
             </View>
         );
-    }
-
-    function creationDatePicker() {
-        const showDatePicker = () => {
-            setShowCreationDate(true);
-        };
-
-        return (
-            // TODO: lägg lite style på datumväljaren! snyggare med flexbox?
-            <View style={{ width: '50%' }}>
-                <Text style={(Style.Form.labelInputField, { width: '50%' })}>
-                    Förfallodatum
-                </Text>
-
-                {Platform.OS === 'android' && (
-                    <Button
-                        onPress={showDatePicker}
-                        title='Visa datumväljare'
-                    />
-                )}
-                {(showCreationDate || Platform.OS === 'ios') && (
-                    <DateTimePicker
-                        onChange={(event: Event, date: Date) => {
-                            setCreationDate(date);
-                            setNewInvoice({
-                                ...newInvoice,
-                                creation_date: date,
-                            });
-                            setShowCreationDate(false);
-                        }}
-                        value={creationDate}
-                    />
-                )}
-            </View>
-        );
-    }
+    };
 
     function invoiceOrderPicker() {
         return (
