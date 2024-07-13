@@ -128,38 +128,45 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
                 setSelectedProduct={setSelectedProduct}
             />
 
-            <Text style={Style.Form.labelInputField}>Antal: </Text>
-            <TextInput
-                style={Style.Form.textInputField}
-                onChangeText={(inputAmount: string) => {
-                    setNewDelivery({
-                        ...newDelivery,
-                        amount: parseInt(inputAmount) || 0,
-                    });
-                }}
-                value={newDelivery?.amount?.toString()}
-                keyboardType={'numeric'}
-                placeholder='Antal av levererad produkt.'
-            />
+            <View style={Style.Container.grid.row}>
+                <Text style={Style.Form.labelInputField}>Antal: </Text>
+                <TextInput
+                    style={Style.Form.textInputField}
+                    onChangeText={(inputAmount: string) => {
+                        setNewDelivery({
+                            ...newDelivery,
+                            amount: parseInt(inputAmount) || 0,
+                        });
+                    }}
+                    value={newDelivery?.amount?.toString()}
+                    keyboardType={'numeric'}
+                    placeholder='Antal av levererad produkt.'
+                />
+            </View>
 
-            <View style={Style.Container.flexBox.row}>
+            <View style={Style.Container.grid.row}>
                 <Text style={(Style.Form.labelInputField, { width: '50%' })}>
                     Leveransdatum:
                 </Text>
                 {DeliveryDatePicker()}
             </View>
 
-            <Text style={Style.Form.labelInputField}>Kommentar: </Text>
-            <TextInput
-                style={Style.Form.textInputField}
-                onChangeText={(inputComment: string) => {
-                    setNewDelivery({ ...newDelivery, comment: inputComment });
-                }}
-                value={newDelivery?.comment}
-            />
+            <View style={Style.Container.grid.row}>
+                <Text style={Style.Form.labelInputField}>Kommentar: </Text>
+                <TextInput
+                    style={Style.Form.textInputField}
+                    onChangeText={(inputComment: string) => {
+                        setNewDelivery({
+                            ...newDelivery,
+                            comment: inputComment,
+                        });
+                    }}
+                    value={newDelivery?.comment}
+                />
+            </View>
 
             <TouchableOpacity
-                style={Style.Button.button}
+                style={Style.Button.buttonContainer}
                 onPress={async () => {
                     // Create New Delivery, Update Product Stock & Alert User.
                     await handleSubmit();
