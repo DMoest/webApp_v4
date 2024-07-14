@@ -27,6 +27,22 @@ export const getOrders = async (): Promise<OrderInterfaces.Order[]> => {
     return [];
 };
 
+export const getOrderById = async (orderId: number): Promise<OrderInterfaces.Order | undefined> => {
+    try {
+        // Fetch orders from API.
+        const response: Response = await fetch(
+            `${config.base_url}/orders/${orderId}?api_key=${config.api_key}`,
+        );
+
+        // Await JSON response.
+        const result = await response.json();
+
+        return result.data;
+    } catch (error) {
+        RequestErrorHandler(error);
+    }
+}
+
 
 /**
  * Function to pick an order.
