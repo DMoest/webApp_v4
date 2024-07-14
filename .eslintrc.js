@@ -132,5 +132,6 @@ module.exports = {
         // Add React Native specific rules if you wish:
         'react-native/no-unused-styles': 2,
         'react-native/split-platform-components': 2,
+        'max-len': ['error', { code: 120 }],
     },
 };
