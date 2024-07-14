@@ -1,11 +1,14 @@
 import React, {useMemo} from 'react';
 import {Pressable, ScrollView, Text, View} from 'react-native';
 import {StatusBar} from 'expo-status-bar';
+import {useAppContext} from "../../context/App.provider";
+import {useNavigation} from '@react-navigation/native';
 import * as OrderInterfaces from '../../interfaces/Order';
 import * as OrderModel from '../../models/Orders';
+import * as ProductInterfaces from '../../interfaces/Product';
+import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
 import {FontAwesome5} from '@expo/vector-icons';
-import {useNavigation} from '@react-navigation/native';
 
 
 /**
@@ -89,8 +92,10 @@ function productStockStatus(
 export const OrderItem: (
     props: OrderInterfaces.OrderItemProps,
 ) => React.JSX.Element = (props: OrderInterfaces.OrderItemProps) => {
-    const order: OrderInterfaces.Order = props.route.params.item;
+    const appContext = useAppContext();
     const navigation = useNavigation();
+    const order: OrderInterfaces.Order = props.route.params.item;
+
 
     /**
      * Compute boolean value to indicate if order is packable.
@@ -148,16 +153,6 @@ export const OrderItem: (
         [order.status_id],
     );
 
-    const pickOrderAndNavigate = async (
-        order: OrderInterfaces.Order,
-    ): Promise<void> => {
-        await OrderModel.pickOrder(order).then((): void => {
-            navigation.navigate('Orderlista', {
-                reload: true,
-            });
-        });
-    };
-
     /**
      * Compute dynamic interaction element based on order status. This would allow the user pack the order if the
      * order is packable or notify the user that the order is already packed, shipped, returned or refunded. The
@@ -178,10 +173,15 @@ export const OrderItem: (
                         ]}
                         onPress={async (): Promise<void> => {
                             try {
-                                const result =
-                                    await OrderModel.pickOrder(order);
-                                console.log('picked order result: ', result);
+                                await OrderModel.pickOrder(order);
+                                const updatedProductsList: ProductInterfaces.Product[] = await ProductModel.getProducts();
+                                const updatedOrdersList: OrderInterfaces.Order[] = await OrderModel.getOrders();
 
+                                // Update the state of things...
+                                appContext.setProducts(updatedProductsList);
+                                appContext.setOrders(updatedOrdersList);
+
+                                // Navigate back to the order list and trigger reload.
                                 navigation.navigate('Orderlista', {
                                     reload: true,
                                 });
@@ -206,7 +206,18 @@ export const OrderItem: (
                                         : Style.Color.schemeOne.primary[300],
                                 },
                             ]}
-                            onPress={pickOrderAndNavigate(order)}>
+                            onPress={async (): Promise<void> => {
+                                try {
+                                    console.log('SKICKA ORDER & RELOAD!');
+
+                                    await OrderModel.updateOrderStatus(order.id, order.name, 400);
+                                    await navigation.navigate('Orderlista', {
+                                        reload: true,
+                                    });
+                                } catch (error) {
+                                    console.error('Error sending order: ', error);
+                                }
+                            }}>
                             <Text style={Style.Typography.buttonText}>
                                 Skicka Order
                             </Text>
