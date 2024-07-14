@@ -51,48 +51,48 @@ export const getOrderById = async (orderId: number): Promise<OrderInterfaces.Ord
  *
  * @param order
  */
-export async function pickOrder(order: OrderInterfaces.Order) {
+export async function pickOrder(order: OrderInterfaces.Order): Promise<void> {
     try {
-        console.log('OrderModel.pickOrder() -> order.id: ', order.id);
         let leftOverStock: number;
 
+        // Loop through all order items and update stock
         for (const orderItem of order.order_items) {
             try {
                 leftOverStock = orderItem.stock - orderItem.amount;
-                console.log('Left over stock: ', leftOverStock);
 
-                const productUpdates: ProductInterfaces.Product = {
+                if (leftOverStock <= 0) {
+                    throw new Error('Not enough stock to pick order.');
+                }
+
+                const productUpdates: ProductInterfaces.ProductUpdate = {
                     api_key: `${config.api_key}`,
                     id: orderItem.product_id,
                     name: orderItem.name,
                     stock: leftOverStock,
                 };
-                console.log('Product updates: ', productUpdates);
 
                 // Update product stock.
-                await ProductModel.updateProduct(productUpdates).then(
-                    (response: Response | undefined): void => {
-                        console.log(
-                            'ProductModel.updateProduct -> Response: ',
-                            response,
-                        );
-                    },
-                );
+                await ProductModel.updateProduct(productUpdates);
+
             } catch (error) {
                 console.error(error);
                 RequestErrorHandler(error);
             }
         }
 
-        console.log('Order.id: ', order.id);
-
-        // Update order status.
-        return updateOrderStatus(order.id, 200);
+        // Update Order status
+        try {
+            await updateOrderStatus(order.id, order.name, 200);
+        } catch (error) {
+            console.error(error);
+            RequestErrorHandler(error);
+        }
     } catch (error) {
         console.error(error);
         RequestErrorHandler(error);
     }
 }
+
 
 export async function updateOrderStatus(order_id: number, order_name: string, new_status_id: number) {
     try {
@@ -119,6 +119,7 @@ export async function updateOrderStatus(order_id: number, order_name: string, ne
         RequestErrorHandler(error);
     }
 }
+
 
 /**
  * Function to calculate the total price of an order.
