@@ -1,14 +1,14 @@
 /**
  * Module imports.
  */
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
     FlatList,
     Text,
     Pressable,
     View,
 } from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native';
 import {TabBar, TabView, SceneMap} from 'react-native-tab-view';
 import {FontAwesome5} from '@expo/vector-icons';
 import {useAppContext} from '../../context/App.provider';
@@ -36,7 +36,6 @@ export const OrderList: React.FC = () => {
         {key: 'third', title: 'Skickade', icon: 'paper-plane'},
         {key: 'fourth', title: 'Returer', icon: 'undo-alt'},
     ]);
-    const [reload, setReload] = useState<boolean>(route.params?.reload ?? false);
 
     const loadOrders = async () => {
         appContext.setIsRefreshing(true);
@@ -56,12 +55,16 @@ export const OrderList: React.FC = () => {
     /**
      * React Hook to reload orders.
      */
-    useEffect((): void => {
-        if (reload || appContext.orders.length === 0) {
-            console.log('load Orders now!');
-            void loadOrders();
-        }
-    }, [appContext.orders, reload]);
+    useFocusEffect(
+        useCallback((): void => {
+            if (route.params?.reload === true || appContext.orders.length === 0) {
+                void loadOrders().then(() => {
+                    // Reset the reload parameter to false after loading orders
+                    navigation.setParams({reload: false});
+                });
+            }
+        }, [route.params?.reload, appContext.orders.length, navigation.setParams])
+    );
 
 
     /**
@@ -73,6 +76,7 @@ export const OrderList: React.FC = () => {
         );
     }, [appContext.orders]);
 
+
     /**
      * Filter Orders to only show packed once.
      */
@@ -82,6 +86,7 @@ export const OrderList: React.FC = () => {
         );
     }, [appContext.orders]);
 
+
     /**
      * Filter Orders to only show sent once.
      */
@@ -90,6 +95,7 @@ export const OrderList: React.FC = () => {
             (order: OrderInterfaces.Order): boolean => order.status_id === 400,
         );
     }, [appContext.orders]);
+
 
     /**
      * Filter Orders to only show return once.
@@ -141,12 +147,13 @@ export const OrderList: React.FC = () => {
         />
     );
 
+
     /**
      * Render item function.
      *
      * @param item
      */
-    const renderItem = ({item}) => (
+    const renderItem = ({item}: object): React.ReactElement => (
         <Pressable
             key={item.id.toString()}
             style={({pressed}) => [
@@ -158,7 +165,7 @@ export const OrderList: React.FC = () => {
                 },
             ]}
             onPress={(): void => {
-                navigation.navigate('Plocklista', {item});
+                navigation.navigate('Orderhanterare', {item});
             }}>
             <OrderListItem item={item}/>
         </Pressable>
@@ -206,6 +213,7 @@ export const OrderList: React.FC = () => {
             )}
         />
     );
+
 
     // Render LoadingIndicator if state is Refreshing else FlatList Component.
     return appContext.isRefreshing ? (
