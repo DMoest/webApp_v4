@@ -2,11 +2,11 @@
  * Module imports.
  */
 import React, {useState} from 'react';
-import {Text, TextInput, TouchableOpacity, View,} from 'react-native';
-// import { useAppContext } from '../../context/App.provider';
-import * as Style from '../../assets/styles/index';
+import {Pressable, Text, TextInput, View,} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import {useAuthContext} from "../../context/Auth.provider";
+import * as Style from '../../assets/styles/index';
+
 
 /**
  * Create new Login form component.
@@ -19,6 +19,7 @@ export const RegisterForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
+
 
     function registerUser() {
         console.log('Click! -> Registrera ny användare med...');
@@ -43,10 +44,11 @@ export const RegisterForm: React.FC = () => {
         }
     }
 
+
     return (
         <View style={Style.Container.content}>
             <Text style={Style.Typography.subHeader}>
-                Registrera en ny användare här...
+                Användarregistrering
             </Text>
 
             <Text>Email: </Text>
@@ -76,24 +78,34 @@ export const RegisterForm: React.FC = () => {
                 secureTextEntry={true}
             />
 
-            <TouchableOpacity
-                style={Style.Button.button}
-                onPress={registerUser}>
-                <Text style={Style.Typography.buttonText}>
-                    Registrera ny användare
-                </Text>
-            </TouchableOpacity>
+            <View style={[Style.Container.grid.rowNoPadding, {
+                marginTop: Style.Typography.whiteSpace[100],
+            }]}>
+                <Pressable
+                    style={({pressed}) => [
+                        Style.Button.buttonContainer,
+                        {opacity: pressed ? 0.5 : 1},
+                    ]}
+                    onPress={registerUser}>
+                    <Text style={Style.Typography.buttonText}>
+                        Registrera ny användare
+                    </Text>
+                </Pressable>
 
-            <TouchableOpacity
-                style={Style.Button.button}
-                onPress={() => {
-                    console.log('Click! -> Gå till logga in...');
-                    navigation.navigate('Logga in formulär');
-                }}>
-                <Text style={Style.Typography.buttonText}>
-                    Gå till Login
-                </Text>
-            </TouchableOpacity>
+                <Pressable
+                    style={({pressed}) => [
+                        Style.Button.buttonContainer,
+                        {opacity: pressed ? 0.5 : 1},
+                    ]}
+                    onPress={() => {
+                        console.log('Click! -> Gå till logga in...');
+                        navigation.navigate('Logga in formulär');
+                    }}>
+                    <Text style={Style.Typography.buttonText}>
+                        Gå till Login
+                    </Text>
+                </Pressable>
+            </View>
         </View>
     );
 };
