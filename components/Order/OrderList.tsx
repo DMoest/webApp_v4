@@ -60,7 +60,6 @@ export const OrderList: React.FC = () => {
         } catch (error) {
             console.error(error);
         } finally {
-            setReload(false);
             appContext.setIsRefreshing(false);
         }
     };
