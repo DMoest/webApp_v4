@@ -47,6 +47,29 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
         }
     }
 
+
+    /**
+     * Triggers the `loadDeliveries` function when the component gains focus and either the `reload` flag is set to
+     * true or there are no orders in the app context. This effect is designed to ensure that the deliveries list is
+     * up-to-date whenever the user navigates to the component. After successfully loading the deliveries, it resets
+     * the `reload` parameter to false to prevent unnecessary reloads on subsequent focus events.
+     *
+     * The effect is dependent on the `reload` flag, the length of the deliveries array in the app context, and the
+     * `setParams` method from the navigation object, meaning it will re-run only when any of these dependencies
+     * change.
+     */
+    useFocusEffect(
+        useCallback((): void => {
+            if (reload === true || appContext.deliveries.length === 0) {
+                void loadDeliveries().then((): void => {
+                    // Reset the reload parameter to false after loading deliveries
+                    navigation.setParams({reload: false});
+                });
+            }
+        }, [reload, appContext.deliveries.length, navigation.setParams])
+    );
+
+
     /**
      * Renders a single delivery item as a pressable component within a list.
      *
