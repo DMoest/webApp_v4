@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo} from 'react'; // eslint-disable-next-line import/namespace
+import React, {useCallback, useMemo} from 'react';
 import {useAppContext} from '../../context/App.provider';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native';
 import {FlatList, Pressable, Text, View} from 'react-native';
 import {DeliveryListItem} from './DeliveryListItem';
 import {LoadingIndicator} from '../Utils/LoadingIndicator';
@@ -14,9 +14,10 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const DeliveryList: React.FC = ({route}): React.JSX.Element => {
+export const DeliveryList: React.FC = (): React.ReactElement => {
     const appContext = useAppContext();
     const navigation = useNavigation();
+    const route = useRoute();
     let reload = route.params?.reload ?? true;
 
 
