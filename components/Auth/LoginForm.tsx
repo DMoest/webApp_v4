@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Pressable, Text, TextInput, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useAuthContext} from '../../context/Auth.provider';
 import * as Style from '../../assets/styles/index';
@@ -49,6 +49,7 @@ export const LoginForm: React.FC = () => {
         }
     }, [authContext.isLoggedIn, navigation]);
 
+
     return (
         <View style={Style.Container.content}>
             <Text>Email: </Text>
@@ -70,25 +71,33 @@ export const LoginForm: React.FC = () => {
                 secureTextEntry={true}
             />
 
-            <TouchableOpacity
-                style={Style.Button.buttonContainer}
-                onPress={loginUser}>
-                <View>
+            <View style={[Style.Container.grid.rowNoPadding, {
+                marginTop: Style.Typography.whiteSpace[100],
+            }]}>
+                <Pressable
+                    style={({pressed}) => [
+                        Style.Button.buttonContainer,
+                        {opacity: pressed ? 0.5 : 1},
+                    ]}
+                    onPress={loginUser}>
                     <Text style={Style.Typography.buttonText}>Logga in</Text>
-                </View>
-            </TouchableOpacity>
+                </Pressable>
 
-            <Text>
-                Om ni inte har en användare kan ni
-                <TouchableOpacity
-                    onPress={() => {
-                        navigation.navigate('Registrera användare');
-                    }}>
-                    <Text style={{color: 'blue'}}>
-                        registrera en ny användare här.
-                    </Text>
-                </TouchableOpacity>
-            </Text>
+                <Text>
+                    Om ni inte har en användare kan ni
+                    <Pressable
+                        onPress={(): void => {
+                            navigation.navigate('Registrera användare');
+                        }}
+                        style={({pressed}) => [
+                            {opacity: pressed ? 0.5 : 1},
+                        ]}>
+                        <Text style={{color: 'blue'}}>
+                            registrera en ny användare här.
+                        </Text>
+                    </Pressable>
+                </Text>
+            </View>
         </View>
     );
 };
