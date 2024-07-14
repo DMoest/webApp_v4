@@ -1,52 +1,34 @@
 /**
  * Module imports.
  */
-import React, { createContext } from 'react';
+import React, {createContext} from 'react';
 import * as DeliveriesInterfaces from '../interfaces/Deliveries';
 import * as OrdersInterfaces from '../interfaces/Order';
 import * as ProductsInterfaces from '../interfaces/Product';
 import * as InvoicesInterfaces from '../interfaces/Invoice';
-import { Product } from "../interfaces/Product";
+import * as AppContextInterfaces from '../interfaces/AppContext';
 
-/**
- * Application context types.
- */
-type AppContextType = {
-    isLoading: boolean;
-    setIsLoading: (isLoading1: boolean) => void;
-    isRefreshing: boolean;
-    setIsRefreshing: (isRefreshing1: boolean) => void;
-    products: ProductsInterfaces.Product[];
-    setProducts: (products1: Product[] | void) => void;
-    orders: OrdersInterfaces.Order[];
-    setOrders: (orders1: OrdersInterfaces.Order[]) => void;
-    packedOrders: OrdersInterfaces.Order[];
-    setPackedOrders: (packedOrders1: OrdersInterfaces.Order[]) => void;
-    deliveries: DeliveriesInterfaces.Deliveries[];
-    setDeliveries: (deliveries1: DeliveriesInterfaces.Deliveries[] | void) => void;
-    invoices: InvoicesInterfaces.Invoice[];
-    setInvoices: (invoices1: InvoicesInterfaces.Invoice[]) => void;
-};
 
 /**
  * App context.
  */
-const AppContext = createContext<AppContextType>({
+const AppContext = createContext<AppContextInterfaces.AppContext>({
     isLoading: false,
-    setIsLoading(isLoading: boolean): void {},
+    setIsLoading(isLoading: boolean): void {
+    },
     isRefreshing: false,
-    setIsRefreshing: (isRefreshing: boolean): void => {},
+    setIsRefreshing: (isRefreshing: boolean): void => {
+    },
     products: [],
     setProducts: () => [],
     orders: [],
     setOrders: () => [],
-    packedOrders: [],
-    setPackedOrders: () => [],
     deliveries: [],
     setDeliveries: () => [],
     invoices: [],
     setInvoices: () => [],
 });
+
 
 /**
  * App context provider.
@@ -54,7 +36,7 @@ const AppContext = createContext<AppContextType>({
  * @param children
  * @constructor
  */
-export const AppProvider: React.FC = ({ children }) => {
+export const AppProvider: React.FC = ({children}) => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [isRefreshing, setIsRefreshing] = React.useState(false);
     const [products, setProducts] = React.useState<
@@ -82,8 +64,6 @@ export const AppProvider: React.FC = ({ children }) => {
                 setProducts,
                 orders,
                 setOrders,
-                packedOrders,
-                setPackedOrders,
                 deliveries,
                 setDeliveries,
                 invoices,
