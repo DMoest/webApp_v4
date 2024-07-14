@@ -1,12 +1,12 @@
-import React from 'react';
 import {RequestErrorHandler} from '../components/Utils/ErrorHandler';
 import * as ProductInterfaces from '../interfaces/Product';
 import config from '../config/config.json';
 
+
 /**
  * Getter Model Method for getting all available products from the API.
  */
-export async function getProducts(): Promise<ProductInterfaces.Product[] | void>  {
+export async function getProducts(): Promise<ProductInterfaces.Product[] | void> {
     try {
         const response = await fetch(
             `${config.base_url}/products?api_key=${config.api_key}`,
@@ -19,6 +19,7 @@ export async function getProducts(): Promise<ProductInterfaces.Product[] | void>
         RequestErrorHandler(error);
     }
 }
+
 
 /**
  * Getter model method to request a specific product by id from API.
@@ -39,14 +40,15 @@ export async function getProductById(product_id: string) {
     }
 }
 
+
 /**
  * Setter Model Method to update a products in API.
  *
- * @param product
+ * @param updated_product
  */
 export async function updateProduct(
-    product: Promise<ProductInterfaces.Product[]>,
-) {
+    updated_product: ProductInterfaces.ProductUpdate,
+): Promise<Response | undefined> {
     try {
         return await fetch(
             `${config.base_url}/products?api_key=${config.api_key}`,
@@ -57,9 +59,9 @@ export async function updateProduct(
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    id: product.id,
-                    name: product.name,
-                    stock: product.stock,
+                    id: updated_product.id,
+                    name: updated_product.name,
+                    stock: updated_product.stock,
                     api_key: `${config.api_key}`,
                 }),
             },
