@@ -25,7 +25,7 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const OrderList: React.FC = () => {
+export const OrderList: React.FC = (): React.ReactElement => {
     const appContext = useAppContext();
     const navigation = useNavigation();
     const route = useRoute();
@@ -36,6 +36,7 @@ export const OrderList: React.FC = () => {
         {key: 'third', title: 'Skickade', icon: 'paper-plane'},
         {key: 'fourth', title: 'Returer', icon: 'undo-alt'},
     ]);
+    const reload = route.params?.reload ?? false;
 
 
     /**
@@ -46,7 +47,8 @@ export const OrderList: React.FC = () => {
      * 2. Attempts to fetch orders using the `OrderModel.getOrders` method.
      * 3. Updates the application context's `orders` state with the fetched orders.
      * 4. In case of an error, logs the error to the console.
-     * 5. Finally, sets the `isRefreshing` state to `false` and `reload` state to `false`, indicating the end of the loading process.
+     * 5. Finally, sets the `isRefreshing` state to `false` and `reload` state to `false`, indicating the end of
+     * the loading process.
      *
      * @returns {Promise<OrderInterfaces.Order[]>} A promise that resolves to the list of loaded orders.
      */
@@ -81,13 +83,13 @@ export const OrderList: React.FC = () => {
      */
     useFocusEffect(
         useCallback((): void => {
-            if (route.params?.reload === true || appContext.orders.length === 0) {
+            if (reload === true || appContext.orders.length === 0) {
                 void loadOrders().then(() => {
                     // Reset the reload parameter to false after loading orders
                     navigation.setParams({reload: false});
                 });
             }
-        }, [route.params?.reload, appContext.orders.length, navigation.setParams])
+        }, [reload, appContext.orders.length, navigation.setParams])
     );
 
 
