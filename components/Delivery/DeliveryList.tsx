@@ -57,10 +57,10 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
      * @param {Object} props.item - The delivery item data to be rendered.
      * @returns {React.ReactElement} A pressable component representing a single delivery item.
      */
-    const renderItem = ({item}) => (
+    const renderItem = ({item}: { item: object; }): React.ReactElement => (
         <Pressable
             key={item.id}
-            onPress={() => {
+            onPress={(): void => {
                 navigation.navigate('Inleveransspecifikation', {item});
             }}
             style={({pressed}) => [
@@ -77,7 +77,7 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
 
 
     /**
-     * Memoizes and returns a React JSX element that conditionally renders either a message indicating
+     * Memorizes and returns a React JSX element that conditionally renders either a message indicating
      * there are no deliveries or a FlatList of delivery items based on the current state of deliveries in the app
      * context.
      *
@@ -115,12 +115,13 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
         }
     }, [appContext.deliveries, appContext.isRefreshing]);
 
+
     return appContext.isRefreshing ? (
         <View style={Style.Container.content}>
             <Pressable
-                key={'newdeliverybtn'}
+                key={'newDeliveryBTN'}
                 style={Style.Button.buttonContainer}
-                onPress={() => {
+                onPress={(): void => {
                     navigation.navigate('Inleverasformulär');
                 }}>
                 <Text style={Style.Typography.buttonText}>
@@ -133,9 +134,9 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
     ) : (
         <View style={Style.Container.content}>
             <Pressable
-                key={'newdeliverybtn'}
+                key={'newDeliveryBTN'}
                 style={Style.Button.buttonContainer}
-                onPress={() => {
+                onPress={(): void => {
                     navigation.navigate('Inleverasformulär');
                 }}>
                 <Text style={Style.Typography.buttonText}>
