@@ -94,9 +94,16 @@ export async function pickOrder(order: OrderInterfaces.Order) {
     }
 }
 
-export async function updateOrderStatus(order_id: number, status_id: number) {
+export async function updateOrderStatus(order_id: number, order_name: string, new_status_id: number) {
     try {
-        const response: Response = await fetch(
+        let requestBody: OrderInterfaces.OrderUpdate = {
+            id: order_id,
+            name: order_name,
+            status_id: new_status_id,
+            api_key: `${config.api_key}`,
+        }
+
+        await fetch(
             `${config.base_url}/orders?api_key=${config.api_key}`,
             {
                 method: 'PUT',
@@ -104,15 +111,9 @@ export async function updateOrderStatus(order_id: number, status_id: number) {
                     Accept: 'application/json',
                     'content-type': 'application/json',
                 },
-                body: {
-                    id: order_id,
-                    status_id: status_id,
-                    api_key: `${config.api_key}`,
-                },
+                body: JSON.stringify(requestBody),
             },
         );
-
-        return response.json();
     } catch (error) {
         console.error(error);
         RequestErrorHandler(error);
