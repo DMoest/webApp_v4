@@ -36,8 +36,7 @@ export const OrderList: React.FC = () => {
         {key: 'third', title: 'Skickade', icon: 'paper-plane'},
         {key: 'fourth', title: 'Returer', icon: 'undo-alt'},
     ]);
-
-    let reload = route.params?.reload ?? false;
+    const [reload, setReload] = useState<boolean>(route.params?.reload ?? false);
 
     const loadOrders = async () => {
         appContext.setIsRefreshing(true);
@@ -49,7 +48,7 @@ export const OrderList: React.FC = () => {
         } catch (error) {
             console.error(error);
         } finally {
-            reload = false;
+            setReload(false);
             appContext.setIsRefreshing(false);
         }
     };
@@ -58,34 +57,12 @@ export const OrderList: React.FC = () => {
      * React Hook to reload orders.
      */
     useEffect((): void => {
-        /**
-         * Function to fetch orders from API.
-         */
-        // const loadOrders = async () => {
-        //     appContext.setIsRefreshing(true);
-        //
-        //     try {
-        //         appContext.setOrders(await OrderModel.getOrders());
-        //         appContext.setPackedOrders(
-        //             appContext.orders.filter(
-        //                 (order: OrderInterfaces.Order) =>
-        //                     order.status === 'Packed' &&
-        //                     order.status_id === 200 &&
-        //                     order.order_items.length > 0,
-        //             ),
-        //         );
-        //
-        //         return appContext.orders;
-        //     } catch (error) {
-        //         console.error(error);
-        //     } finally {
-        //         reload = false;
-        //         appContext.setIsRefreshing(false);
-        //     }
-        // };
+        if (reload || appContext.orders.length === 0) {
+            console.log('load Orders now!');
+            void loadOrders();
+        }
+    }, [appContext.orders, reload]);
 
-        void loadOrders();
-    }, []);
 
     /**
      * Filter Orders to only show new once.
