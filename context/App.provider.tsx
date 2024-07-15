@@ -1,7 +1,7 @@
 /**
  * Module imports.
  */
-import React, {createContext} from 'react';
+import React, {createContext, useState} from 'react';
 import * as DeliveriesInterfaces from '../interfaces/Deliveries';
 import * as OrdersInterfaces from '../interfaces/Order';
 import * as ProductsInterfaces from '../interfaces/Product';
@@ -37,21 +37,25 @@ const AppContext = createContext<AppContextInterfaces.AppContext>({
  * @constructor
  */
 export const AppProvider: React.FC = ({children}) => {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [isRefreshing, setIsRefreshing] = React.useState(false);
-    const [products, setProducts] = React.useState<
+    // User interaction indicators
+    const [isLoading, setIsLoading] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
+    // API Objects
+    const [products, setProducts] = useState<
         ProductsInterfaces.Product[]
     >([]);
-    const [orders, setOrders] = React.useState<OrdersInterfaces.Order[]>([]);
-    const [packedOrders, setPackedOrders] = React.useState<
+    const [orders, setOrders] = useState<OrdersInterfaces.Order[]>([]);
+    const [packedOrders, setPackedOrders] = useState<
         OrdersInterfaces.Order[]
     >([]);
-    const [deliveries, setDeliveries] = React.useState<
+    const [deliveries, setDeliveries] = useState<
         DeliveriesInterfaces.Deliveries[]
     >([]);
-    const [invoices, setInvoices] = React.useState<
+    const [invoices, setInvoices] = useState<
         InvoicesInterfaces.Invoice[]
     >([]);
+
 
     return (
         <AppContext.Provider
@@ -73,6 +77,7 @@ export const AppProvider: React.FC = ({children}) => {
         </AppContext.Provider>
     );
 };
+
 
 /**
  * Context access function exported.

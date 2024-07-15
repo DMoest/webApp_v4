@@ -36,7 +36,7 @@ export const OrderList: React.FC = (): React.ReactElement => {
         {key: 'third', title: 'Skickade', icon: 'paper-plane'},
         {key: 'fourth', title: 'Returer', icon: 'undo-alt'},
     ]);
-    const reload = route.params?.reload ?? false;
+    const reload: boolean | null = route.params?.reload ?? false;
 
 
     /**
@@ -47,8 +47,7 @@ export const OrderList: React.FC = (): React.ReactElement => {
      * 2. Attempts to fetch orders using the `OrderModel.getOrders` method.
      * 3. Updates the application context's `orders` state with the fetched orders.
      * 4. In case of an error, logs the error to the console.
-     * 5. Finally, sets the `isRefreshing` state to `false` and `reload` state to `false`, indicating the end of
-     * the loading process.
+     * 5. Finally, sets the `isRefreshing` state to `false` and `reload` state to `false`, indicating the end of the loading process.
      *
      * @returns {Promise<OrderInterfaces.Order[]>} A promise that resolves to the list of loaded orders.
      */
