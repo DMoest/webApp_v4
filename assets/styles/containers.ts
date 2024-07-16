@@ -2,7 +2,7 @@
  * Module imports.
  */
 // eslint-disable-next-line import/namespace
-import { Dimensions } from 'react-native';
+import {Dimensions, StyleProp, ViewStyle} from 'react-native';
 import * as Color from './colors';
 import * as Typography from './typography';
 
@@ -169,9 +169,22 @@ export const borderRadius = {
 };
 
 /**
- * Flatlist background color.
+ * Defines the style for FlatList components within the application.
+ *
+ * This style object sets the FlatList to occupy the full width and height of its container,
+ * removes any margin, applies horizontal padding based on the application's typography settings,
+ * and sets the background color to a light theme. The horizontal padding is determined by the
+ * 100th index of the whiteSpace scale in the Typography module, allowing for consistent spacing
+ * across the application.
+ *
+ * Properties:
+ * - `width`: Sets the width of the FlatList to 100% of its parent container.
+ * - `height`: Sets the height of the FlatList to 100% of its parent container.
+ * - `margin`: Removes any margin from the FlatList.
+ * - `paddingHorizontal`: Applies horizontal padding based on the typography whiteSpace scale.
+ * - `backgroundColor`: Sets the background color to a predefined light color from the Color module.
  */
-export const flatList = {
+export const flatList: StyleProp<ViewStyle> = {
     width: '100%',
     height: '100%',
     margin: 0,
