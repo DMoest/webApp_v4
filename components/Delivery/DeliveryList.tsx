@@ -141,7 +141,7 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
      * @returns {React.JSX.Element} A React JSX element that is either a message indicating no deliveries or
      * a FlatList of delivery items.
      */
-    const renderDeliveriesList: React.JSX.Element = useMemo(() => {
+    const renderDeliveriesList: React.ReactElement = useMemo(() => {
         if (appContext.deliveries.length === 0) {
             return (
                 <View style={Style.Container.warningMsgContainer}>
