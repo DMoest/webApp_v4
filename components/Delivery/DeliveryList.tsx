@@ -6,6 +6,7 @@ import {DeliveryListItem} from './DeliveryListItem';
 import {LoadingIndicator} from '../Utils/LoadingIndicator';
 import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
 import * as DeliveryModel from '../../models/Deliveries';
+import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
 
 
@@ -43,7 +44,7 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
     const appContext = useAppContext();
     const navigation = useNavigation();
     const route = useRoute();
-    let reload = route.params?.reload ?? true;
+    let reload: boolean | null = route.params?.reload ?? false;
 
 
     /**
@@ -57,13 +58,12 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
      * @returns {Promise<DeliveriesInterfaces.Deliveries[] | undefined>} A promise that resolves to the
      * list of fetched deliveries or undefined if an error occurs.
      */
-    async function loadDeliveries() {
+    async function loadDeliveries(): Promise<void> {
         appContext.setIsRefreshing(true);
 
         try {
             appContext.setDeliveries(await DeliveryModel.getDeliveries());
-
-            return appContext.deliveries;
+            appContext.setProducts(await ProductModel.getProducts());
         } catch (error) {
             console.warn(error);
         } finally {
