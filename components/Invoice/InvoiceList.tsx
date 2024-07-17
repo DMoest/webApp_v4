@@ -2,13 +2,14 @@
  * Module imports.
  */
 import React, {useCallback} from 'react';
-import {FlatList, Pressable, TouchableOpacity} from 'react-native';
+import {FlatList, Pressable} from 'react-native';
 import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native';
 import {useAppContext} from '../../context/App.provider';
 import {LoadingIndicator} from '../Utils/LoadingIndicator';
 import {InvoiceListItem} from './InvoiceListItem';
 import * as InvoiceInterfaces from '../../interfaces/Invoice';
 import * as InvoiceModel from '../../models/Invoices';
+import {RouteParams} from "../../interfaces/Route";
 import * as Style from '../../assets/styles';
 
 
@@ -41,7 +42,7 @@ import * as Style from '../../assets/styles';
 export const InvoiceList: React.FC = (): React.ReactElement => {
     const appContext = useAppContext();
     const navigation = useNavigation();
-    const route = useRoute();
+    const route = useRoute<RouteParams>();
     let reload = route.params?.reload ?? false;
 
 
@@ -84,15 +85,12 @@ export const InvoiceList: React.FC = (): React.ReactElement => {
      */
     useFocusEffect(
         useCallback((): void => {
-            console.info('useFocusEffect called...');
-
             if (reload === true || !appContext.invoices.length) {
                 void loadInvoices().then((): void => {
                     // Reset the reload parameter to false after loading deliveries
                     navigation.setParams({reload: false});
                 });
             } else {
-                console.info('Invoices already loaded and no reload...');
                 appContext.setIsLoading(false);
             }
         }, [reload, appContext.invoices.length, navigation.setParams])
