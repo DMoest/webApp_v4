@@ -1,11 +1,9 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {
-    Alert,
     Button,
     Platform,
     Pressable,
     Text,
-    TouchableOpacity,
     View,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -23,7 +21,7 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 
 
-export const InvoiceForm: React.FC = (): React.JSX.Element => {
+export const InvoiceForm: React.FC = (): React.ReactElement => {
     const appContext = useAppContext();
     const navigation = useNavigation();
     const route = useRoute();
@@ -36,13 +34,12 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
             )[0] as OrderInterfaces.Order) || null,
         );
     const [creationDate, setCreationDate] = useState<Date>(new Date());
-    const [dueDate, setDueDate] = useState<Date>(new Date());
     const [showCreationDate, setShowCreationDate] = useState<boolean>(false);
+    const [dueDate, setDueDate] = useState<Date>(new Date());
     const [showDueDate, setShowDueDate] = useState<boolean>(false);
-
-    // Props for creating a new invoice.
-    const [newInvoice, setNewInvoice] =
+    const [newInvoiceData, setNewInvoiceData] =
         useState<InvoiceInterfaces.NewInvoice | null>(null);
+
 
     /**
      * Calculate the due date for the invoice.
@@ -53,26 +50,32 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
         );
     };
 
-    useEffect(() => {
+    useEffect((): void => {
         console.log(`~> Route.name: ${route.name}`);
+
         if (
             !Array.isArray(appContext.orders) ||
-            appContext.orders.length === 0
+            !appContext.orders.length
         ) {
-            appContext.setIsRefreshing(true);
-            OrderModel.getOrders().then(
-                (orders: OrderInterfaces.Order[]): void => {
-                    appContext.setOrders(orders);
-                    appContext.setIsRefreshing(false);
-                    console.log('DONE: OrderModel.getOrders()');
-                },
-            );
+            try {
+                appContext.setIsRefreshing(true);
+                OrderModel.getOrders().then(
+                    (orders: OrderInterfaces.Order[]): void => {
+                        appContext.setOrders(orders);
+                    },
+                );
+            } catch (error) {
+                console.error(error);
+            } finally {
+                appContext.setIsRefreshing(false);
+            }
         }
     }, []);
 
-    useEffect(() => {
+
+    useEffect((): void => {
         selectedOrder
-            ? setNewInvoice({
+            ? setNewInvoiceData({
                 order_id: selectedOrder.id,
                 total_price: OrderModel.calcOrderTotalPrice(selectedOrder),
                 creation_date: new Date().toLocaleDateString('se-SV'),
@@ -80,6 +83,7 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
             })
             : null;
     }, [selectedOrder]);
+
 
     // Compute the packed orders from the appContext.orders.
     const packedOrders: OrderInterfaces.Order[] = useMemo(() => {
@@ -101,6 +105,7 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
         return currentlyPackedOrders;
     }, [appContext.orders]);
 
+
     const handleSubmit = async (
         input_invoice: Partial<InvoiceInterfaces.NewInvoice>,
     ): Promise<void> => {
@@ -111,42 +116,30 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
 
             // Create the new invoice.
             await InvoiceModel.createInvoice(input_invoice).then(
-                (newInvoice: InvoiceInterfaces.Invoice): void => {
-                    console.log(
+                (createdInvoice): void => {
+                    console.info(
                         'RESPONSE NEW INVOICE: ',
-                        newInvoice,
+                        createdInvoice,
                         ' from: ',
                         input_invoice,
                     );
-
-                    navigation.navigate('Fakturor', {reload: true});
                 },
             );
 
             // Update order status to invoiced.
             await OrderModel.updateOrderStatus(
                 input_invoice.order_id,
+                selectedOrder.name,
                 600,
-                'Fakturerad',
             );
-
-            // Update the state of the appContext.invoices.
-            appContext.setInvoices(await InvoiceModel.getInvoices());
 
             // Update the state of the appContext.orders & appContext.packedOrders.
             appContext.setOrders(await OrderModel.getOrders());
         } catch (error) {
             console.error(error);
         } finally {
-            // Prompt the user that the invoice was created.
-            Alert.alert(
-                'Ny faktura har skapats.\n \n' +
-                `Fakturanr: ${newInvoice?.id}\n` +
-                `Ordernr: ${newInvoice?.order_id}\n` +
-                `Totalt pris: ${newInvoice?.total_price}\n` +
-                `Fakturadatum: ${newInvoice?.creation_date}\n` +
-                `Förfaller: ${newInvoice?.due_date}`,
-            );
+            console.log('Invoice created...', newInvoiceData);
+            navigation.navigate('Fakturor', {reload: true});
         }
     };
 
@@ -178,8 +171,8 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
                             date: Date,
                         ): void => {
                             setCreationDate(date);
-                            setNewInvoice({
-                                ...newInvoice,
+                            setNewInvoiceData({
+                                ...newInvoiceData,
                                 creation_date: date.toLocaleString(),
                             });
                             setShowCreationDate(false);
@@ -225,8 +218,8 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
                         ) => {
                             if (date) {
                                 setDueDate(date);
-                                setNewInvoice({
-                                    ...newInvoice,
+                                setNewInvoiceData({
+                                    ...newInvoiceData,
                                     due_date: date.toLocaleString(),
                                 });
                             }
@@ -253,11 +246,10 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
                         const selectedOrder: OrderInterfaces.Order =
                             packedOrders[itemIndex];
                         setSelectedOrder(selectedOrder);
-                        setNewInvoice({
-                            ...newInvoice,
+                        setNewInvoiceData({
+                            ...newInvoiceData,
                             order_id: itemValue,
-                            total_price:
-                                OrderModel.calcOrderTotalPrice(selectedOrder),
+                            total_price: OrderModel.calcOrderTotalPrice(selectedOrder),
                         });
                     }}>
                     {packedOrders.map((order: OrderInterfaces.Order) => {
@@ -276,13 +268,13 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
 
     return appContext.isRefreshing ? (
         <LoadingIndicator loadingType={'Ordrar'}/>
-    ) : packedOrders ? (
+    ) : !appContext.isRefreshing && packedOrders.length ? (
         <View style={Style.Container.content}>
             <View style={Style.Container.grid.row}>
                 {creationDatePicker()}
                 {dueDatePicker()}
                 <Text style={Style.Container.grid.row}>
-                    Fakturabelopp: {newInvoice?.total_price} kr
+                    Fakturabelopp: {newInvoiceData?.total_price} kr
                 </Text>
             </View>
 
@@ -299,22 +291,26 @@ export const InvoiceForm: React.FC = (): React.JSX.Element => {
                 ]}
                 onPress={async () => {
                     // Create the new invoice.
-                    await handleSubmit(newInvoice);
+                    await handleSubmit(newInvoiceData);
 
                     // Navigate back to the invoice list and send params.reload: true.
-                    await navigation.navigate('Fakturor', {reload: true});
+                    navigation.navigate('Fakturor', {reload: true});
                 }}>
                 <Text style={Style.Typography.buttonText}>Skapa Faktura</Text>
             </Pressable>
 
             <StatusBar style='auto'/>
         </View>
-    ) : (
+    ) : !packedOrders.length ? (
         <View style={Style.Container.content}>
             <Text style={Style.Typography.paragraph}>
                 Det finns inga ordrar som är paketerade och redo att
                 faktureras.
             </Text>
+        </View>
+    ) : (
+        <View style={Style.Container.content}>
+            <LoadingIndicator loadingType={'Ordrar'}/>
         </View>
     );
 };

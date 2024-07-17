@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {
     Pressable,
     RefreshControl,
@@ -6,7 +6,7 @@ import {
     Text,
     View,
 } from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute, useFocusEffect} from '@react-navigation/native';
 import {DataTable} from 'react-native-paper';
 import {useAppContext} from '../../context/App.provider';
 import {useAuthContext} from '../../context/Auth.provider';
@@ -21,22 +21,21 @@ import * as Style from '../../assets/styles';
  *
  * @constructor
  */
-export const InvoiceDataTable: React.FC = (): React.JSX.Element => {
+export const InvoiceDataTable: React.FC = (): React.ReactElement => {
     const authContext = useAuthContext();
     const appContext = useAppContext();
     const navigation = useNavigation();
     const route = useRoute();
     let reload = route.params?.reload ?? false;
 
-    const loadInvoices = async () => {
+
+    const loadInvoices = async (): Promise<void> => {
         console.log('Loading invoices...');
 
         try {
             appContext.setIsRefreshing(true);
             let invoices = await InvoiceModel.getInvoices();
-
             appContext.setInvoices(invoices['data']);
-            return appContext.invoices;
         } catch (error) {
             console.error(error);
         } finally {
@@ -45,18 +44,23 @@ export const InvoiceDataTable: React.FC = (): React.JSX.Element => {
         }
     };
 
-    useEffect((): void => {
-        if (
-            !Array.isArray(appContext.invoices) ||
-            !appContext.invoices.length ||
-            reload === true
-        ) {
-            console.log('Reloading invoices...');
-            void loadInvoices();
-        }
-    }, []);
 
-    const dataTable: React.JSX.Element = useMemo(() => {
+    useFocusEffect(
+        useCallback((): void => {
+            if (
+                !Array.isArray(appContext.invoices) ||
+                !appContext.invoices.length ||
+                reload === true
+            ) {
+                console.log('Reloading invoices...');
+                void loadInvoices();
+                navigation.setParams({reload: false});
+            }
+        }, [reload, appContext.invoices, navigation.setParams]),
+    );
+
+
+    const dataTable: React.ReactElement = useMemo(() => {
         if (
             !Array.isArray(appContext.invoices) ||
             appContext.invoices.length === 0
@@ -71,7 +75,8 @@ export const InvoiceDataTable: React.FC = (): React.JSX.Element => {
             );
         }
 
-        const dataTableRows: React.JSX.Element[] = appContext.invoices.map(
+
+        const dataTableRows: React.ReactElement[] = appContext.invoices.map(
             (invoice: InvoiceInterfaces.Invoice, index: number) => {
                 return (
                     <Pressable
@@ -93,8 +98,10 @@ export const InvoiceDataTable: React.FC = (): React.JSX.Element => {
                                 {invoice.id.toString()}
                             </DataTable.Cell>
 
-                            <DataTable.Cell style={Style.Container.grid.col[1]}>
-                                {invoice.name.toString()}
+                            <DataTable.Cell style={Style.Container.grid.col[2]}>
+                                <Text>
+                                    {invoice.name.split(' ').join('\n')}
+                                </Text>
                             </DataTable.Cell>
 
                             <DataTable.Cell style={Style.Container.grid.col[1]}>
@@ -105,7 +112,7 @@ export const InvoiceDataTable: React.FC = (): React.JSX.Element => {
                                 {invoice.total_price.toString()} kr
                             </DataTable.Cell>
 
-                            <DataTable.Cell style={Style.Container.grid.col[1]}>
+                            <DataTable.Cell style={Style.Container.grid.col[2]}>
                                 {new Date(
                                     invoice.creation_date.toString(),
                                 ).toLocaleString()}
@@ -141,7 +148,7 @@ export const InvoiceDataTable: React.FC = (): React.JSX.Element => {
                     <DataTable.Title style={Style.Container.grid.col[1]}>
                         Belopp
                     </DataTable.Title>
-                    
+
                     <DataTable.Title style={Style.Container.grid.col[1]}>
                         Skapad
                     </DataTable.Title>
