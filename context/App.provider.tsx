@@ -42,19 +42,18 @@ export const AppProvider: React.FC = ({children}) => {
     const [isRefreshing, setIsRefreshing] = useState(false);
 
     // API Objects
-    const [products, setProducts] = useState<
-        ProductsInterfaces.Product[]
-    >([]);
-    const [orders, setOrders] = useState<OrdersInterfaces.Order[]>([]);
+    const [products, setProducts] = useState<ProductsInterfaces.Product[] | null
+    >(null);
+    const [orders, setOrders] = useState<OrdersInterfaces.Order[] | null>(null);
     const [packedOrders, setPackedOrders] = useState<
-        OrdersInterfaces.Order[]
-    >([]);
+        OrdersInterfaces.Order[] | null
+    >(null);
     const [deliveries, setDeliveries] = useState<
-        DeliveriesInterfaces.Deliveries[]
-    >([]);
+        DeliveriesInterfaces.Deliveries[] | null
+    >(null);
     const [invoices, setInvoices] = useState<
-        InvoicesInterfaces.Invoice[]
-    >([]);
+        InvoicesInterfaces.Invoice[] | null
+    >(null);
 
 
     return (
