@@ -4,7 +4,13 @@ import config from '../config/config.json';
 
 
 /**
- * Getter Model Method for getting all available products from the API.
+ * Fetches all available products from the API.
+ *
+ * This function asynchronously retrieves a list of all products available from the API
+ * and returns them as an array of `Product` objects. If the request fails for any reason,
+ * it catches the error, handles it using `RequestErrorHandler`, and returns an empty array.
+ *
+ * @returns {Promise<ProductInterfaces.Product[]>} A promise that resolves to an array of `Product` objects.
  */
 export async function getProducts(): Promise<ProductInterfaces.Product[]> {
     try {
@@ -23,9 +29,15 @@ export async function getProducts(): Promise<ProductInterfaces.Product[]> {
 
 
 /**
- * Getter model method to request a specific product by id from API.
+ * Fetches a specific product by its ID from the API.
  *
- * @param product_id
+ * This function asynchronously requests a product by its unique identifier from the API.
+ * If the request is successful, it returns the product data. In case of an error, it catches
+ * the error and handles it using `RequestErrorHandler`.
+ *
+ * @param {string} product_id - The unique identifier of the product to fetch.
+ * @returns {Promise<any>} A promise that resolves to the product data if successful, or undefined if an
+ * error occurs.
  */
 export async function getProductById(product_id: string) {
     try {
@@ -43,9 +55,17 @@ export async function getProductById(product_id: string) {
 
 
 /**
- * Setter Model Method to update a products in API.
+ * Updates a product in the API.
  *
- * @param updated_product
+ * This function sends an asynchronous request to update a product's details in the API.
+ * It uses the HTTP PUT method to submit the updated product information. If the request
+ * is successful, it returns the response object. In case of an error, it catches the error
+ * and handles it using `RequestErrorHandler`.
+ *
+ * @param {ProductInterfaces.ProductUpdate} updated_product - An object containing the updated product
+ * details.
+ * @returns {Promise<Response | undefined>} A promise that resolves to the response object if the request
+ * is successful, or undefined if an error occurs.
  */
 export async function updateProduct(
     updated_product: ProductInterfaces.ProductUpdate,
