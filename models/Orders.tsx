@@ -6,8 +6,13 @@ import * as ProductInterfaces from '../interfaces/Product';
 
 
 /**
- * Function to fetch all orders from API.
- * Converts response to JSON data before return.
+ * Fetches all orders from the API.
+ *
+ * This function asynchronously retrieves a list of all orders from the API
+ * and returns them as an array of `Order` objects. If the request fails for any reason,
+ * it catches the error, handles it using `RequestErrorHandler`, and returns an empty array.
+ *
+ * @returns {Promise<OrderInterfaces.Order[]>} A promise that resolves to an array of `Order` objects.
  */
 export const getOrders = async (): Promise<OrderInterfaces.Order[]> => {
     try {
@@ -27,6 +32,18 @@ export const getOrders = async (): Promise<OrderInterfaces.Order[]> => {
     return [];
 };
 
+
+/**
+ * Fetches a specific order by its ID from the API.
+ *
+ * This function asynchronously requests an order by its unique identifier from the API.
+ * If the request is successful, it returns the order data. In case of an error, it catches
+ * the error and handles it using `RequestErrorHandler`.
+ *
+ * @param {number} orderId - The unique identifier of the order to fetch.
+ * @returns {Promise<OrderInterfaces.Order | undefined>} A promise that resolves to the order data if
+ * successful, or undefined if an error occurs.
+ */
 export const getOrderById = async (orderId: number): Promise<OrderInterfaces.Order | undefined> => {
     try {
         // Fetch orders from API.
@@ -45,13 +62,18 @@ export const getOrderById = async (orderId: number): Promise<OrderInterfaces.Ord
 
 
 /**
- * Function to pick an order.
- * Loop through all products and try/catch update product with request call to API.
- * Any error on request call is caught and handled by RequestErrorHandler function.
+ * Updates the stock of a product based on an order.
  *
- * @param order
+ * This function loops through all items in an order, updating the stock of each product
+ * based on the order's requirements. If the stock is insufficient, it throws an error.
+ * Errors during the update process are caught and handled by `RequestErrorHandler`.
+ *
+ * @param {OrderInterfaces.Order} order - The order containing items to update stock for.
+ * @returns {Promise<void>} A promise that resolves when all product stocks have been updated.
  */
-export async function pickOrder(order: OrderInterfaces.Order): Promise<void> {
+export async function pickOrder(
+    order: OrderInterfaces.Order
+): Promise<void> {
     try {
         let leftOverStock: number;
 
@@ -94,7 +116,24 @@ export async function pickOrder(order: OrderInterfaces.Order): Promise<void> {
 }
 
 
-export async function updateOrderStatus(order_id: number, order_name: string, new_status_id: number) {
+/**
+ * Updates the status of an order in the API.
+ *
+ * This function sends an asynchronous request to update the status of an order in the API.
+ * It uses the HTTP PUT method to submit the updated order status. If the request is successful,
+ * it does not return anything. In case of an error, it catches the error and handles it using
+ * `RequestErrorHandler`.
+ *
+ * @param {number} order_id - The unique identifier of the order to update.
+ * @param {string} order_name - The name of the order.
+ * @param {number} new_status_id - The new status ID to set for the order.
+ * @returns {Promise<void>} A promise that resolves when the order status has been updated.
+ */
+export async function updateOrderStatus(
+    order_id: number,
+    order_name: string,
+    new_status_id: number
+): Promise<void> {
     try {
         let requestBody: OrderInterfaces.OrderUpdate = {
             id: order_id,
@@ -122,10 +161,13 @@ export async function updateOrderStatus(order_id: number, order_name: string, ne
 
 
 /**
- * Function to calculate the total price of an order.
- * It loops through all order items and calculates the total price.
+ * Calculates the total price of an order.
  *
- * @param order
+ * This function iterates over all items in an order, calculating the total price by
+ * multiplying the price of each item by its quantity. It returns the total price of the order.
+ *
+ * @param {Partial<OrderInterfaces.Order>} order - The order to calculate the total price for.
+ * @returns {number} The total price of the order.
  */
 export function calcOrderTotalPrice(
     order: Partial<OrderInterfaces.Order>,
@@ -146,6 +188,5 @@ export function calcOrderTotalPrice(
         }
     }
 
-    console.log('Calculated total price for order: ', total_price);
     return total_price;
 }
