@@ -1,5 +1,8 @@
 /**
- * Module imports.
+ * This module defines the application-wide context and provides mechanisms
+ * for managing and accessing application state such as loading indicators,
+ * products, orders, deliveries, and invoices. It facilitates state management
+ * across the application by providing a context provider and a custom hook.
  */
 import React, {createContext, useState} from 'react';
 import * as AppContextInterfaces from '../interfaces/AppContext';
@@ -10,7 +13,9 @@ import * as InvoicesInterfaces from '../interfaces/Invoice';
 
 
 /**
- * App context.
+ * `AppContext` is a React context object initialized with default values for
+ * application state management, including loading indicators, lists of products,
+ * orders, deliveries, and invoices, along with functions to update these states.
  */
 const AppContext = createContext<AppContextInterfaces.AppContext>({
     isLoading: false,
@@ -31,10 +36,12 @@ const AppContext = createContext<AppContextInterfaces.AppContext>({
 
 
 /**
- * App context provider.
+ * `AppProvider` is a React functional component that wraps its children with the
+ * `AppContext.Provider`, allowing them to access and manipulate the application's
+ * state such as loading indicators, products, orders, deliveries, and invoices.
  *
- * @param children
- * @constructor
+ * @param {React.ReactNode} children - The child components that will have access
+ * to the context.
  */
 export const AppProvider: React.FC = ({children}) => {
     // User interaction indicators
@@ -81,6 +88,10 @@ export const AppProvider: React.FC = ({children}) => {
 
 
 /**
- * Context access function exported.
+ * `useAppContext` is a custom hook that allows components to access the application
+ * context. It returns the context value, providing access to the application's state
+ * and functions to manipulate it.
+ *
+ * @returns {AppContextInterfaces.AppContext} The application context value.
  */
-export const useAppContext = () => React.useContext(AppContext);
+export const useAppContext = (): AppContextInterfaces.AppContext => React.useContext(AppContext);
