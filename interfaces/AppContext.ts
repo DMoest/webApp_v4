@@ -1,6 +1,6 @@
 import * as ProductsInterfaces from './products';
 import * as OrdersInterfaces from './orders';
-import * as DeliveriesInterfaces from './deliveries';
+import * as DeliveriesInterfaces from './Delivery';
 import * as InvoicesInterfaces from './invoices';
 
 
@@ -22,9 +22,9 @@ export interface AppContext {
     orders: OrdersInterfaces.Order[];
     setOrders: (orders1: OrdersInterfaces.Order[]) => void;
 
-    // Deliveries
-    deliveries: DeliveriesInterfaces.Deliveries[];
-    setDeliveries: (deliveries1: DeliveriesInterfaces.Deliveries[] | void) => void;
+    // Delivery
+    deliveries: DeliveriesInterfaces.Delivery[];
+    setDeliveries: (deliveries1: DeliveriesInterfaces.Delivery[] | void) => void;
 
     // Invoices
     invoices: InvoicesInterfaces.Invoice[];

@@ -1,7 +1,7 @@
 /**
- * Deliveries interface.
+ * Delivery interface.
  */
-export interface Deliveries {
+export interface Delivery {
     id: number;
     product_id: string;
     product_name?: string;
@@ -14,7 +14,7 @@ export interface Deliveries {
 export interface DeliveryItemProps {
     route: {
         params: {
-            item: Deliveries;
+            item: Delivery;
         };
     };
 }

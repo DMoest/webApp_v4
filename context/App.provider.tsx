@@ -2,7 +2,7 @@
  * Module imports.
  */
 import React, {createContext, useState} from 'react';
-import * as DeliveriesInterfaces from '../interfaces/Deliveries';
+import * as DeliveriesInterfaces from '../interfaces/Delivery';
 import * as OrdersInterfaces from '../interfaces/Order';
 import * as ProductsInterfaces from '../interfaces/Product';
 import * as InvoicesInterfaces from '../interfaces/Invoice';
@@ -49,7 +49,7 @@ export const AppProvider: React.FC = ({children}) => {
         OrdersInterfaces.Order[] | null
     >(null);
     const [deliveries, setDeliveries] = useState<
-        DeliveriesInterfaces.Deliveries[] | null
+        DeliveriesInterfaces.Delivery[] | null
     >(null);
     const [invoices, setInvoices] = useState<
         InvoicesInterfaces.Invoice[] | null

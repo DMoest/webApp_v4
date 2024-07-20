@@ -5,7 +5,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import * as Style from '../../assets/styles';
-import * as DeliveryInterfaces from '../../interfaces/Deliveries';
+import * as DeliveryInterfaces from '../../interfaces/Delivery';
 import { Typography } from '../../assets/styles';
 
 /**

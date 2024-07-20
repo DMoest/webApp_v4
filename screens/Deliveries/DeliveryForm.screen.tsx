@@ -14,13 +14,13 @@ import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { DeliveryProductPicker } from '../../components/Delivery/DeliveryProductPicker';
 import { StatusBar } from 'expo-status-bar';
-import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
+import * as DeliveriesInterfaces from '../../interfaces/Delivery';
 import * as StockInterfaces from '../../interfaces/Product';
 import * as ProductModel from '../../models/Products';
 import * as DeliveryModel from '../../models/Deliveries';
 import config from '../../config/config.json';
 import * as Style from '../../assets/styles';
-import { Deliveries } from '../../interfaces/Deliveries';
+import {Delivery} from '../../interfaces/Delivery';
 
 /**
  * Create new delivery form component.
@@ -32,7 +32,7 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
     const appContext = useAppContext();
 
     const [newDelivery, setNewDelivery] =
-        useState<Partial<DeliveriesInterfaces.Deliveries>>();
+        useState<Partial<DeliveriesInterfaces.Delivery>>();
     const [selectedProduct, setSelectedProduct] =
         useState<StockInterfaces.Product>(appContext.products[0]);
 
@@ -47,7 +47,7 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
                 });
             }
 
-            const initialDeliveryValues: Deliveries = {
+            const initialDeliveryValues: Delivery = {
                 product_id: appContext.products[0].id.toString(),
                 delivery_date: new Date().toLocaleDateString('se-SV'),
                 amount: 0,

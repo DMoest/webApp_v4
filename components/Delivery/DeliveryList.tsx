@@ -4,7 +4,7 @@ import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native'
 import {FlatList, Pressable, Text, View} from 'react-native';
 import {DeliveryListItem} from './DeliveryListItem';
 import {LoadingIndicator} from '../Utils/LoadingIndicator';
-import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
+import * as DeliveriesInterfaces from '../../interfaces/Delivery';
 import * as DeliveryModel from '../../models/Deliveries';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
@@ -55,7 +55,7 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
      * logged to the console. Regardless of the outcome, the `reload` flag is set to false at the end of
      * the operation to indicate that a reload is no longer necessary.
      *
-     * @returns {Promise<DeliveriesInterfaces.Deliveries[] | undefined>} A promise that resolves to the
+     * @returns {Promise<DeliveriesInterfaces.Delivery[] | undefined>} A promise that resolves to the
      * list of fetched deliveries or undefined if an error occurs.
      */
     async function loadDeliveries(): Promise<void> {
@@ -154,7 +154,7 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
             return (
                 <FlatList
                     data={appContext.deliveries}
-                    keyExtractor={(item: DeliveriesInterfaces.Deliveries) =>
+                    keyExtractor={(item: DeliveriesInterfaces.Delivery) =>
                         item.id.toString()
                     }
                     renderItem={renderItem}

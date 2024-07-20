@@ -1,12 +1,20 @@
 import React from 'react';
 import config from '../config/config.json';
-import DeliveriesInterfaces from '../interfaces/Deliveries';
+import DeliveriesInterfaces from '../interfaces/Delivery';
 import { RequestErrorHandler } from '../components/Utils/ErrorHandler';
 
+
 /**
- * Get all deliveries.
+ * Fetches all deliveries from the API.
+ *
+ * This function asynchronously retrieves a list of all deliveries from the API
+ * and returns them as an array of `Delivery` objects. If the request fails for any reason,
+ * it catches the error, handles it using `RequestErrorHandler`, and returns an empty array.
+ *
+ * @returns {Promise<DeliveriesInterfaces.Delivery[]>} A promise that resolves to an array of
+ * `Delivery` objects.
  */
-export async function getDeliveries(): Promise<DeliveriesInterfaces.Deliveries[] | void> {
+export async function getDeliveries(): Promise<DeliveriesInterfaces.Deliveries[]> {
     try {
         const response = await fetch(
             `${config.base_url}/deliveries?api_key=${config.api_key}`,
@@ -17,12 +25,23 @@ export async function getDeliveries(): Promise<DeliveriesInterfaces.Deliveries[]
     } catch (error) {
         RequestErrorHandler(error);
     }
+
+    return [];
 }
 
+
 /**
- * Create new delivery.
+ * Creates a new delivery in the API.
  *
- * @param delivery
+ * This function sends an asynchronous request to create a new delivery in the API.
+ * It uses the HTTP POST method to submit the delivery details. If the request is successful,
+ * it returns the newly created delivery object. In case of an error, it catches the error
+ * and handles it using `RequestErrorHandler`.
+ *
+ * @param {Partial<DeliveriesInterfaces.Deliveries>} delivery - An object containing the new delivery
+ * details.
+ * @returns {Promise<DeliveriesInterfaces.Deliveries>} A promise that resolves to the newly created
+ * delivery object.
  */
 export async function createDelivery(
     delivery: Partial<DeliveriesInterfaces.Deliveries>,

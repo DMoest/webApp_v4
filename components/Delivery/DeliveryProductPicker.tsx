@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {useAppContext} from '../../context/App.provider';
-import * as DeliveriesInterfaces from '../../interfaces/Deliveries';
+import * as DeliveriesInterfaces from '../../interfaces/Delivery';
 import * as StockInterfaces from '../../interfaces/Product';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles/index';
@@ -12,7 +12,7 @@ import * as Style from '../../assets/styles/index';
  * Type for DeliveryProductPicker Component input props.
  */
 type NewDeliveryPropsType = {
-    newDelivery: Partial<DeliveriesInterfaces.Deliveries>;
+    newDelivery: Partial<DeliveriesInterfaces.Delivery>;
     setNewDelivery: () => void;
     setSelectedProduct: (productsHash: any) => void;
 };
