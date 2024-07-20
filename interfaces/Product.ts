@@ -55,7 +55,8 @@ export interface ProductCreate {
 
 /**
  * Describes the structure for updating an existing product's information.
- * This interface outlines both the required fields for identifying the product and the optional fields that can be updated.
+ * This interface outlines both the required fields for identifying the product and the optional fields
+ * that can be updated.
  *
  * @interface ProductUpdate
  * @property {number} id - The unique identifier of the product to be updated.
@@ -63,7 +64,8 @@ export interface ProductCreate {
  * @property {string} api_key - An API key required for product update operations.
  * @property {string} [article_number] - Optional. New or updated article number of the product.
  * @property {string} [description] - Optional. New or updated description of the product.
- * @property {string} [specifiers] - Optional. New or updated specifications or characteristics of the product.
+ * @property {string} [specifiers] - Optional. New or updated specifications or characteristics of the
+ * product.
  * @property {number} [stock] - Optional. Updated stock quantity for the product.
  * @property {string} [location] - Optional. New or updated storage location of the product.
  * @property {number} [price] - Optional. New or updated selling price of the product.
