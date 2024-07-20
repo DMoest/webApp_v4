@@ -9,19 +9,21 @@
  *
  * Purpose:
  * The primary purpose of these interfaces is to ensure type safety and consistency across the application's
- * authentication flow, from the presentation layer down to the network communication with the backend server.
- * By adhering to these interfaces, the application can facilitate secure and efficient user authentication,
- * registration, and state management.
+ * authentication flow, from the presentation layer down to the network communication with the backend
+ * server. By adhering to these interfaces, the application can facilitate secure and efficient user
+ * authentication, registration, and state management.
  *
  * Usage:
- * These interfaces are integral to the authentication system, interacting with models, components, and screens
- * that handle user authentication. They are used to type-check the data sent to and received from the server,
- * manage user session state, and guide the development of authentication-related UI components.
+ * These interfaces are integral to the authentication system, interacting with models, components, and
+ * screens that handle user authentication. They are used to type-check the data sent to and received from
+ * the server, manage user session state, and guide the development of authentication-related UI components.
  *
  * Related Modules:
  * - `models/Auth`: Defines the data models related to authentication.
- * - `components/Auth`: Contains React components that utilize these interfaces for prop types and state management.
- * - `screens/Auth`: Screens in the application that involve authentication, leveraging these interfaces for consistency.
+ * - `components/Auth`: Contains React components that utilize these interfaces for prop types and state
+ * management.
+ * - `screens/Auth`: Screens in the application that involve authentication, leveraging these interfaces
+ * for consistency.
  *
  * @module interfaces/Auth
  */
@@ -119,6 +121,6 @@ export interface AuthContextType {
     isLoggedIn: boolean;
     setIsLoggedIn: (authIndicator: boolean) => void;
     login: (username: string, password: string) => Promise<void>;
-    logout: () => Promise<void>; // Note the Promise<void> since logout is async
-    register: (username: string, password: string) => Promise<void>; // Note the Promise<void> since register is async
+    logout: () => Promise<void>;
+    register: (username: string, password: string) => Promise<void>;
 }
