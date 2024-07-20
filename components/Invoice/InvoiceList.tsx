@@ -43,7 +43,7 @@ export const InvoiceList: React.FC = (): React.ReactElement => {
     const appContext = useAppContext();
     const navigation = useNavigation();
     const route = useRoute<RouteParams>();
-    let reload = route.params?.reload ?? false;
+    let reload: boolean | null = route.params?.reload ?? false;
 
 
     /**
@@ -79,13 +79,13 @@ export const InvoiceList: React.FC = (): React.ReactElement => {
      *
      * Dependencies:
      * - reload: A boolean indicating whether a reload of invoices is requested.
-     * - appContext.invoices.length: The current number of invoices loaded, used to determine if loading
+     * - appContext.invoices: The current number of invoices loaded, used to determine if loading
      * is necessary.
      * - navigation.setParams: Function from navigation to reset the reload parameter.
      */
     useFocusEffect(
         useCallback((): void => {
-            if (reload === true || !appContext.invoices.length) {
+            if (!appContext.invoices || reload === true) {
                 void loadInvoices().then((): void => {
                     // Reset the reload parameter to false after loading deliveries
                     navigation.setParams({reload: false});
@@ -93,7 +93,7 @@ export const InvoiceList: React.FC = (): React.ReactElement => {
             } else {
                 appContext.setIsLoading(false);
             }
-        }, [reload, appContext.invoices.length, navigation.setParams])
+        }, [appContext.invoices, reload, navigation.setParams])
     );
 
 
