@@ -116,8 +116,8 @@ export interface AuthResponse {
  * user registration.
  */
 export interface AuthContextType {
-    user: AuthInterfaces.User | undefined;
-    setUser: (user: AuthInterfaces.User) => void;
+    user: User | undefined;
+    setUser: (user: User) => void;
     isLoggedIn: boolean;
     setIsLoggedIn: (authIndicator: boolean) => void;
     login: (username: string, password: string) => Promise<void>;
