@@ -2,11 +2,11 @@
  * Module imports.
  */
 import React, {createContext, useState} from 'react';
+import * as AppContextInterfaces from '../interfaces/AppContext';
 import * as DeliveriesInterfaces from '../interfaces/Delivery';
 import * as OrdersInterfaces from '../interfaces/Order';
 import * as ProductsInterfaces from '../interfaces/Product';
 import * as InvoicesInterfaces from '../interfaces/Invoice';
-import * as AppContextInterfaces from '../interfaces/AppContext';
 
 
 /**
@@ -14,10 +14,10 @@ import * as AppContextInterfaces from '../interfaces/AppContext';
  */
 const AppContext = createContext<AppContextInterfaces.AppContext>({
     isLoading: false,
-    setIsLoading(isLoading: boolean): void {
+    setIsLoading(): void {
     },
     isRefreshing: false,
-    setIsRefreshing: (isRefreshing: boolean): void => {
+    setIsRefreshing: (): void => {
     },
     products: [],
     setProducts: () => [],
@@ -38,16 +38,17 @@ const AppContext = createContext<AppContextInterfaces.AppContext>({
  */
 export const AppProvider: React.FC = ({children}) => {
     // User interaction indicators
-    const [isLoading, setIsLoading] = useState(false);
-    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [isLoading, setIsLoading] = useState<
+        boolean>(false);
+    const [isRefreshing, setIsRefreshing] = useState<
+        boolean>(false);
 
     // API Objects
-    const [products, setProducts] = useState<ProductsInterfaces.Product[] | null
+    const [products, setProducts] = useState<
+        ProductsInterfaces.Product[] | null
     >(null);
-    const [orders, setOrders] = useState<OrdersInterfaces.Order[] | null>(null);
-    const [packedOrders, setPackedOrders] = useState<
-        OrdersInterfaces.Order[] | null
-    >(null);
+    const [orders, setOrders] = useState<
+        OrdersInterfaces.Order[] | null>(null);
     const [deliveries, setDeliveries] = useState<
         DeliveriesInterfaces.Delivery[] | null
     >(null);
@@ -63,6 +64,7 @@ export const AppProvider: React.FC = ({children}) => {
                 setIsLoading,
                 isRefreshing,
                 setIsRefreshing,
+
                 products,
                 setProducts,
                 orders,
