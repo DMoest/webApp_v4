@@ -1,10 +1,12 @@
 /**
- * Provides a React context for authentication, encapsulating the logic for user login, logout, and registration.
- * This context makes user authentication state and functions available throughout the component tree.
+ * Provides a React context for authentication, encapsulating the logic for user login, logout, and
+ * registration. This context makes user authentication state and functions available throughout the
+ * component tree.
  *
- * The `AuthProvider` component wraps the application's component tree to provide every child component access to the authentication context.
- * It maintains the state of the current user, whether the user is logged in, and any authentication-related loading or error states.
- * Functions for login, logout, and registration are provided to manipulate the authentication state.
+ * The `AuthProvider` component wraps the application's component tree to provide every child component
+ * access to the authentication context. It maintains the state of the current user, whether the user is
+ * logged in, and any authentication-related loading or error states. Functions for login, logout, and
+ * registration are provided to manipulate the authentication state.
  *
  * @module AuthProvider
  * @exports AuthProvider The provider component for the authentication context.
@@ -27,7 +29,8 @@ import {AuthContextType} from "../interfaces/Auth";
  * @context
  * @type {React.Context<AuthContextType>}
  */
-const AuthContext: React.Context<AuthInterfaces.AuthContextType> = createContext<AuthContextType>({
+const AuthContext: React.Context<AuthInterfaces.AuthContextType> = createContext<
+    AuthContextType>({
     user: undefined,
     setUser(user: AuthInterfaces.User | null): void {
     },
@@ -60,10 +63,14 @@ const AuthContext: React.Context<AuthInterfaces.AuthContextType> = createContext
  * the authentication context.
  */
 export const AuthProvider: React.FC = ({children}) => {
-    const [user, setUser] = useState<AuthInterfaces.User | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const [error, setError] = useState<Error | null>(null);
+    const [isLoading, setIsLoading] = useState<
+        boolean>(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<
+        boolean>(false);
+    const [user, setUser] = useState<
+        AuthInterfaces.User | null>(null);
+    const [error, setError] = useState<
+        Error | null>(null);
 
 
     const login = async (email: string, password: string): Promise<void> => {
