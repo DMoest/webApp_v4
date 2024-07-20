@@ -1,6 +1,3 @@
-/**
- * Module imports.
- */
 import React, {useCallback, useMemo, useState} from 'react';
 import {
     FlatList,
@@ -20,10 +17,11 @@ import * as Style from '../../assets/styles';
 
 
 /**
- * OrdersList object to fetch order list from API and generate a FlatList View from response JSON object.
- * Before the FlatList is generated orders are filtered to only show the new once.
+ * Represents a tab view containing lists of orders categorized by their status (New, Packed, Sent, Returns).
+ * Utilizes the React Native Tab View for navigation between these lists. Each list can refresh to fetch the latest orders.
+ * Handles loading states and displays a loading indicator accordingly.
  *
- * @constructor
+ * @returns {React.ReactElement} A component that renders a tab view with lists of orders.
  */
 export const OrderList: React.FC = (): React.ReactElement => {
     const appContext = useAppContext();
@@ -36,28 +34,23 @@ export const OrderList: React.FC = (): React.ReactElement => {
         {key: 'third', title: 'Skickade', icon: 'paper-plane'},
         {key: 'fourth', title: 'Returer', icon: 'undo-alt'},
     ]);
-    const reload: boolean | null = route.params?.reload ?? false;
+    let reload: boolean | null = route.params?.reload ?? false;
 
 
     /**
-     * Asynchronously loads orders from the API and updates the application context.
+     * Asynchronously fetches orders from an API and updates the application context with the fetched orders.
+     * Sets the refreshing state during the loading process and logs any errors encountered.
      *
-     * This function performs the following operations:
-     * 1. Sets the application context's `isRefreshing` state to `true` to indicate the start of the loading process.
-     * 2. Attempts to fetch orders using the `OrderModel.getOrders` method.
-     * 3. Updates the application context's `orders` state with the fetched orders.
-     * 4. In case of an error, logs the error to the console.
-     * 5. Finally, sets the `isRefreshing` state to `false` and `reload` state to `false`, indicating the end of the loading process.
-     *
-     * @returns {Promise<OrderInterfaces.Order[]>} A promise that resolves to the list of loaded orders.
+     * @async
+     * @function loadOrders
+     * @returns {Promise<void>} A promise that resolves when orders have been fetched and the application
+     * context has been updated.
      */
-    const loadOrders = async () => {
+    const loadOrders = async (): Promise<void> => {
         appContext.setIsRefreshing(true);
 
         try {
             appContext.setOrders(await OrderModel.getOrders());
-
-            return appContext.orders;
         } catch (error) {
             console.error(error);
         } finally {
@@ -65,107 +58,105 @@ export const OrderList: React.FC = (): React.ReactElement => {
         }
     };
 
+
     /**
-     * A hook that triggers order reloading based on navigation parameters or order list length.
+     * A hook that triggers the reloading of orders based on specific conditions, such as navigation
+     * parameters or the current order list being empty. Ensures that the latest orders are fetched and
+     * displayed whenever the component comes into focus.
      *
-     * This hook utilizes `useFocusEffect` to listen for the screen coming into focus. Upon focus,
-     * it checks if the `reload` parameter in the route's parameters is `true` or if the order list
-     * is empty (`appContext.orders.length === 0`). If either condition is met, it calls the `loadOrders`
-     * function to fetch and update the order list. After successfully reloading orders, it resets the
-     * `reload` parameter to `false` to prevent unnecessary reloads on subsequent focuses unless explicitly
-     * requested again.
-     *
-     * Dependencies:
-     * - `route.params?.reload`: The navigation parameter that indicates whether to reload the orders.
-     * - `appContext.orders.length`: The current length of the order list, to check if the list is empty.
-     * - `navigation.setParams`: The navigation function used to reset the `reload` parameter.
+     * @hook useFocusEffect
+     * @effect Triggers order reloading based on navigation parameters or order list length.
      */
     useFocusEffect(
         useCallback((): void => {
-            if (reload === true || appContext.orders.length === 0) {
+            if (!appContext.orders || reload === true) {
                 void loadOrders().then(() => {
                     // Reset the reload parameter to false after loading orders
                     navigation.setParams({reload: false});
                 });
             }
-        }, [reload, appContext.orders.length, navigation.setParams])
+        }, [reload, appContext.orders, navigation.setParams])
     );
 
 
     /**
-     * Memoized array of new orders.
+     * Memoized array that filters orders by their status to new orders.
+     * Optimizes performance by reducing unnecessary recalculations and re-renders.
      *
-     * Filters the orders from the application context to include only those with a status_id of 100,
-     * indicating they are new orders. This memoization ensures that the filtering operation is only
-     * re-executed when the `appContext.orders` array changes, improving performance by avoiding
-     * unnecessary recalculations on every render.
-     *
-     * @returns {OrderInterfaces.Order[]} An array of order objects that are new.
+     * @memo newOrders
+     * @returns {OrderInterfaces.Order[]} An array of new order objects.
      */
     const newOrders: OrderInterfaces.Order[] = useMemo(() => {
-        return appContext.orders.filter(
-            (order: OrderInterfaces.Order): boolean => order.status_id === 100,
-        );
+        if (appContext.orders) {
+            return appContext.orders.filter(
+                (order: OrderInterfaces.Order): boolean => order.status_id === 100,
+            );
+        } else {
+            return [];
+        }
     }, [appContext.orders]);
 
 
     /**
-     * Memoized array of packed orders.
+     * Memoized array that filters orders by their status to packed orders.
+     * Optimizes performance by reducing unnecessary recalculations and re-renders.
      *
-     * Utilizes the useMemo hook to filter and return orders from the application context that have a status_id of 200,
-     * indicating they are packed orders. This memoization optimizes performance by ensuring the filtering operation
-     * is only re-executed when the `appContext.orders` array changes, thus avoiding unnecessary recalculations on
-     * every render.
-     *
-     * @returns {OrderInterfaces.Order[]} An array of order objects that are packed.
+     * @memo packedOrders
+     * @returns {OrderInterfaces.Order[]} An array of packed order objects.
      */
     const packedOrders: OrderInterfaces.Order[] = useMemo(() => {
+        if (appContext.orders) {
         return appContext.orders.filter(
             (order: OrderInterfaces.Order): boolean => order.status_id === 200,
         );
+        } else {
+            return [];
+        }
     }, [appContext.orders]);
 
 
     /**
-     * Memoized array of sent orders.
+     * Memoized array that filters orders by their status to sent orders.
+     * Optimizes performance by reducing unnecessary recalculations and re-renders.
      *
-     * Utilizes the useMemo hook to filter and return orders from the application context that have a status_id of 400,
-     * indicating they are sent orders. This memoization optimizes performance by ensuring the filtering operation
-     * is only re-executed when the `appContext.orders` array changes, thus avoiding unnecessary recalculations on
-     * every render.
-     *
-     * @returns {OrderInterfaces.Order[]} An array of order objects that are sent.
+     * @memo sentOrders
+     * @returns {OrderInterfaces.Order[]} An array of sent order objects.
      */
     const sentOrders: OrderInterfaces.Order[] = useMemo(() => {
+        if (appContext.orders) {
         return appContext.orders.filter(
             (order: OrderInterfaces.Order): boolean => order.status_id === 400,
         );
+        } else {
+            return [];
+        }
     }, [appContext.orders]);
 
 
     /**
-     * Memoized array of return orders.
+     * Memoized array that filters orders by their status to return orders.
+     * Optimizes performance by reducing unnecessary recalculations and re-renders.
      *
-     * Utilizes the useMemo hook to filter and return orders from the application context that have a status_id of 800,
-     * indicating they are return orders. This memoization optimizes performance by ensuring the filtering operation
-     * is only re-executed when the `appContext.orders` array changes, thus avoiding unnecessary recalculations on
-     * every render.
-     *
-     * @returns {OrderInterfaces.Order[]} An array of order objects that are returns.
+     * @memo returnOrders
+     * @returns {OrderInterfaces.Order[]} An array of return order objects.
      */
     const returnOrders: OrderInterfaces.Order[] = useMemo(() => {
-        return appContext.orders.filter(
-            (order: OrderInterfaces.Order): boolean => order.status_id === 800,
+        if (appContext.orders) {
+            return appContext.orders.filter((order: OrderInterfaces.Order): boolean => order.status_id === 800,
         );
+        } else {
+            return [];
+        }
     }, [appContext.orders]);
 
 
     /**
      * Renders a list of new orders using a FlatList component.
      *
-     * This component displays orders that have been marked as new (status_id of 100). It uses the `newOrders`
-     * array for its data source. Each item in the list is rendered using the `renderItem` function. The list supports
-     * pull-to-refresh, which triggers the `loadOrders` function to reload the orders from the API.
+     * This component displays orders that have been marked as new (status_id of 100). It uses the
+     * `newOrders` array for its data source. Each item in the list is rendered using the `renderItem`
+     * function. The list supports pull-to-refresh, which triggers the `loadOrders` function to reload the
+     * orders from the API.
      *
      * @component
      * @returns {React.ReactElement} A FlatList component displaying new orders.
@@ -185,9 +176,10 @@ export const OrderList: React.FC = (): React.ReactElement => {
     /**
      * Renders a list of packed orders using a FlatList component.
      *
-     * This component displays orders that have been marked as packed (status_id of 200). It uses the `packedOrders`
-     * array for its data source. Each item in the list is rendered using the `renderItem` function. The list supports
-     * pull-to-refresh, which triggers the `loadOrders` function to reload the orders from the API.
+     * This component displays orders that have been marked as packed (status_id of 200). It uses the
+     * `packedOrders` array for its data source. Each item in the list is rendered using the `renderItem`
+     * function. The list supports pull-to-refresh, which triggers the `loadOrders` function to reload the
+     * orders from the API.
      *
      * @component
      * @returns {React.ReactElement} A FlatList component displaying packed orders.
@@ -207,9 +199,10 @@ export const OrderList: React.FC = (): React.ReactElement => {
     /**
      * Renders a list of sent orders using a FlatList component.
      *
-     * This component displays orders that have been marked as sent (status_id of 400). It uses the `sentOrders`
-     * array for its data source. Each item in the list is rendered using the `renderItem` function. The list supports
-     * pull-to-refresh, which triggers the `loadOrders` function to reload the orders from the API.
+     * This component displays orders that have been marked as sent (status_id of 400). It uses the
+     * `sentOrders` array for its data source. Each item in the list is rendered using the `renderItem`
+     * function. The list supports pull-to-refresh, which triggers the `loadOrders` function to reload the
+     * orders from the API.
      *
      * @component
      * @returns {React.ReactElement} A FlatList component displaying sent orders.
@@ -229,9 +222,10 @@ export const OrderList: React.FC = (): React.ReactElement => {
     /**
      * Renders a list of return orders using a FlatList component.
      *
-     * This component displays orders that have been marked as returns (status_id of 800). It uses the `returnOrders`
-     * array for its data source. Each item in the list is rendered using the `renderItem` function. The list supports
-     * pull-to-refresh, which triggers the `loadOrders` function to reload the orders from the API.
+     * This component displays orders that have been marked as returns (status_id of 800). It uses the
+     * `returnOrders` array for its data source. Each item in the list is rendered using the `renderItem`
+     * function. The list supports pull-to-refresh, which triggers the `loadOrders` function to reload the
+     * orders from the API.
      *
      * @component
      * @returns {React.ReactElement} A FlatList component displaying return orders.
@@ -251,9 +245,10 @@ export const OrderList: React.FC = (): React.ReactElement => {
     /**
      * Renders an individual order item as a pressable component.
      *
-     * This function component takes an order item and renders it within a `Pressable` component to make it interactive.
-     * The `Pressable` component changes its background color based on the press state to provide visual feedback to the user.
-     * Upon pressing, it navigates to the 'Orderhanterare' screen with the pressed order item as a parameter.
+     * This function component takes an order item and renders it within a `Pressable` component to make
+     * it interactive. The `Pressable` component changes its background color based on the press state to
+     * provide visual feedback to the user. Upon pressing, it navigates to the 'Orderhanterare' screen
+     * with the pressed order item as a parameter.
      *
      * @param {Object} {item} - The order item to be rendered. It is an object containing order details.
      * @returns {React.ReactElement} A pressable component representing an individual order item.
@@ -280,17 +275,18 @@ export const OrderList: React.FC = (): React.ReactElement => {
     /**
      * Maps each tab to its corresponding component for rendering.
      *
-     * This constant utilizes the `SceneMap` function from `react-native-tab-view` to map each tab identified by a key
-     * to its respective component. The keys 'first', 'second', 'third', and 'fourth' correspond to tabs for new orders,
-     * packed orders, sent orders, and return orders, respectively. Each key is associated with a component that renders
-     * a list of orders based on their status.
+     * This constant utilizes the `SceneMap` function from `react-native-tab-view` to map each tab
+     * identified by a key to its respective component. The keys 'first', 'second', 'third', and 'fourth'
+     * correspond to tabs for new orders, packed orders, sent orders, and return orders, respectively.
+     * Each key is associated with a component that renders a list of orders based on their status.
      *
      * - 'first' maps to `NewOrdersList`, which renders a list of new orders.
      * - 'second' maps to `PackedOrdersList`, which renders a list of packed orders.
      * - 'third' maps to `SentOrdersList`, which renders a list of sent orders.
      * - 'fourth' maps to `ReturnOrdersList`, which renders a list of return orders.
      *
-     * This mapping is used by the `TabView` component to render the appropriate list based on the selected tab.
+     * This mapping is used by the `TabView` component to render the appropriate list based on the
+     * selected tab.
      */
     const renderScene = SceneMap({
         first: NewOrdersList,
@@ -304,12 +300,12 @@ export const OrderList: React.FC = (): React.ReactElement => {
      * Customizes the tab bar for the TabView component.
      *
      * This function component renders a custom tab bar for the `TabView` component using the `TabBar` from
-     * `react-native-tab-view`. It customizes the appearance of the tab bar and its items, including the indicator
-     * and label styles, based on the application's color scheme and typography settings.
+     * `react-native-tab-view`. It customizes the appearance of the tab bar and its items, including the
+     * indicator and label styles, based on the application's color scheme and typography settings.
      *
-     * The tab bar's indicator style and the tab label's style change dynamically based on whether the tab is focused,
-     * providing visual feedback to the user. Icons for each tab are rendered using the `FontAwesome5` component, with
-     * their appearance also changing based on the tab's focus state.
+     * The tab bar's indicator style and the tab label's style change dynamically based on whether the
+     * tab is focused, providing visual feedback to the user. Icons for each tab are rendered using the
+     * `FontAwesome5` component, with their appearance also changing based on the tab's focus state.
      *
      * @param {Object} props - The props passed to the `TabBar` component.
      * @returns {React.ReactElement} A `TabBar` component with customized styling and behavior.
