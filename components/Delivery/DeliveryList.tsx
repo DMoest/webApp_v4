@@ -86,13 +86,13 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
      */
     useFocusEffect(
         useCallback((): void => {
-            if (reload === true || appContext.deliveries.length === 0) {
+            if (!appContext.deliveries || reload === true) {
                 void loadDeliveries().then((): void => {
                     // Reset the reload parameter to false after loading deliveries
                     navigation.setParams({reload: false});
                 });
             }
-        }, [reload, appContext.deliveries.length, navigation.setParams])
+        }, [appContext.deliveries, reload, navigation.setParams])
     );
 
 
@@ -130,7 +130,7 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
      * there are no deliveries or a FlatList of delivery items based on the current state of deliveries
      * in the app context.
      *
-     * If there are no deliveries (`appContext.deliveries.length === 0`), it renders a view with a
+     * If there are no deliveries (`!appContext.deliveries`), it renders a view with a
      * warning message. Otherwise, it renders a FlatList component populated with delivery items. The
      * FlatList is configured to refresh on pull-down, invoking the `loadDeliveries` function to fetch and
      * display the latest deliveries.
@@ -142,7 +142,7 @@ export const DeliveryList: React.FC = (): React.ReactElement => {
      * a FlatList of delivery items.
      */
     const renderDeliveriesList: React.ReactElement = useMemo(() => {
-        if (appContext.deliveries.length === 0) {
+        if (!appContext.deliveries) {
             return (
                 <View style={Style.Container.warningMsgContainer}>
                     <Text style={Style.Typography.warningFlashMsg}>
