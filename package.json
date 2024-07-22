@@ -23,6 +23,7 @@
     "@expo-google-fonts/josefin-sans": "^0.2.3",
     "@expo-google-fonts/merriweather": "^0.2.3",
     "@expo-google-fonts/oleo-script-swash-caps": "^0.2.3",
+    "@expo/metro-runtime": "~3.2.1",
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-masked-view/masked-view": "0.3.1",
     "@react-native-picker/picker": "2.7.5",
