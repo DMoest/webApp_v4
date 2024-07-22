@@ -137,3 +137,13 @@ npm-debug.*
 
 # Mac specifics
 .DS_Store
+
+
+# Builds
+android/
+build/
+dist/
+ios/
+prod/
+production/
+public/
