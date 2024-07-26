@@ -10,6 +10,7 @@ import * as DeliveriesInterfaces from '../interfaces/Delivery';
 import * as OrdersInterfaces from '../interfaces/Order';
 import * as ProductsInterfaces from '../interfaces/Product';
 import * as InvoicesInterfaces from '../interfaces/Invoice';
+import * as UserPositionInterfaces from "../interfaces/UserPosition";
 
 
 /**
@@ -24,6 +25,7 @@ const AppContext = createContext<AppContextInterfaces.AppContext>({
     isRefreshing: false,
     setIsRefreshing: (): void => {
     },
+
     products: [],
     setProducts: () => [],
     orders: [],
@@ -32,6 +34,10 @@ const AppContext = createContext<AppContextInterfaces.AppContext>({
     setDeliveries: () => [],
     invoices: [],
     setInvoices: () => [],
+
+    userPosition: null,
+    setUserPosition: (): void => {
+    },
 });
 
 
@@ -62,6 +68,8 @@ export const AppProvider: React.FC = ({children}) => {
     const [invoices, setInvoices] = useState<
         InvoicesInterfaces.Invoice[] | null
     >(null);
+    const [userPosition, setUserPosition] = useState<
+        UserPositionInterfaces.UserPosition | null>(null);
 
 
     return (
@@ -80,6 +88,9 @@ export const AppProvider: React.FC = ({children}) => {
                 setDeliveries,
                 invoices,
                 setInvoices,
+
+                userPosition,
+                setUserPosition,
             }}>
             {children}
         </AppContext.Provider>
