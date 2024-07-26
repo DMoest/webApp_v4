@@ -1,8 +1,7 @@
 /**
  * Module imports.
  */
-// eslint-disable-next-line import/namespace
-import {Dimensions, StyleProp, ViewStyle} from 'react-native';
+import {Dimensions, StyleProp, ViewStyle, StyleSheet} from 'react-native';
 import * as Color from './colors';
 import * as Typography from './typography';
 
@@ -23,6 +22,22 @@ export const content = {
     // Colors
     color: Color.text.dark,
     backgroundColor: Color.background.light,
+};
+
+export const mapContainer: StyleProp<Partial<ViewStyle>> = {
+    width: '100%',
+    height: 300,
+    paddingTop: Typography.whiteSpace[25],
+    paddingHorizontal: Typography.whiteSpace[50],
+    paddingBottom: Typography.whiteSpace[100],
+
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+};
+
+export const map: StyleProp<any> = {
+    ...StyleSheet.absoluteFillObject,
 };
 
 export const screenIntroductory = {
