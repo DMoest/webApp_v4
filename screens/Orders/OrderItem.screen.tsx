@@ -1,14 +1,17 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Pressable, ScrollView, Text, View} from 'react-native';
+import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native';
+import MapView, {Marker} from 'react-native-maps';
 import {StatusBar} from 'expo-status-bar';
 import {useAppContext} from "../../context/App.provider";
-import {useNavigation} from '@react-navigation/native';
 import * as OrderInterfaces from '../../interfaces/Order';
 import * as OrderModel from '../../models/Orders';
 import * as ProductInterfaces from '../../interfaces/Product';
 import * as ProductModel from '../../models/Products';
 import * as Style from '../../assets/styles';
 import {FontAwesome5} from '@expo/vector-icons';
+import * as NominatimModel from '../../models/Nominatim';
+import * as Location from 'expo-location';
 
 
 /**
@@ -18,7 +21,7 @@ import {FontAwesome5} from '@expo/vector-icons';
  */
 function productStockStatus(
     orderItem: OrderInterfaces.OrderItem,
-): React.JSX.Element {
+): React.ReactElement {
     const stockIndicatorElement: React.JSX.Element = useMemo(() => {
         let computedData: OrderInterfaces.OrderStockIndicatorElement = {
             color: '',
@@ -40,6 +43,7 @@ function productStockStatus(
             computedData.color = Style.Color.indicator.warning[300];
             computedData.text = `Produkten ${orderItem.name} saknar täckning för ordern i lagersaldot (${orderItem.stock}).`;
         }
+
 
         return (
             <View style={Style.Container.grid.row}>
@@ -70,6 +74,7 @@ function productStockStatus(
         );
     }, [orderItem.stock, orderItem.amount]);
 
+
     return (
         <View
             style={{
@@ -83,6 +88,7 @@ function productStockStatus(
     );
 }
 
+
 /**
  * OrderItem screen/view.
  *
@@ -91,14 +97,143 @@ function productStockStatus(
  */
 export const OrderItem: (
     props: OrderInterfaces.OrderItemProps,
-) => React.JSX.Element = (props: OrderInterfaces.OrderItemProps) => {
+) => React.ReactElement = (props: OrderInterfaces.OrderItemProps) => {
     const appContext = useAppContext();
     const navigation = useNavigation();
+    const route = useRoute();
     const order: OrderInterfaces.Order = props.route.params.item;
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [orderLocationMarker, setOrderLocationMarker] = useState<React.ReactElement | null>(null);
+    const [userPositionMarker, setUserPositionMarker] = useState<React.ReactElement | null>(null);
+    const mapRef = useRef<MapView>(null);
+    const reload: boolean | null = route.params?.reload ?? false;
+
+
+    /**
+     * Fetches the current user location and the order location, then sets the respective markers on the map.
+     *
+     * This function requests permission to access the user's location. If granted, it retrieves the current
+     * location coordinates and sets the user position in the application context. It also fetches the
+     * coordinates for the order address using the Nominatim model and sets the order location marker on
+     * the map. If the order address is not found, the order location marker is set to null. Additionally,
+     * it sets the user location marker on the map.
+     *
+     * @returns {Promise<void>} A promise that resolves when the data fetching and marker setting are
+     *  complete.
+     */
+    const fetchData = async (): Promise<void> => {
+        try {
+            const permission: Location.LocationPermissionResponse = await Location.requestForegroundPermissionsAsync();
+
+            if (permission.status !== 'granted') {
+                setErrorMessage('Permission to access location was denied');
+                return;
+            }
+
+            const location = await Location.getCurrentPositionAsync({});
+            if (location) {
+                appContext.setUserPosition({
+                    longitude: location.coords.longitude,
+                    latitude: location.coords.latitude,
+                });
+
+                setUserPositionMarker(
+                    <Marker
+                        coordinate={{
+                            latitude: location.coords.latitude,
+                            longitude: location.coords.longitude,
+                        }}
+                        title="Min position"
+                        pinColor="blue"
+                    />
+                );
+            } else {
+                setUserPositionMarker(null);
+            }
+
+
+            const response = await NominatimModel.getCoordinates(order.address);
+            if (response && response.length > 0) {
+                const pinColor = (): string =>
+                    order.status_id === 200 ? Style.Color.indicator.caution[300]
+                        : order.status_id === 400 ? Style.Color.indicator.positive[300]
+                            : Style.Color.indicator.info[300];
+
+                setOrderLocationMarker(
+                    <Marker
+                        coordinate={{
+                            latitude: parseFloat(response[0].lat),
+                            longitude: parseFloat(response[0].lon),
+                        }}
+                        title={order.name + " position"}
+                        pinColor={pinColor()}
+                    />,
+                );
+            } else {
+                setOrderLocationMarker(null);
+            }
+        } catch (error) {
+            console.error('Error: ', error);
+        }
+    };
+
+
+    /**
+     * Hook to handle focus effect for fetching user and order locations.
+     *
+     * This hook uses `useFocusEffect` to trigger the `fetchData` function when the screen comes into focus.
+     * It checks if the user position is not set or if a reload is required. If either condition is true,
+     * it calls the `fetchData` function to update the user and order locations. After fetching the data,
+     * it resets the reload parameter to false.
+     *
+     * Dependencies:
+     * - `appContext.userPosition`: The current user position from the application context.
+     * - `reload`: A boolean indicating if a reload is required.
+     * - `navigation.setParams`: Function to update the navigation parameters.
+     */
+    useFocusEffect(
+        useCallback((): void => {
+            if (!appContext.userPosition || reload) {
+                void fetchData();
+                navigation.setParams({reload: false});
+            }
+        }, [appContext.userPosition, reload, navigation.setParams])
+    );
+
+    useEffect(() => {
+        if (mapRef.current && userPositionMarker && orderLocationMarker) {
+            mapRef.current.fitToCoordinates(
+                [
+                    {
+                        latitude: appContext.userPosition.latitude,
+                        longitude: appContext.userPosition.longitude,
+                    },
+                    {
+                        latitude: parseFloat(orderLocationMarker.props.coordinate.latitude),
+                        longitude: parseFloat(orderLocationMarker.props.coordinate.longitude),
+                    },
+                ],
+                {
+                    edgePadding: {top: 50, right: 50, bottom: 50, left: 50},
+                    animated: true,
+                }
+            );
+        }
+    }, [userPositionMarker, orderLocationMarker]);
 
 
     /**
      * Compute boolean value to indicate if order is packable.
+     *
+     * This memoized value determines if the order is packable based on the order status and stock levels.
+     * It checks if the order status is 100, the order has items, and every item in the order has
+     * sufficient stock.
+     *
+     * Dependencies:
+     * - `order.status_id`: The current status ID of the order.
+     * - `order.order_items`: The list of items in the order.
+     *
+     * @returns {boolean} True if the order is packable, false otherwise.
      */
     const orderIsPackable: boolean = useMemo(
         (): boolean =>
@@ -112,8 +247,18 @@ export const OrderItem: (
         [order.status_id, order.order_items],
     );
 
+
     /**
      * Compute boolean value to indicate if order is missing items.
+     *
+     * This memoized value determines if the order is missing items based on the order status and the number of items.
+     * It checks if the order status is 100 and the order has no items.
+     *
+     * Dependencies:
+     * - `order.status_id`: The current status ID of the order.
+     * - `order.order_items.length`: The number of items in the order.
+     *
+     * @returns {boolean} True if the order is missing items, false otherwise.
      */
     const orderIsMissingItems: boolean = useMemo(
         (): boolean =>
@@ -121,45 +266,96 @@ export const OrderItem: (
         [order.status_id, order.order_items.length],
     );
 
+
     /**
      * Compute boolean value to indicate if order is packed.
+     *
+     * This memoized value determines if the order is packed based on the order status.
+     * It checks if the order status is 200.
+     *
+     * Dependencies:
+     * - `order.status_id`: The current status ID of the order.
+     *
+     * @returns {boolean} True if the order is packed, false otherwise.
      */
     const orderIsPacked: boolean = useMemo(
         (): boolean => order.status_id === 200,
         [order.status_id],
     );
 
+
     /**
      * Compute boolean value to indicate if order is sent to customer.
+     *
+     * This memoized value determines if the order is sent based on the order status.
+     * It checks if the order status is either 400 or 600.
+     *
+     * Dependencies:
+     * - `order.status_id`: The current status ID of the order.
+     *
+     * @returns {boolean} True if the order is sent, false otherwise.
      */
     const orderIsSent: boolean = useMemo(
         (): boolean => [400, 600].includes(order.status_id),
         [order.status_id],
     );
 
+
     /**
      * Compute boolean value to indicate if order is returned.
+     *
+     * This memoized value determines if the order is returned based on the order status.
+     * It checks if the order status is 800.
+     *
+     * Dependencies:
+     * - `order.status_id`: The current status ID of the order.
+     *
+     * @returns {boolean} True if the order is returned, false otherwise.
      */
     const orderIsReturned: boolean = useMemo(
         (): boolean => order.status_id === 800,
         [order.status_id],
     );
 
+
     /**
      * Compute boolean value to indicate if order is refunded.
+     *
+     * This memoized value determines if the order is refunded based on the order status.
+     * It checks if the order status is 900.
+     *
+     * Dependencies:
+     * - `order.status_id`: The current status ID of the order.
+     *
+     * @returns {boolean} True if the order is refunded, false otherwise.
      */
     const orderIsRefunded: boolean = useMemo(
         (): boolean => order.status_id === 900,
         [order.status_id],
     );
 
+
     /**
-     * Compute dynamic interaction element based on order status. This would allow the user pack the order if the
-     * order is packable or notify the user that the order is already packed, shipped, returned or refunded. The
-     * element displayed is based on the computed values based on status and stock levels.
+     * Compute dynamic interaction element based on order status.
+     *
+     * This memoized value determines the appropriate interaction element to display based on the order
+     * status and stock levels. It returns different elements for various order statuses, such as
+     * packable, packed, sent, returned, and refunded. The element displayed allows the user to pack the
+     * order, send the order, or shows relevant status messages.
+     *
+     * Dependencies:
+     * - `orderIsPackable`: Boolean indicating if the order is packable.
+     * - `orderIsPacked`: Boolean indicating if the order is packed.
+     * - `orderIsSent`: Boolean indicating if the order is sent.
+     * - `orderIsReturned`: Boolean indicating if the order is returned.
+     * - `orderIsRefunded`: Boolean indicating if the order is refunded.
+     * - `orderIsMissingItems`: Boolean indicating if the order is missing items.
+     * - `order.status_id`: The current status ID of the order.
+     *
+     * @returns {React.ReactElement} The interaction element to display based on the order status.
      */
-    const dynamicInteractionElement: React.JSX.Element =
-        useMemo((): React.JSX.Element => {
+    const dynamicInteractionElement: React.ReactElement =
+        useMemo((): React.ReactElement => {
             if (orderIsPackable) {
                 return (
                     <Pressable
@@ -208,8 +404,6 @@ export const OrderItem: (
                             ]}
                             onPress={async (): Promise<void> => {
                                 try {
-                                    console.log('SKICKA ORDER & RELOAD!');
-
                                     await OrderModel.updateOrderStatus(order.id, order.name, 400);
                                     await navigation.navigate('Orderlista', {
                                         reload: true,
@@ -283,7 +477,23 @@ export const OrderItem: (
             }
         }, [order.status_id]);
 
-    const orderDetails: React.JSX.Element = useMemo(() => {
+
+    /**
+     * Compute and render order details.
+     *
+     * This memoized value returns a React element that displays the details of an order, including the
+     * order ID, status, customer name, address, postal code, and city. It also includes a dynamic
+     * interaction element based on the order status.
+     *
+     * Dependencies:
+     * - `order`: The order object containing details such as ID, status, customer name, address, postal
+     *      code, and city.
+     * - `dynamicInteractionElement`: The interaction element to display based on the order status.
+     *
+     * @returns {React.ReactElement} The React element displaying the order details and dynamic
+     *      interaction element.
+     */
+    const orderDetails: React.ReactElement = useMemo(() => {
         return (
             <View style={Style.Container.content}>
                 <View style={Style.Container.grid.row}>
@@ -332,7 +542,50 @@ export const OrderItem: (
         );
     }, [order, dynamicInteractionElement]);
 
-    const orderListItems: React.JSX.Element[] = order.order_items.map(
+
+    /**
+     * Compute and render map element based on user and order locations.
+     *
+     * This memoized value returns a React element that displays a map centered around the user's position.
+     * It includes markers for the user's current location and the order location if available.
+     *
+     * Dependencies:
+     * - `appContext.userPosition`: The current user position from the application context.
+     * - `userPositionMarker`: The marker element for the user's position.
+     * - `orderLocationMarker`: The marker element for the order location.
+     *
+     * @returns {React.ReactElement | null} The React element displaying the map with markers, or null if
+     *      the user position is not available.
+     */
+    const mapElement: React.ReactElement | null = useMemo(() => {
+        if (!appContext.userPosition?.latitude || !appContext.userPosition?.longitude) {
+            return null;
+        }
+
+        return (
+            <View style={Style.Container.mapContainer}>
+                <MapView
+                    ref={mapRef}
+                    style={Style.Container.map}
+                    initialRegion={{
+                        // center around your position
+                        latitude: appContext.userPosition?.latitude,
+                        longitude: appContext.userPosition?.longitude,
+                        latitudeDelta: 0.1,
+                        longitudeDelta: 0.1,
+                    }}
+                    mapType={'hybrid'}
+                    // showsUserLocation={true}
+                >
+                    {userPositionMarker}
+                    {orderLocationMarker}
+                </MapView>
+            </View>
+        );
+    }, [appContext.userPosition, userPositionMarker, orderLocationMarker]);
+
+
+    const orderListItems: React.ReactElement[] = order.order_items.map(
         (orderListItem: OrderInterfaces.OrderItem, index: number) => (
             <View key={index}>
                 <View style={Style.Container.grid}>
@@ -430,10 +683,17 @@ export const OrderItem: (
         ),
     );
 
+
+    const shouldShowMapElement = [200, 400].includes(order.status_id);
+
+
     return (
         <View style={Style.Container.content}>
             <ScrollView style={Style.Container.scrollView}>
                 {orderDetails}
+
+                {shouldShowMapElement && mapElement}
+
                 {orderListItems}
             </ScrollView>
             <StatusBar style='auto'/>
