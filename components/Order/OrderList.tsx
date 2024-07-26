@@ -70,7 +70,7 @@ export const OrderList: React.FC = (): React.ReactElement => {
     useFocusEffect(
         useCallback((): void => {
             if (!appContext.orders || reload === true) {
-                void loadOrders().then(() => {
+                void loadOrders().then((): void => {
                     // Reset the reload parameter to false after loading orders
                     navigation.setParams({reload: false});
                 });
@@ -265,7 +265,7 @@ export const OrderList: React.FC = (): React.ReactElement => {
                 },
             ]}
             onPress={(): void => {
-                navigation.navigate('Orderhanterare', {item});
+                navigation.navigate('Orderhanterare', {item: item, reload: true});
             }}>
             <OrderListItem item={item}/>
         </Pressable>
