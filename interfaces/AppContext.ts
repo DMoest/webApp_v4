@@ -2,6 +2,7 @@ import * as ProductsInterfaces from './Product';
 import * as OrdersInterfaces from './Order';
 import * as DeliveriesInterfaces from './Delivery';
 import * as InvoicesInterfaces from './Invoice';
+import {UserPosition} from "./UserPosition";
 
 
 /**
@@ -49,4 +50,7 @@ export interface AppContext {
     // Invoices
     invoices: InvoicesInterfaces.Invoice[] | null;
     setInvoices: (invoices: InvoicesInterfaces.Invoice[] | null) => void;
+
+    userPosition: any;
+    setUserPosition: (userPosition: UserPosition) => void;
 }
