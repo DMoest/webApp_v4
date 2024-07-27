@@ -1,30 +1,61 @@
 /**
- * Module imports.
+ * @module AuthNavigator
+ *
+ * This module sets up a stack navigator for the authentication-related screens in the application.
+ * Depending on the user's authentication status, it either shows the invoice navigator or the
+ * login/register screens.
+ * It includes:
+ * - Login: Screen for user login.
+ * - Register: Screen for user registration.
+ * - InvoiceNavigator: Navigator for invoice-related screens, shown if the user is logged in.
+ *
+ * The navigator is wrapped in a SafeAreaView to ensure it is displayed correctly on all devices.
+ * It also includes a FlashMessage component for displaying notifications.
+ *
+ * @requires react
+ * @requires react-native
+ * @requires react-native-screens
+ * @requires react-native-flash-message
+ * @requires ../../context/Auth.provider
+ * @requires ./Login.screen
+ * @requires ./Register.screen
+ * @requires ../Invoices/Invoices.navigator
+ * @requires ../../assets/styles
  */
+// External libraries
 import React from 'react';
+import {SafeAreaView} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
+import FlashMessage from 'react-native-flash-message';
+
+// Internal components and modules
 import { useAuthContext } from '../../context/Auth.provider';
 import { Login } from './Login.screen';
 import { Register } from './Register.screen';
 import { InvoiceNavigator } from '../Invoices/Invoices.navigator';
-import { SafeAreaView } from 'react-native';
+
+// Assets & styles
 import * as Style from '../../assets/styles';
 
+
 /**
- * Auth stack navigator.
+ * Stack navigator for authentication.
  */
 const Stack: NativeStackNavigatorProps = createStackNavigator();
 
+
 /**
- * AuthNavigator object.
+ * AuthNavigator component.
  *
- * If property isLoggedIn is set show the invoices screen. Else show the login screen
- * or if user have not registered they can navigate to register screen.
+ * This component sets up a stack navigator for the authentication-related screens.
+ * If the user is logged in, it shows the InvoiceNavigator. Otherwise, it shows the Login and Register
+ * screens.
  *
  * @constructor
+ * @returns {React.ReactElement} The authentication stack navigator component.
  */
-export const AuthNavigator: React.FC = (): React.JSX.Element => {
+export const AuthNavigator: React.FC = (): React.ReactElement => {
     const authContext = useAuthContext();
 
     return (
@@ -57,6 +88,8 @@ export const AuthNavigator: React.FC = (): React.JSX.Element => {
                     </>
                 )}
             </Stack.Navigator>
+
+            <FlashMessage position="top"/>
         </SafeAreaView>
     );
 };
