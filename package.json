@@ -15,6 +15,7 @@
     "lint": "eslint .",
     "eject": "expo eject",
     "publish": "expo publish",
+    "export": "npx expo export --channel stage",
     "test": "jest",
     "ts:check": "tsc",
     "reinstall-dev": "rm -rf node_modules && rm -rf package-lock.json && rm -rf yarn.lock && yarn install --dev"
