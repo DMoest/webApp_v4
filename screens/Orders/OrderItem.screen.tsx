@@ -200,7 +200,7 @@ export const OrderItem: (
         }, [appContext.userPosition, reload, navigation.setParams])
     );
 
-    useEffect(() => {
+    useEffect((): void => {
         if (mapRef.current && userPositionMarker && orderLocationMarker) {
             mapRef.current.fitToCoordinates(
                 [
