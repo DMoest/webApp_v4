@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NativeStackNavigatorProps } from 'react-native-screens/lib/typescript/native-stack/types';
+import React, {useEffect} from 'react';
+import {createBottomTabNavigator, BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
+import {NativeStackNavigatorProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import {RouteProp} from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import * as AuthModel from '../models/Auth';
-import { useAuthContext } from '../context/Auth.provider';
-import { useAppContext } from '../context/App.provider';
-import { Home } from './Home.screen';
-import { DeliveryNavigator } from './Deliveries/Delivery.navigator';
-import { AuthNavigator } from './Auth/Auth.navigator';
-import { OrderNavigator } from './Orders/Order.navigator';
-import { ProductsNavigator } from './Products/Products.navigator';
-import { InvoiceNavigator } from './Invoices/Invoices.navigator';
-import { LoadingIndicator } from '../components/Utils/LoadingIndicator';
-import { FontAwesome5 } from '@expo/vector-icons';
+import {useAuthContext} from '../context/Auth.provider';
+import {useAppContext} from '../context/App.provider';
+import {Home} from './Home.screen';
+import {DeliveryNavigator} from './Deliveries/Delivery.navigator';
+import {AuthNavigator} from './Auth/Auth.navigator';
+import {OrderNavigator} from './Orders/Order.navigator';
+import {ProductsNavigator} from './Products/Products.navigator';
+import {InvoiceNavigator} from './Invoices/Invoices.navigator';
+import {LoadingIndicator} from '../components/Utils/LoadingIndicator';
+import {FontAwesome5} from '@expo/vector-icons';
 import * as Style from '../assets/styles/index';
+
 
 /**
  * Bottom tabs navigator.
@@ -80,7 +82,7 @@ export const BottomTabsNavigator: () => React.JSX.Element = () => {
     ) : (
         <>
             <BottomTabs.Navigator
-                screenOptions={({ route }) => ({
+                screenOptions={({route}: { route: RouteProp<any, any> }): BottomTabNavigationOptions => ({
                     tabBarIcon: ({ color, size }) => {
                         let iconName;
 
@@ -109,7 +111,7 @@ export const BottomTabsNavigator: () => React.JSX.Element = () => {
                         );
                     },
                     tabBarActiveTintColor: Style.Color.schemeOne.secondary[300],
-                    tabBarInactiveTintColor: Style.Color.grayScale.gray3,
+                    tabBarInactiveTintColor: Style.Color.grayScale[200],
                     headerShown: false,
                 })}>
                 <BottomTabs.Screen
