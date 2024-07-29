@@ -1,33 +1,60 @@
+/**
+ * @module DeliveryCreationForm
+ *
+ * This module provides a form for creating a new delivery. It includes fields for product selection,
+ * amount, delivery date, and comments. The form also includes a date picker for selecting the delivery date.
+ * Upon form submission, a new delivery is created and the selected product's stock is updated.
+ *
+ * @requires react
+ * @requires react-native
+ * @requires @react-native-community/datetimepicker
+ * @requires expo-status-bar
+ * @requires react-native-flash-message
+ * @requires @react-navigation/native
+ * @requires ../../components/Delivery/DeliveryProductPicker
+ * @requires ../../context/App.provider
+ * @requires ../../config/config.json
+ * @requires ../../assets/styles
+ * @requires ../../interfaces/Delivery
+ * @requires ../../interfaces/Product
+ * @requires ../../models/Deliveries
+ * @requires ../../models/Products
+ */
 import React, { useEffect, useState } from 'react';
 import {
-    Alert,
     Button,
     Platform,
+    Pressable,
     ScrollView,
     Text,
     TextInput,
-    TouchableOpacity,
     View,
 } from 'react-native';
-import { useAppContext } from '../../context/App.provider';
-import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { DeliveryProductPicker } from '../../components/Delivery/DeliveryProductPicker';
 import { StatusBar } from 'expo-status-bar';
-import * as DeliveriesInterfaces from '../../interfaces/Delivery';
-import * as StockInterfaces from '../../interfaces/Product';
-import * as ProductModel from '../../models/Products';
-import * as DeliveryModel from '../../models/Deliveries';
+import { showMessage } from 'react-native-flash-message';
+import { useNavigation } from '@react-navigation/native';
+import { DeliveryProductPicker } from '../../components/Delivery/DeliveryProductPicker';
+import { useAppContext } from '../../context/App.provider';
 import config from '../../config/config.json';
 import * as Style from '../../assets/styles';
-import {Delivery} from '../../interfaces/Delivery';
+import * as DeliveriesInterfaces from '../../interfaces/Delivery';
+import { Delivery } from '../../interfaces/Delivery';
+import * as StockInterfaces from '../../interfaces/Product';
+import * as DeliveryModel from '../../models/Deliveries';
+import * as ProductModel from '../../models/Products';
 
 /**
  * Create new delivery form component.
  *
+ * This component provides a form for creating a new delivery. It includes fields for product selection,
+ * amount, delivery date, and comments. The form also includes a date picker for selecting the delivery date.
+ * Upon form submission, a new delivery is created and the selected product's stock is updated.
+ *
  * @constructor
+ * @returns {React.ReactElement} The delivery creation form component.
  */
-export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
+export const DeliveryCreationForm: React.FC = (): React.ReactElement => {
     const navigation = useNavigation();
     const appContext = useAppContext();
 
@@ -37,12 +64,24 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
         useState<StockInterfaces.Product>(appContext.products[0]);
 
     /**
-     * Hook to set initial values from
+     * Hook to set initial values for the delivery form.
+     *
+     * This hook is executed after the component mounts and fetches the products if they are not already
+     * loaded. It then sets the initial values for the delivery form, including the product_id,
+     * delivery_date, amount, comment, and api_key. The product_id is set to the id of the first product,
+     * the delivery_date is set to the current date, the amount is set to 0, the comment is set to an
+     * empty string, and the api_key is set from the config.
+     *
+     * @requires react
+     * @requires ../../models/Products
+     * @requires ../../context/App.provider
+     * @requires ../../config/config.json
+     * @requires ../../interfaces/Delivery
      */
-    useEffect(() => {
-        const fetchProductsAndSetInitialValues = async () => {
+    useEffect((): void => {
+        const fetchProductsAndSetInitialValues = async (): Promise<void> => {
             if (appContext.products.length === 0) {
-                await ProductModel.getProducts().then((products) => {
+                await ProductModel.getProducts().then((products): void => {
                     appContext.setProducts(products);
                 });
             }
@@ -64,13 +103,16 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
     /**
      * DateTime Picker Function to create new delivery datetime.
      *
-     * @param props
+     * This function provides a date picker for selecting the delivery date. It includes a button for
+     * showing the date picker and a DateTimePicker component for selecting the date. The selected date is
+     * then set as the delivery date.
+     *
      * @constructor
+     * @returns {React.ReactElement} The date picker component.
      */
-    function DeliveryDatePicker(): React.JSX.Element {
+    function DeliveryDatePicker(): React.ReactElement {
         const [dropDownDate, setDropDownDate] = useState<Date>(new Date());
         const [show, setShow] = useState<boolean>(false);
-
         const showDatePicker = () => {
             setShow(true);
         };
@@ -85,7 +127,7 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
                 )}
                 {(show || Platform.OS === 'ios') && (
                     <DateTimePicker
-                        onChange={(event: Event, date: Date) => {
+                        onChange={(event: Event, date: Date): void => {
                             setDropDownDate(date);
                             setNewDelivery({
                                 ...newDelivery,
@@ -100,7 +142,14 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
         );
     }
 
-    async function handleSubmit() {
+    /**
+     * Handle form submission.
+     *
+     * This function handles the form submission. It creates a new delivery with the form data and
+     * updates the selected product's stock. It also displays a success message with the new delivery's
+     * details and the updated product's stock.
+     */
+    async function handleSubmit(): Promise<void> {
         try {
             const updatedProduct = {
                 ...selectedProduct,
@@ -110,14 +159,18 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
             await DeliveryModel.createDelivery(newDelivery);
             await ProductModel.updateProduct(updatedProduct);
 
-            await Alert.alert(
-                'Ny Inleverans har skapats.\n \n' +
+            showMessage({
+                message:
+                    'Ny Inleverans har skapats.\n \n' +
                     `Produkt id: ${newDelivery.product_id}\n` +
                     `Antal: ${newDelivery.amount}\n` +
                     `Leveransdatum: ${newDelivery.delivery_date}\n` +
                     `Kommentar: ${newDelivery.comment}\n` +
                     `Nytt lagersaldo: ${updatedProduct.stock}`,
-            );
+                description: 'E-post eller lösenord saknas',
+                type: 'success',
+                duration: 3500,
+            });
         } catch (error) {
             console.error('Handle Submit Error: ', error);
         }
@@ -135,7 +188,7 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
                 <Text style={Style.Form.labelInputField}>Antal: </Text>
                 <TextInput
                     style={Style.Form.textInputField}
-                    onChangeText={(inputAmount: string) => {
+                    onChangeText={(inputAmount: string): void => {
                         setNewDelivery({
                             ...newDelivery,
                             amount: parseInt(inputAmount) || 0,
@@ -158,7 +211,7 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
                 <Text style={Style.Form.labelInputField}>Kommentar: </Text>
                 <TextInput
                     style={Style.Form.textInputField}
-                    onChangeText={(inputComment: string) => {
+                    onChangeText={(inputComment: string): void => {
                         setNewDelivery({
                             ...newDelivery,
                             comment: inputComment,
@@ -168,21 +221,21 @@ export const DeliveryCreationForm: React.FC = (): React.JSX.Element => {
                 />
             </View>
 
-            <TouchableOpacity
+            <Pressable
                 style={Style.Button.buttonContainer}
-                onPress={async () => {
+                onPress={async (): Promise<void> => {
                     // Create New Delivery, Update Product Stock & Alert User.
                     await handleSubmit();
 
                     // Navigate back to deliveries list with param.reload = true.
-                    await navigation.navigate('Inleveranslista', {
+                    navigation.navigate('Inleveranslista', {
                         reload: true,
                     });
                 }}>
                 <Text style={Style.Typography.buttonText}>
                     Skapa Ny Inleverans
                 </Text>
-            </TouchableOpacity>
+            </Pressable>
 
             <StatusBar style='auto' />
         </ScrollView>
