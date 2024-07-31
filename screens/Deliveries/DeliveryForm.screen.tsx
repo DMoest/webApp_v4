@@ -167,7 +167,7 @@ export const DeliveryCreationForm: React.FC = (): React.ReactElement => {
                     `Leveransdatum: ${newDelivery.delivery_date}\n` +
                     `Kommentar: ${newDelivery.comment}\n` +
                     `Nytt lagersaldo: ${updatedProduct.stock}`,
-                description: 'E-post eller lösenord saknas',
+                description: 'Inleverans skapad och lagersaldo är uppdaterat.',
                 type: 'success',
                 duration: 3500,
             });
