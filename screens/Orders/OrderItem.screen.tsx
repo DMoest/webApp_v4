@@ -1,23 +1,65 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Pressable, ScrollView, Text, View} from 'react-native';
-import {useFocusEffect, useNavigation, useRoute} from '@react-navigation/native';
-import MapView, {Marker} from 'react-native-maps';
-import {StatusBar} from 'expo-status-bar';
-import {useAppContext} from "../../context/App.provider";
+/**
+ * @module OrderItem
+ *
+ * This module provides a detailed view of a specific order. It includes information about the order such as
+ * order ID, status, customer name, address, postal code, and city. It also displays a map with markers for
+ * the user's current location and the order location if available. The module allows the user to pack the
+ * order, send the order, or shows relevant status messages based on the order status.
+ *
+ * @requires react
+ * @requires react-native
+ * @requires @react-navigation/native
+ * @requires react-native-maps
+ * @requires expo-status-bar
+ * @requires ../../context/App.provider
+ * @requires ../../interfaces/Order
+ * @requires ../../models/Orders
+ * @requires ../../interfaces/Product
+ * @requires ../../models/Products
+ * @requires ../../assets/styles
+ * @requires @expo/vector-icons
+ * @requires ../../models/Nominatim
+ * @requires expo-location
+ * @requires react-native-flash-message
+ */
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
+import { Pressable, ScrollView, Text, View } from 'react-native';
+import {
+    useFocusEffect,
+    useNavigation,
+    useRoute,
+} from '@react-navigation/native';
+import MapView, { Marker } from 'react-native-maps';
+import { StatusBar } from 'expo-status-bar';
+import { useAppContext } from '../../context/App.provider';
+import { showMessage } from 'react-native-flash-message';
+import * as Location from 'expo-location';
+import MapViewDirections from 'react-native-maps-directions';
+import { FontAwesome5 } from '@expo/vector-icons';
 import * as OrderInterfaces from '../../interfaces/Order';
 import * as OrderModel from '../../models/Orders';
 import * as ProductInterfaces from '../../interfaces/Product';
 import * as ProductModel from '../../models/Products';
-import * as Style from '../../assets/styles';
-import {FontAwesome5} from '@expo/vector-icons';
 import * as NominatimModel from '../../models/Nominatim';
-import * as Location from 'expo-location';
+import * as Style from '../../assets/styles';
 
+import * as APP_CONFIG from '../../config/config.json';
 
 /**
  * Function to check product stock.
  *
- * @param orderItem
+ * This function checks the stock status of a product in an order. It returns a React element that displays
+ * the product's stock status based on the stock level vs. order amount. The stock status is indicated by
+ * different colors and messages.
+ *
+ * @param {OrderInterfaces.OrderItem} orderItem - The order item to check the stock status for.
+ * @returns {React.ReactElement} A React element displaying the product's stock status.
  */
 function productStockStatus(
     orderItem: OrderInterfaces.OrderItem,
@@ -43,7 +85,6 @@ function productStockStatus(
             computedData.color = Style.Color.indicator.warning[300];
             computedData.text = `Produkten ${orderItem.name} saknar täckning för ordern i lagersaldot (${orderItem.stock}).`;
         }
-
 
         return (
             <View style={Style.Container.grid.row}>
@@ -74,7 +115,6 @@ function productStockStatus(
         );
     }, [orderItem.stock, orderItem.amount]);
 
-
     return (
         <View
             style={{
@@ -88,12 +128,16 @@ function productStockStatus(
     );
 }
 
-
 /**
  * OrderItem screen/view.
  *
- * @param props
- * @constructor
+ * This component displays a detailed view of a specific order. It includes information about the order
+ * such as order ID, status, customer name, address, postal code, and city. It also displays a map with
+ * markers for the user's current location and the order location if available. The component allows the
+ * user to pack the order, send the order, or shows relevant status messages based on the order status.
+ *
+ * @param {OrderInterfaces.OrderItemProps} props - The properties for the OrderItem component.
+ * @returns {React.ReactElement} The OrderItem component.
  */
 export const OrderItem: (
     props: OrderInterfaces.OrderItemProps,
@@ -103,11 +147,12 @@ export const OrderItem: (
     const route = useRoute();
     const order: OrderInterfaces.Order = props.route.params.item;
     const [errorMessage, setErrorMessage] = useState(null);
-    const [orderLocationMarker, setOrderLocationMarker] = useState<React.ReactElement | null>(null);
-    const [userPositionMarker, setUserPositionMarker] = useState<React.ReactElement | null>(null);
+    const [orderLocationMarker, setOrderLocationMarker] =
+        useState<React.ReactElement | null>(null);
+    const [userPositionMarker, setUserPositionMarker] =
+        useState<React.ReactElement | null>(null);
     const mapRef = useRef<MapView>(null);
     const reload: boolean | null = route.params?.reload ?? false;
-
 
     /**
      * Fetches the current user location and the order location, then sets the respective markers on the map.
@@ -123,7 +168,8 @@ export const OrderItem: (
      */
     const fetchData = async (): Promise<void> => {
         try {
-            const permission: Location.LocationPermissionResponse = await Location.requestForegroundPermissionsAsync();
+            const permission: Location.LocationPermissionResponse =
+                await Location.requestForegroundPermissionsAsync();
 
             if (permission.status !== 'granted') {
                 setErrorMessage('Permission to access location was denied');
@@ -143,21 +189,22 @@ export const OrderItem: (
                             latitude: location.coords.latitude,
                             longitude: location.coords.longitude,
                         }}
-                        title="Min position"
-                        pinColor="blue"
-                    />
+                        title='Min position'
+                        pinColor={Style.Color.indicator.info[300]}
+                    />,
                 );
             } else {
                 setUserPositionMarker(null);
             }
 
-
             const response = await NominatimModel.getCoordinates(order.address);
             if (response && response.length > 0) {
                 const pinColor = (): string =>
-                    order.status_id === 200 ? Style.Color.indicator.caution[300]
-                        : order.status_id === 400 ? Style.Color.indicator.positive[300]
-                            : Style.Color.indicator.info[300];
+                    order.status_id === 200
+                        ? Style.Color.indicator.warning[300]
+                        : order.status_id === 400
+                          ? Style.Color.indicator.positive[300]
+                          : Style.Color.indicator.info[300];
 
                 setOrderLocationMarker(
                     <Marker
@@ -165,7 +212,7 @@ export const OrderItem: (
                             latitude: parseFloat(response[0].lat),
                             longitude: parseFloat(response[0].lon),
                         }}
-                        title={order.name + " position"}
+                        title={order.name + ' position'}
                         pinColor={pinColor()}
                     />,
                 );
@@ -176,7 +223,6 @@ export const OrderItem: (
             console.error('Error: ', error);
         }
     };
-
 
     /**
      * Hook to handle focus effect for fetching user and order locations.
@@ -195,11 +241,22 @@ export const OrderItem: (
         useCallback((): void => {
             if (!appContext.userPosition || reload) {
                 void fetchData();
-                navigation.setParams({reload: false});
+                navigation.setParams({ reload: false });
             }
-        }, [appContext.userPosition, reload, navigation.setParams])
+        }, [appContext.userPosition, reload, navigation.setParams]),
     );
 
+    /**
+     * Hook to fit map view to user and order locations.
+     *
+     * This hook is executed after the component renders and whenever the user or order location markers change.
+     * It checks if the map reference, user position marker, and order location marker are available. If they are,
+     * it adjusts the map view to fit the coordinates of the user and order locations with appropriate padding.
+     *
+     * @requires react
+     * @requires react-native-maps
+     * @requires ../../context/App.provider
+     */
     useEffect((): void => {
         if (mapRef.current && userPositionMarker && orderLocationMarker) {
             mapRef.current.fitToCoordinates(
@@ -209,18 +266,21 @@ export const OrderItem: (
                         longitude: appContext.userPosition.longitude,
                     },
                     {
-                        latitude: parseFloat(orderLocationMarker.props.coordinate.latitude),
-                        longitude: parseFloat(orderLocationMarker.props.coordinate.longitude),
+                        latitude: parseFloat(
+                            orderLocationMarker.props.coordinate.latitude,
+                        ),
+                        longitude: parseFloat(
+                            orderLocationMarker.props.coordinate.longitude,
+                        ),
                     },
                 ],
                 {
-                    edgePadding: {top: 50, right: 50, bottom: 50, left: 50},
+                    edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
                     animated: true,
-                }
+                },
             );
         }
     }, [userPositionMarker, orderLocationMarker]);
-
 
     /**
      * Compute boolean value to indicate if order is packable.
@@ -247,7 +307,6 @@ export const OrderItem: (
         [order.status_id, order.order_items],
     );
 
-
     /**
      * Compute boolean value to indicate if order is missing items.
      *
@@ -266,7 +325,6 @@ export const OrderItem: (
         [order.status_id, order.order_items.length],
     );
 
-
     /**
      * Compute boolean value to indicate if order is packed.
      *
@@ -282,7 +340,6 @@ export const OrderItem: (
         (): boolean => order.status_id === 200,
         [order.status_id],
     );
-
 
     /**
      * Compute boolean value to indicate if order is sent to customer.
@@ -300,7 +357,6 @@ export const OrderItem: (
         [order.status_id],
     );
 
-
     /**
      * Compute boolean value to indicate if order is returned.
      *
@@ -317,7 +373,6 @@ export const OrderItem: (
         [order.status_id],
     );
 
-
     /**
      * Compute boolean value to indicate if order is refunded.
      *
@@ -333,7 +388,6 @@ export const OrderItem: (
         (): boolean => order.status_id === 900,
         [order.status_id],
     );
-
 
     /**
      * Compute dynamic interaction element based on order status.
@@ -359,7 +413,7 @@ export const OrderItem: (
             if (orderIsPackable) {
                 return (
                     <Pressable
-                        style={({pressed}) => [
+                        style={({ pressed }) => [
                             Style.Button.buttonContainer,
                             {
                                 backgroundColor: pressed
@@ -370,12 +424,21 @@ export const OrderItem: (
                         onPress={async (): Promise<void> => {
                             try {
                                 await OrderModel.pickOrder(order);
-                                const updatedProductsList: ProductInterfaces.Product[] = await ProductModel.getProducts();
-                                const updatedOrdersList: OrderInterfaces.Order[] = await OrderModel.getOrders();
+                                const updatedProductsList: ProductInterfaces.Product[] =
+                                    await ProductModel.getProducts();
+                                const updatedOrdersList: OrderInterfaces.Order[] =
+                                    await OrderModel.getOrders();
 
                                 // Update the state of things...
                                 appContext.setProducts(updatedProductsList);
                                 appContext.setOrders(updatedOrdersList);
+
+                                showMessage({
+                                    message: `Order (${order.id}) har paketerats`,
+                                    description: 'Order har paketerats.',
+                                    type: 'success',
+                                    duration: 3500,
+                                });
 
                                 // Navigate back to the order list and trigger reload.
                                 navigation.navigate('Orderlista', {
@@ -383,6 +446,13 @@ export const OrderItem: (
                                 });
                             } catch (error) {
                                 console.error('Error picking order: ', error);
+                                showMessage({
+                                    message: `Order (${order.id}) gick inte att paketera`,
+                                    description: 'Order gick inte paketera',
+                                    type: 'warning',
+                                    duration: 3000,
+                                });
+                            } finally {
                             }
                         }}>
                         <Text style={Style.Typography.buttonText}>
@@ -394,7 +464,7 @@ export const OrderItem: (
                 return (
                     <View>
                         <Pressable
-                            style={({pressed}) => [
+                            style={({ pressed }) => [
                                 Style.Button.buttonContainer,
                                 {
                                     backgroundColor: pressed
@@ -404,12 +474,27 @@ export const OrderItem: (
                             ]}
                             onPress={async (): Promise<void> => {
                                 try {
-                                    await OrderModel.updateOrderStatus(order.id, order.name, 400);
-                                    await navigation.navigate('Orderlista', {
+                                    await OrderModel.updateOrderStatus(
+                                        order.id,
+                                        order.name,
+                                        400,
+                                    );
+
+                                    showMessage({
+                                        message: `Order (${order.id}) har skickats`,
+                                        description: 'Order har skickats.',
+                                        type: 'success',
+                                        duration: 3500,
+                                    });
+
+                                    navigation.navigate('Orderlista', {
                                         reload: true,
                                     });
                                 } catch (error) {
-                                    console.error('Error sending order: ', error);
+                                    console.error(
+                                        'Error sending order: ',
+                                        error,
+                                    );
                                 }
                             }}>
                             <Text style={Style.Typography.buttonText}>
@@ -477,7 +562,6 @@ export const OrderItem: (
             }
         }, [order.status_id]);
 
-
     /**
      * Compute and render order details.
      *
@@ -542,6 +626,25 @@ export const OrderItem: (
         );
     }, [order, dynamicInteractionElement]);
 
+    const orderDirectionsPath = useMemo(() => {
+        if (
+            appContext.userPosition?.latitude &&
+            appContext.userPosition?.longitude &&
+            orderLocationMarker
+        ) {
+            return (
+                <MapViewDirections
+                    origin={appContext.userPosition}
+                    destination={orderLocationMarker.props.coordinate}
+                    apikey={APP_CONFIG.google_directions_api_key}
+                    strokeWidth={3}
+                    strokeColor={Style.Color.indicator.positive[100]}
+                />
+            );
+        } else {
+            return null;
+        }
+    }, [appContext.userPosition, orderLocationMarker]);
 
     /**
      * Compute and render map element based on user and order locations.
@@ -558,7 +661,10 @@ export const OrderItem: (
      *      the user position is not available.
      */
     const mapElement: React.ReactElement | null = useMemo(() => {
-        if (!appContext.userPosition?.latitude || !appContext.userPosition?.longitude) {
+        if (
+            !appContext.userPosition?.latitude ||
+            !appContext.userPosition?.longitude
+        ) {
             return null;
         }
 
@@ -577,13 +683,13 @@ export const OrderItem: (
                     mapType={'hybrid'}
                     // showsUserLocation={true}
                 >
+                    {orderDirectionsPath}
                     {userPositionMarker}
                     {orderLocationMarker}
                 </MapView>
             </View>
         );
     }, [appContext.userPosition, userPositionMarker, orderLocationMarker]);
-
 
     const orderListItems: React.ReactElement[] = order.order_items.map(
         (orderListItem: OrderInterfaces.OrderItem, index: number) => (
@@ -683,9 +789,7 @@ export const OrderItem: (
         ),
     );
 
-
     const shouldShowMapElement = [200, 400].includes(order.status_id);
-
 
     return (
         <View style={Style.Container.content}>
@@ -696,7 +800,7 @@ export const OrderItem: (
 
                 {orderListItems}
             </ScrollView>
-            <StatusBar style='auto'/>
+            <StatusBar style='auto' />
         </View>
     );
 };
